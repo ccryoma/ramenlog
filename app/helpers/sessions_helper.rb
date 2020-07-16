@@ -26,6 +26,10 @@ module SessionsHelper
     end
   end
   
+  # 渡されたユーザーがログイン中の会員であればtrueを返す
+  def current_member?(member)
+    member && member == current_member
+  end
   # 会員がログインしていればtrue、その他ならfalseを返す
   def logged_in?
     !current_member.nil?
@@ -43,5 +47,16 @@ module SessionsHelper
     forget(current_member)
     session.delete(:member_id)
     @current_member = nil
+  end
+  
+  # 記憶したURL（もしくはデフォルト値）にリダイレクト
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # アクセスしようとしたURLを覚えておく
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end
