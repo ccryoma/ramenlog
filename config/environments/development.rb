@@ -31,8 +31,11 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  #メールプレビューの設定
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  host = '155d13ba2bd24eb4993e1ea39cfefe46.vfs.cloud9.ap-northeast-1.amazonaws.com'
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
   config.action_mailer.perform_caching = false
 
@@ -61,4 +64,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   #Cloud9への接続許可
   config.hosts.clear
+
 end

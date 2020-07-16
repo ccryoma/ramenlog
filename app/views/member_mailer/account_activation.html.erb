@@ -1,0 +1,12 @@
+<h1>ラーメンログ</h1>
+
+<p><%= @member.name %>さん</p>
+
+<p>
+ラーメンログへようこそ！
+下記リンクをクリックして、アカウントを有効化してください。
+</p>
+
+
+<%= link_to edit_account_activation_url(@member.activation_token,email: @member.email),
+            edit_account_activation_url(@member.activation_token,email: @member.email) %>

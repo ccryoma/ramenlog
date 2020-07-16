@@ -18,9 +18,9 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(member_params)
     if @member.save
-      log_in @member
-      flash[:success] = "ラーメンログへようこそ！"
-      redirect_to @member
+      @member.send_activation_email
+      flash[:info] = "メールを確認してアカウントを有効化してください"
+      redirect_to root_url
     else
       render 'new'
     end

@@ -1,0 +1,6 @@
+<%= @member.name %>さん
+
+ラーメンログへようこそ！
+下記リンクをクリックして、アカウントを有効化してください。
+
+<%= edit_account_activation_url(@member.activation_token, email: @member.email) %>
