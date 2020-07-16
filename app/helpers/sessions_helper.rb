@@ -5,20 +5,42 @@ module SessionsHelper
     session[:member_id] = member.id
   end
 
-  # 現在ログイン中の会員を返す（いる場合）
-  def current_member
-    if session[:member_id]
-      @current_member ||= Member.find_by(id: session[:member_id])
-    end
+  # 会員のセッションを永続的にする
+  def remember(member)
+    member.remember
+    cookies.permanent.signed[:member_id] = member.id
+    cookies.permanent[:remember_token] = member.remember_token
   end
 
+
+  # セッション、もしくは記憶トークンcookieに対応する会員を返す
+  def current_member
+    if (member_id = session[:member_id])
+      @current_member ||= Member.find_by(id: member_id)
+    elsif (member_id = cookies.signed[:member_id])
+      member = Member.find_by(id: member_id)
+      if member && member.authenticated?(cookies[:remember_token])
+        log_in member
+        @current_member = member
+      end
+    end
+  end
+  
   # 会員がログインしていればtrue、その他ならfalseを返す
   def logged_in?
     !current_member.nil?
   end
   
+  # 永続的セッションを破棄する
+  def forget(member)
+    member.forget
+    cookies.delete(:member_id)
+    cookies.delete(:remember_token)
+  end
+  
   # 現在の会員をログアウトする
   def log_out
+    forget(current_member)
     session.delete(:member_id)
     @current_member = nil
   end
