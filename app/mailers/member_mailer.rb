@@ -5,9 +5,8 @@ class MemberMailer < ApplicationMailer
     mail to: member.email, subject: "アカウントの有効化"
   end
 
-  def password_reset
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def password_reset(member)
+    @member = member
+    mail to: member.email, subject: "パスワード再設定"
   end
 end
