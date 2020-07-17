@@ -1,0 +1,17 @@
+Example:
+  name: "ExampleShop"
+  address: "example_address"
+  sheets: 20
+  opening_ours: "9:00～22:00"
+  parking: "Nothing"
+  member: 0
+
+<% 30.times do |n| %>
+shop_<%= n %>:
+  name: <%= "Shop #{n}" %>
+  address: <%= "Address #{n}" %>
+  sheets: 20
+  opening_ours: 
+  parking: "9:00～22:00"
+  member: <%= n %>
+<% end %>
