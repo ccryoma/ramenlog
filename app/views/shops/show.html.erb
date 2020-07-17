@@ -1,0 +1,39 @@
+<% provide(:title, @shop.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= @shop.name %>
+      </h1>
+      <table>
+        <tr>
+          <th>店名</th>
+          <td><%= @shop.name %></td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td><%= @shop.address %></td>
+        </tr>
+        <tr>
+          <th>営業時間</th>
+          <td><%= @shop.opening_ours %></td>
+        </tr>
+        <tr>
+          <th>席数</th>
+          <td><%= @shop.sheets %></td>
+        </tr>
+        <tr>
+          <th>駐車場</th>
+          <td><%= @shop.parking %></td>
+        </tr>
+        <tr>
+          <th>初投稿者</th>
+          <td><%= link_to @shop.member.name, member_path(@shop.member), target: :_blank %></td>
+        </tr>
+      </table>
+    </section>
+    <% if current_member %>
+      <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
+    <% end %>
+  </aside>
+</div>
