@@ -1,11 +1,13 @@
 class ShopsController < ApplicationController  
   
   def index
-    @shops = Shop.paginate(page: params[:page])
+    @shops = Shop.paginate(page: params[:page],per_page: 20)
   end
   
   def show
     @shop = Shop.find(params[:id])
+    @post = Post.new
+    @posts = @shop.posts
   end
 
   def new

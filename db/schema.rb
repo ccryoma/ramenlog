@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_103501) do
+ActiveRecord::Schema.define(version: 2020_07_18_060437) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(version: 2020_07_17_103501) do
     t.index ["email"], name: "index_members_on_email", unique: true
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "comment"
+    t.float "point"
+    t.integer "shop_id", null: false
+    t.integer "member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_posts_on_member_id"
+    t.index ["shop_id"], name: "index_posts_on_shop_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -62,4 +74,6 @@ ActiveRecord::Schema.define(version: 2020_07_17_103501) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "posts", "members"
+  add_foreign_key "posts", "shops"
 end

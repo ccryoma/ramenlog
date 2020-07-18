@@ -11,12 +11,17 @@
           <td><%= @shop.name %></td>
         </tr>
         <tr>
+        <tr>
+          <th>ポイント</th>
+          <td><%= shop_point(@shop) %></td>
+        </tr>
+        <tr>
           <th>住所</th>
           <td><%= @shop.address %></td>
         </tr>
         <tr>
           <th>営業時間</th>
-          <td><%= @shop.opening_ours %></td>
+          <td><%= @shop.opening_ours %></tpar
         </tr>
         <tr>
           <th>席数</th>
@@ -32,8 +37,31 @@
         </tr>
       </table>
     </section>
+
+    <ul class="members">
+      <%= render 'shared/postlist' %>
+    </ul>
+    
+
     <% if current_member %>
+
+      <%= form_with(model: @post, local: true) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <%= f.label :title ,"タイトル" %>
+        <%= f.text_field :title, class: 'form-control' %>
+  
+        <%= f.label :point ,"ポイント" %>
+        <%= f.text_field :point , class: 'form-control' %>
+  
+        <%= f.label :comment ,"レビュー" %>
+        <%= f.text_area :comment , class: 'form-control' %>
+  
+        <%= f.hidden_field :shop_id, value: @shop.id %>
+        
+        <%= f.submit "投稿", class: "btn btn-primary" %>
+      <% end %>
       <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
+      
     <% end %>
   </aside>
 </div>

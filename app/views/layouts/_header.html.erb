@@ -5,6 +5,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "ホーム", root_path %></li>
         <li><%= link_to "ヘルプ", help_path %></li>
+        <li><%= link_to "店舗登録", registration_path %></li>
         <li><%= link_to "店舗一覧", shops_path %></li>
         <% if logged_in? %>
           <li><%= link_to "会員一覧", members_path %></li>
