@@ -1,0 +1,14 @@
+<li id="micropost-<%= post.id %>">
+  <h2><%= post.title %></h2>
+  <h2><%= post.point %></h2>
+  <span><%= post.comment %></span>
+  <h2><%= link_to post.member.name, member_path(post.member) %></h2>
+  
+  <span class="timestamp">
+    <%= post.created_at %>
+  </span>
+  <% if current_member && current_member.admin? %>
+    <%= link_to "削除", post, method: :delete,
+                                  data: { confirm: "削除しますか？" } %>
+  <% end %>
+</li>
