@@ -1,6 +1,6 @@
 <li>
   <%= link_to shop.name, shop %>
-  <%= shop_point(shop.id) %>
+  <%= shop.point_avg || "-" %>
   <% if current_member && current_member.admin? %>
     | <%= link_to "削除", shop, method: :delete,
                                   data: { confirm: "削除しますか？" } %>

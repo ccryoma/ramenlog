@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_060437) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "comment"
-    t.float "point"
+    t.decimal "point", precision: 2, scale: 1
     t.integer "shop_id", null: false
     t.integer "member_id", null: false
     t.datetime "created_at", precision: 6, null: false
