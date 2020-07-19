@@ -13,7 +13,7 @@
         <tr>
         <tr>
           <th>ポイント</th>
-          <td><%= shop_point(@shop) %></td>
+          <td><%= @shop_point ? @shop_point.round(1) : "-" %></td>
         </tr>
         <tr>
           <th>住所</th>

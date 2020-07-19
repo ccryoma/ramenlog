@@ -39,11 +39,11 @@ end
 
 
 # 投稿をまとめて生成する
-5.times do |n|
+30.times do |n|
   title  = Faker::Lorem.sentence(word_count: 3)
   comment = Faker::Lorem.sentence(word_count: 20)
-  point = n
-  shop = Shop.find(1)
+  point = rand(6)
+  shop = Shop.find(1 + n % 10)
   member = Member.find(n + 1)
   member.posts.create!(title: title,
                         comment: comment,

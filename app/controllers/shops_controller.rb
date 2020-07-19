@@ -1,11 +1,12 @@
 class ShopsController < ApplicationController  
   
   def index
-    @shops = Shop.paginate(page: params[:page],per_page: 20)
+    @shops = Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC").paginate(page: params[:page],per_page: 20) 
   end
   
   def show
     @shop = Shop.find(params[:id])
+    @shop_point = Post.where(shop_id: @shop.id).average("point")
     @post = Post.new
     @posts = @shop.posts
   end

@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     create_table :posts do |t|
       t.string :title
       t.text :comment
-      t.float :point
+      t.decimal :point, precision: 2, scale: 1
       t.references :shop, null: false, foreign_key: true
       t.references :member, null: false, foreign_key: true
 
