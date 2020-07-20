@@ -288,3 +288,60 @@ span.image {
     border: 0;
   }
 }
+
+/* icon */
+.member_icon img{
+  width: 100px; height: 100px;
+  object-fit: contain;
+}
+
+.shop_image img{
+  width: 150px; height: 150px;
+  object-fit: contain;
+}
+
+.shop{
+	display:flex;
+}
+
+.shop_right{
+  flex-direction: column;
+  margin-left: 20px;
+  width:100%;
+}
+
+.shop_right_name{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.shop_right_point{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.shop_right_topCom{
+  background-color: ivory;
+  padding:5px;
+}
+
+.shop_right_topCom_title{
+  font-weight: bold;
+}
+
+.shop_right_topCom_title_by{
+  font-weight: normal;
+  color: gray;
+  a:link, a:visited, a:hover, a:active {
+    color: gray;
+  }
+}
+
+.shop_right_topCom_comment{
+  font-size: 0.9em;
+  color: dimgray;
+}
+
+.shop_right_delete{
+  text-align:right;
+}

@@ -1,4 +1,7 @@
 <li>
+  <div class="member_icon">
+    <%= link_to member.image.attached? ? image_tag(member.image) : image_tag("default_member.png")  ,member %>
+  </div>
   <%= link_to member.name, member %>
   <% if current_member.admin? && !current_member?(member) %>
     | <%= link_to "削除", member, method: :delete,

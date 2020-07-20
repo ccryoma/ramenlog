@@ -6,5 +6,4 @@ class Shop < ApplicationRecord
   validates :opening_ours,  length: { maximum: 255 }
   validates :parking,   length: { maximum: 50 }
   validates :member_id,  presence: true
-  
 end

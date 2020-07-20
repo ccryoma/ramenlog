@@ -4,6 +4,9 @@
     <section class="user_info">
       <h1>
         <%= @member.name %>
+        <div class="member_icon">
+          <%= @member.image.attached? ? image_tag(@member.image) : image_tag("default_member.png")  %>
+        </div>
       </h1>
     </section>
   </aside>

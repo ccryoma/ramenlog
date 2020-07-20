@@ -3,6 +3,7 @@ class PostsController < ApplicationController
 
   def create
     @post = current_member.posts.build(posts_params)
+    @post.images.attach(params[:post][:images])
     if @post.save
       flash[:success] = "レビューが投稿されました!"
       redirect_to shop_path(@post.shop_id)
@@ -22,7 +23,7 @@ class PostsController < ApplicationController
   private
 
     def posts_params
-      params.require(:post).permit(:title, :point,:comment, :shop_id)
+      params.require(:post).permit(:title, :point,:comment, :shop_id, images: [])
     end
 
 end
