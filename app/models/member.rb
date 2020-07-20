@@ -1,6 +1,7 @@
 class Member < ApplicationRecord
   has_many :shops
   has_many :posts
+  has_one_attached :image
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -12,6 +13,10 @@ class Member < ApplicationRecord
                     uniqueness: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
+                                      message: "must be a valid image format" },
+                      size:         { less_than: 5.megabytes,
+                                      message: "ファイルサイズは5MB未満としてください" }
   
   # 渡された文字列のハッシュ値を返す(fixtureパスワード用)
   def Member.digest(string)

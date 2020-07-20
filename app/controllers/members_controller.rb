@@ -32,6 +32,7 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
+    @member.image.attach(params[:member][:image])
     if @member.update(member_params)
       flash[:success] = "プロフィールが更新されました"
       redirect_to @member
@@ -50,7 +51,7 @@ class MembersController < ApplicationController
 
     def member_params
       params.require(:member).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :image)
     end
     # beforeアクション
 

@@ -16,6 +16,23 @@
           <td><%= @shop_point ? @shop_point.round(1) : "-" %></td>
         </tr>
         <tr>
+          <th>画像</th>
+          <td>
+            <div class="shop_image">
+              <% @no_image = true %>
+              <% @posts.each do |post| %>
+                <% if post.images.attached? %>
+                  <% post.images.each do |image| %>
+                    <%= image_tag image %> <br>
+                  <% end %>
+                  <% @no_image = false %>
+                <% end %>
+              <% end %>
+              <%= image_tag("no_image.png") if @no_image %>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <th>住所</th>
           <td><%= @shop.address %></td>
         </tr>
@@ -47,6 +64,10 @@
 
       <%= form_with(model: @post, local: true) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
+        <span class="image">
+          <%= f.file_field :images, multiple: true , accept: "image/jpeg,image/gif,image/png" %>
+        </span>
+        
         <%= f.label :title ,"タイトル" %>
         <%= f.text_field :title, class: 'form-control' %>
   

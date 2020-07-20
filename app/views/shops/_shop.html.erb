@@ -1,8 +1,48 @@
 <li>
-  <%= link_to shop.name, shop %>
-  <%= shop.point_avg || "-" %>
-  <% if current_member && current_member.admin? %>
-    | <%= link_to "削除", shop, method: :delete,
-                                  data: { confirm: "削除しますか？" } %>
-  <% end %>
+  <div class="shop">
+    <div class="shop_left">
+      <div class="shop_image">
+        <% @no_image = true %>
+        <% shop.posts.each do |post| %>
+          <% if post.images.attached? %>
+            <%= link_to image_tag(post.images[0]) , shop %>
+            <% @no_image = false %>
+            <% break %>
+          <% end %>
+        <% end %>
+        <%= link_to(image_tag("no_image.png"),shop) if @no_image %>
+      </div>
+    </div>
+    <div class="shop_right">
+      <div class="shop_right_name">
+        <%= link_to shop.name, shop %>
+      </div>
+      <div class="shop_right_address">
+        <%= shop.address %>
+      </div>
+      <div class="shop_right_point">
+        <%= shop.point_avg || "未評価" %>
+      </div>
+      <div class="shop_right_topCom">
+        <div class="shop_right_topCom_title">
+          <% if shop.posts[0] %>
+            <%= shop.posts[0].title %>
+            <span class="shop_right_topCom_title_by">
+              by <%= link_to shop.posts[0].member.name, member_path(shop.posts[0].member), target: :_blank %>
+            </span>
+          <% else %>
+            ※まだコメントがありません
+          <% end %>
+        </div>
+        <div class="shop_right_topCom_comment">
+          <%= shop.posts[0] ? shop.posts[0].comment : "" %>
+        </div>
+      </div>
+      <% if current_member && current_member.admin? %>
+        <div class="shop_right_delete">
+          <%= link_to "この店舗を削除", shop, method: :delete,data: { confirm: "削除しますか？" } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </li>
