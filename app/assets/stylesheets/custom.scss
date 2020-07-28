@@ -290,46 +290,48 @@ span.image {
 }
 
 /* icon */
-.member_icon img{
+.member_icon img {
   width: 100px; height: 100px;
   object-fit: contain;
 }
 
-.shop_image img{
+/* shop */
+.shop_image img {
   width: 150px; height: 150px;
   object-fit: contain;
+  margin: 10px;
 }
 
-.shop{
-	display:flex;
+.shop {
+	display: flex;
 }
 
-.shop_right{
+.shop_right {
   flex-direction: column;
   margin-left: 20px;
-  width:100%;
+  width: 100%;
 }
 
-.shop_right_name{
+.shop_right_name {
   font-size: 1.5em;
   font-weight: bold;
 }
 
-.shop_right_point{
+.shop_right_point {
   font-size: 1.5em;
   font-weight: bold;
 }
 
-.shop_right_topCom{
+.shop_right_topCom {
   background-color: ivory;
   padding:5px;
 }
 
-.shop_right_topCom_title{
+.shop_right_topCom_title {
   font-weight: bold;
 }
 
-.shop_right_topCom_title_by{
+.shop_right_topCom_title_by {
   font-weight: normal;
   color: gray;
   a:link, a:visited, a:hover, a:active {
@@ -337,11 +339,96 @@ span.image {
   }
 }
 
-.shop_right_topCom_comment{
+.shop_right_topCom_comment {
   font-size: 0.9em;
   color: dimgray;
 }
 
-.shop_right_delete{
+.shop_right_delete {
   text-align:right;
+}
+
+
+
+.shop_head {
+  overflow: auto;
+  width: 100%;
+}
+  
+.shop_head_name {
+  font-size: 2.0em;
+  font-weight: bold;
+}
+
+.shop_head_point {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.shop_dtl {
+	display: flex;
+	margin-top: 10px;
+}
+
+.shop_dtl_left {
+  width: 30%;
+}
+
+.shop_dtl_right {
+  width: 70%;
+	display: flex;
+	flex-wrap: wrap;
+  img {
+    width: 150px; height: 150px;
+    object-fit: contain;
+    margin: 10px;
+  }
+}
+
+.shop_Com {
+	display: flex;
+}
+
+.shop_Com_left_memberImg img {
+  width: 50px; height: 50px;
+  object-fit: contain;
+}
+
+.shop_Com_left_memberName {
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.shop_Com_right {
+  flex-direction: column;
+  margin: 10px;
+  width: 100%;
+  background-color: ivory;
+  padding: 5px;
+}
+
+.shop_Com_right_title {
+  font-weight: bold;
+}
+
+.shop_Com_right_comment {
+  font-size: 0.9em;
+  color: dimgray;
+}
+
+.shop_Com_right_delete {
+  text-align: right;
+}
+
+
+.top-bg {
+  background-image: url("top.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: white;
 }
