@@ -4,10 +4,40 @@
     <section class="user_info">
       <h1>
         <%= @member.name %>
+        <%= @member.posts.count %>
         <div class="member_icon">
           <%= @member.image.attached? ? image_tag(@member.image) : image_tag("default_member.png")  %>
         </div>
       </h1>
+     
+      
+  <ul>
+    <% @member.posts.each do |post| %>
+      <li class="shop_Com">
+        <div class="shop_Com_right">
+          <div class="shop_Com_right_title">
+            <%= link_to(post.shop.name, post.shop) %>
+          </div>
+          <div class="shop_Com_right_title">
+              <%= post.title %>
+          </div>
+          <div class="shop_Com_right_comment">
+              <%= post.comment %>
+          </div>
+          <div class="shop_Com_right_point">
+              <%= post.point %>
+          </div>
+          <% if current_member && current_member.admin? %>
+            <div class="shop_Com_right_delete">
+              <%= link_to "削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  
+  
     </section>
   </aside>
 </div>

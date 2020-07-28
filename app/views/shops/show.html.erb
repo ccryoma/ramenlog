@@ -1,36 +1,21 @@
 <% provide(:title, @shop.name) %>
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= @shop.name %>
-      </h1>
-      <table>
+      
+  <div class="shop_head">
+    <div class="shop_head_name">
+      <%= @shop.name %>
+    </div>
+    <div class="shop_head_point">
+      <%= @shop_point ? @shop_point.round(1) : "未評価" %>
+    </div>
+  </div>
+  
+  <div class="shop_dtl">
+    <div class="shop_dtl_left">
+      <table class="table">
         <tr>
           <th>店名</th>
           <td><%= @shop.name %></td>
-        </tr>
-        <tr>
-        <tr>
-          <th>ポイント</th>
-          <td><%= @shop_point ? @shop_point.round(1) : "-" %></td>
-        </tr>
-        <tr>
-          <th>画像</th>
-          <td>
-            <div class="shop_image">
-              <% @no_image = true %>
-              <% @posts.each do |post| %>
-                <% if post.images.attached? %>
-                  <% post.images.each do |image| %>
-                    <%= image_tag image %> <br>
-                  <% end %>
-                  <% @no_image = false %>
-                <% end %>
-              <% end %>
-              <%= image_tag("no_image.png") if @no_image %>
-            </div>
-          </td>
         </tr>
         <tr>
           <th>住所</th>
@@ -49,24 +34,63 @@
           <td><%= @shop.parking %></td>
         </tr>
         <tr>
-          <th>初投稿者</th>
-          <td><%= link_to @shop.member.name, member_path(@shop.member), target: :_blank %></td>
+          <th>店舗登録者</th>
+          <td><%= link_to @shop.member.name, @shop.member, target: :_blank %></td>
         </tr>
       </table>
-    </section>
-
-    <ul class="members">
-      <%= render 'shared/postlist' %>
-    </ul>
-    
+    </div>
+    <div class="shop_dtl_right">
+        <% @no_image = true %>
+        <% @posts.each do |post| %>
+          <% if post.images.attached? %>
+            <% post.images.each do |image| %>
+              <div class="shop_dtl_left_img">
+                <%= image_tag image %>
+              </div>
+            <% end %>
+            <% @no_image = false %>
+          <% end %>
+        <% end %>
+        <%= image_tag("no_image.png") if @no_image %>
+    </div>
+  </div>
+      
+  <ul>
+    <% @shop.posts.each do |post| %>
+      <li class="shop_Com">
+        <div class="shop_Com_left">
+          <div class="shop_Com_left_memberImg">
+            <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("default_member.png"), post.member, target: :_blank)  %>
+          </div>
+          <div class="shop_Com_left_memberName">
+            <%= link_to(post.member.name, post.member, target: :_blank) %>
+          </div>
+        </div>
+        <div class="shop_Com_right">
+          <div class="shop_Com_right_title">
+              <%= post.title %>
+          </div>
+          <div class="shop_Com_right_comment">
+              <%= post.comment %>
+          </div>
+          <div class="shop_Com_right_point">
+              <%= post.point %>
+          </div>
+          <% if current_member && current_member.admin? %>
+            <div class="shop_Com_right_delete">
+              <%= link_to "削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+      
 
     <% if current_member %>
 
       <%= form_with(model: @post, local: true) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
-        <span class="image">
-          <%= f.file_field :images, multiple: true , accept: "image/jpeg,image/gif,image/png" %>
-        </span>
         
         <%= f.label :title ,"タイトル" %>
         <%= f.text_field :title, class: 'form-control' %>
@@ -76,6 +100,10 @@
   
         <%= f.label :comment ,"レビュー" %>
         <%= f.text_area :comment , class: 'form-control' %>
+        
+        <span class="image">
+          <%= f.file_field :images, multiple: true , accept: "image/jpeg,image/gif,image/png" %>
+        </span>
   
         <%= f.hidden_field :shop_id, value: @shop.id %>
         
@@ -84,5 +112,5 @@
       <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
       
     <% end %>
-  </aside>
+
 </div>
