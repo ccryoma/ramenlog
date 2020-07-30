@@ -16,7 +16,7 @@ production:
   database: ramenlog-db
   pool: 5
   username: admin
-  password: boku-ryoma
+  password: 
   socket: /var/lib/mysql/mysql.sock
   host: ramenlog-db.clowxe0fjs0m.ap-northeast-1.rds.amazonaws.com
   database: ramenlog-db
