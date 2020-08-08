@@ -57,6 +57,8 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'ed25519'
   gem 'bcrypt_pbkdf'
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 group :test do
