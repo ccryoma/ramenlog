@@ -45,6 +45,17 @@ namespace :deploy do
     end
   end
 
+  desc 'Run reset'
+  task :reset do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, :exec, :rake, 'db:migrate:reset DISABLE_DATABASE_ENVIRONMENT_CHECK=1'
+        end
+      end
+    end
+  end
+
   desc 'Run seed'
   task :seed do
     on roles(:app) do
