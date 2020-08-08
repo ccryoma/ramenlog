@@ -8,7 +8,7 @@ Member.create!(name:  "りょうま",
              activated_at: Time.zone.now)
 
 # 追加のユーザーをまとめて生成する
-70.times do |n|
+50.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@ramen.org"
   password = "password"
@@ -22,7 +22,7 @@ end
 
 # 店舗をまとめて生成する
 prename = ["麺屋", "製麺所", "ラーメン", "らーめん", "工房"]
-50.times do |n|
+40.times do |n|
   name  = prename[rand(5)] + Faker::Name.last_name
   address = Faker::Address.state
   opening_ours = "10:00～#{20 + n % 6}:00"
@@ -50,4 +50,36 @@ end
                         point: point,
                         shop: shop,
                         member: member)
+end
+
+# タグを生成する
+Tag.create!([
+    { name: 'ラーメン' },
+    { name: 'つけ麺' },
+    { name: '油そば'},
+    { name: 'タンメン'},
+    { name: '太麺'},
+    { name: '細麺'},
+    { name: '平打ち麺' },
+    { name: '刀削麺'},
+    { name: 'しょうゆ'},
+    { name: 'しお'},
+    { name: 'みそ'},
+    { name: 'とんこつ' },
+    { name: '背脂'},
+    { name: '魚介'},
+    { name: '煮干し'},
+    { name: '鶏白湯'},
+    { name: '激辛' },
+    { name: '二郎系'},
+    { name: '家系'},
+    { name: '博多系'}
+])
+
+# タグをまとめて紐付けする
+20.times do |n|
+  shop = Shop.find(1 + n % 5)
+  shop.shop_tag_relations.create!(
+                        shop: shop,
+                        tag_id: n + 1)
 end
