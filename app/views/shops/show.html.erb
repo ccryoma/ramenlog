@@ -8,6 +8,11 @@
     <div class="shop_head_point">
       <%= @shop_point ? @shop_point.round(1) : "未評価" %>
     </div>
+    <div class="shop_head_tag">
+      <% @shop.tags.each do |tag| %>
+        <%= tag.name %>
+      <% end %>
+    </div>
   </div>
   
   <div class="shop_dtl">
@@ -23,7 +28,7 @@
         </tr>
         <tr>
           <th>営業時間</th>
-          <td><%= @shop.opening_ours %></tpar
+          <td><%= @shop.opening_ours %></td>
         </tr>
         <tr>
           <th>席数</th>

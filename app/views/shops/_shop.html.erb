@@ -23,6 +23,11 @@
       <div class="shop_right_point">
         <%= shop.point_avg || "未評価" %>
       </div>
+      <div class="shop_right_tags">
+        <% shop.tags.each do |tag| %>
+          <%= tag.name %>
+        <% end %>
+      </div>
       <div class="shop_right_topCom">
         <div class="shop_right_topCom_title">
           <% if shop.posts[0] %>
