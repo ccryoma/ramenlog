@@ -1,31 +1,71 @@
-<header class="navbar navbar-fixed-top ">
+<header class="navbar  ">
   <div class="container">
-    <%= link_to "ラーメンログ", root_path, id: "logo",style:"color:black" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "ホーム", root_path %></li>
-        <li><%= link_to "ヘルプ", help_path %></li>
-        <li><%= link_to "店舗一覧", shops_path %></li>
-        <% if logged_in? %>
-          <li><%= link_to "店舗登録", registration_path %></li>
-          <li><%= link_to "会員一覧", members_path %></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              アカウント <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "プロフィール", current_member %></li>
-              <li><%= link_to "設定", edit_member_path(current_member) %></li>
-              <li class="divider"></li>
-              <li>
-                <%= link_to "ログアウト", logout_path, method: :delete %>
+  
+    <div class="p_header">
+      <div class="p_header_nav">
+        <nav>
+          <ul class="nav navbar-nav">
+            <li><%= link_to "ホーム", root_path %></li>
+            <li><%= link_to "ヘルプ", help_path %></li>
+            <li><%= link_to "店舗一覧", shops_path %></li>
+            <% if logged_in? %>
+              <li><%= link_to "店舗登録", registration_path %></li>
+              <li><%= link_to "会員一覧", members_path %></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  アカウント <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "プロフィール", current_member %></li>
+                  <li><%= link_to "設定", edit_member_path(current_member) %></li>
+                  <li class="divider"></li>
+                  <li>
+                    <%= link_to "ログアウト", logout_path, method: :delete %>
+                  </li>
+                </ul>
               </li>
-            </ul>
-          </li>
-        <% else %>
-          <li><%= link_to "ログイン", login_path %></li>
-        <% end %>
-      </ul>
-    </nav>
+            <% else %>
+              <li><%= link_to "ログイン", login_path %></li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+      <div class="global_search">
+        <div class="global_search_title">
+          <%= link_to "ラーメンログ", root_path, id: "logo",style:"color:black" %>
+        </div>
+        <div class="global_search_form">
+          <%= form_with(url: "", local: true, id: "search_form_id", method: "get") do |f| %>
+            <div class='search_form'>
+              <div class='search_form_word'>
+                <div class='search_form_word_area'>
+                  <%= f.text_field 'post[area]', placeholder: 'エリア[例:池袋、新宿]', class: 'form-control' %>
+                </div>
+                <div class='search_form_word_name'>
+                  <%= f.text_field 'post[name]', placeholder: '店名', class: 'form-control' %>
+                </div>
+                <div class='search_form_btn'>
+                  <%= f.submit '一覧表示', class: "btn", id: "btn_list" %>
+                </div>
+                <div class='search_form_btn_map'>
+                  <%= f.submit '地図表示', class: "btn", id: "btn_map" %>
+                </div>
+              </div>
+              <div class='search_form_tags'>
+                <%= f.collection_check_boxes('post[tag_ids]', Tag.all, :id, :name,include_hidden: false ) do |tag| %>
+                  <div class='search_form_tags_tag'>
+                    <%= tag.check_box %>
+                    <%= tag.label %>
+                  </div>
+                <% end %>
+              </div> 
+              <div class='search_form_AO'>
+                <%= f.select 'post[AO]', {'全てのタグを含む(AND)': 'AND', '一部のタグを含む(OR)': 'OR'}, {selected: 'AND'} %>
+              </div> 
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
