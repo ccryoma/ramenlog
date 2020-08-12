@@ -1,0 +1,109 @@
+<% if @find %>
+  <h2><%= params['post']['area'] %></h2>
+<% else %>
+  <h2>
+    ご指定の条件ではお店が見つかりませんでした<br />
+    ※全国のお店を表示しています
+  </h2>
+<% end %>
+
+<!--
+<input id="address" type="textbox" >
+<input type="button" value="検索"" onclick="codeAddress()">
+-->
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 100%;
+}
+</style>
+
+<script>
+
+// マーカー用のデータを取得
+const data = [
+  <% @shops.each do |shop| %>
+    <% if shop.latitude && shop.longitude %>
+      <% @shopwin = (render partial: "shopWin", locals:{shop: shop}).gsub(/(\r\n|\r|\n)/, "\\n") %>
+      <%= "{ shopInfo: \'#{@shopwin}\', lat: #{shop.latitude}, lng: #{shop.longitude} },".html_safe %>
+    <% end %>
+  <% end %>
+];
+
+let map
+
+function initMap(){
+  //デフォルトの緯度経度の変数
+  const latLng = {
+    lat: 35.729642,
+    lng: 139.710887
+  };
+
+  /*
+  geocoder = new google.maps.Geocoder()
+  */
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: latLng,
+    zoom: 15,
+  });
+
+    // 現在表示されているinfoWindowオブジェクト
+  let currentWindow;
+
+  data.map(d => {
+    // マーカーをつける
+    const marker = new google.maps.Marker({
+      position: {lat: d.lat, lng: d.lng},
+      map: map
+    });
+
+    // マーカークリックしたら地名をポップアップさせる
+    marker.addListener('click', () => {
+      currentWindow && currentWindow.close();
+      const infoWindow = new google.maps.InfoWindow({content: d.shopInfo});
+      infoWindow.open(map, marker);
+      currentWindow = infoWindow;
+    });
+  });
+
+
+// マーカーがいい感じに表示できるよう調整
+map.fitBounds(new google.maps.LatLngBounds(
+  // sw
+  {
+    lat: Math.min(...data.map(d => d.lat)),
+    lng: Math.min(...data.map(d => d.lng))
+  },
+  // ne
+  {
+    lat: Math.max(...data.map(d => d.lat)),
+    lng: Math.max(...data.map(d => d.lng))
+  }
+));
+}
+
+/*
+let geocoder
+
+function codeAddress(){
+  let inputAddress = document.getElementById('address').value;
+
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });   
+}
+*/
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzZIPZF0Uch20mSuje8gzNVh2MYViAHlM&callback=initMap" async defer></script>

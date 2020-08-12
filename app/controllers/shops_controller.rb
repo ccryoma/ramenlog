@@ -1,5 +1,18 @@
 class ShopsController < ApplicationController  
   
+  def search
+    @shops = Shop.search(post_params).paginate(page: params[:page],per_page: 20) 
+  end
+
+  def map
+    @shops = Shop.search(post_params)
+    @find = true
+    if @shops.empty? || (params[:post][:area].empty? && params[:post][:name].empty? && params[:post][:tag_ids].nil?)
+      @find = false
+    end
+    @shops = Shop.search('')  if @shops.empty?
+  end
+
   def index
     @shops = Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC").paginate(page: params[:page],per_page: 20) 
   end
@@ -17,7 +30,7 @@ class ShopsController < ApplicationController
 
   def create
     @shop = current_member.shops.build(shop_params)
-    if @shop.save
+    if @shop.save!
       @shop.save_tags(params[:shop][:tag_ids])
       flash[:success] = "店舗を登録しました！"
       redirect_to shop_path(@shop.id)
@@ -50,6 +63,10 @@ class ShopsController < ApplicationController
   private
 
     def shop_params
-      params.require(:shop).permit(:name, :address, :opening_ours, :sheets, :parking)
+      params.require(:shop).permit(:name, :address, :opening_ours, :sheets, :parking, :latitude, :longitude, tag_ids: [])
+    end
+    
+    def post_params
+      params.require(:post).permit(:area,:name,:AO,tag_ids: [] )
     end
 end
