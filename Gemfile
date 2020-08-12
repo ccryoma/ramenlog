@@ -39,7 +39,9 @@ gem 'jbuilder', '~> 2.9.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.5', require: false
 gem 'mysql2'
-
+gem 'http'
+gem 'geocoder'
+gem "gmaps4rails"
 # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
 gem 'listen', '3.1.5'
 group :development, :test do

@@ -1,5 +1,56 @@
+<script>
+(function () {
+ 
+  // 「一覧表示」ボタン押下時
+  var btnList_onclick = function (event) {
+    $("#search_form_id").attr("action", "<%= search_path %>").submit();
+  };
+
+  // 「地図表示」ボタン押下時
+  var btnMap_onclick = function (event) {
+    $("#search_form_id").attr("action", "<%= map_path %>").submit();
+  };
+ 
+  // ドキュメント読み込み完了時
+  var document_onready = function (event) {
+    $("#btn_list").on("click", btnList_onclick).focus();
+    $("#btn_map").on("click", btnMap_onclick);
+  };
+ 
+  $(document).ready(document_onready);
+})();
+</script>
+
+
 <div class="center jumbotron top-bg">
   <h1>今日は、どんなラーメン食べる??<br />ラーメンログ</h1>
 
   <%= link_to "会員登録", signup_path, class: "btn btn-lg btn-primary" %>
+  <p>エリアや店名から探す</p>
+    <%= form_with(url: "", local: true, id: "search_form_id", method: "get") do |f| %>
+    <div class='search_form'>
+      <div class='search_form_word'>
+        <div class='search_form_word_area'>
+          <%= f.text_field 'post[area]', placeholder: 'エリア[例:池袋、新宿]', class: 'form-control' %>
+        </div>
+        <div class='search_form_word_name'>
+          <%= f.text_field 'post[name]', placeholder: '店名', class: 'form-control' %>
+        </div>
+      </div>
+      <div class='search_form_tags'>
+        <%= f.collection_check_boxes('post[tag_ids]', Tag.all, :id, :name,include_hidden: false ) do |tag| %>
+          <div class='search_form_tags_tag'>
+            <%= tag.check_box %>
+            <%= tag.label %>
+          </div>
+        <% end %>
+      </div>
+      <div class='search_form_btn'>
+        <%= f.submit '一覧表示', class: "btn", id: "btn_list" %>
+      </div>
+      <div class='search_form_btn_map'>
+        <%= f.submit '地図表示', class: "btn", id: "btn_map" %>
+      </div>
+    </div>
+    <% end %>
 </div>
