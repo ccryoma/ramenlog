@@ -6,7 +6,7 @@
     <%= form_with(model: @member, local: true) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.label :name ,"名前" %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control', id:'member_name' %>
 
       <%= f.label :email ,"メールアドレス" %>
       <%= f.email_field :email , class: 'form-control' %>

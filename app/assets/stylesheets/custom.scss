@@ -522,3 +522,18 @@ span.image {
     display: inline-block;
   }
 }
+
+/* member_profile */
+.member_profile {
+  display: flex;
+  .member_profile_left {
+    flex-direction: column;
+  }
+  .member_profile_right {
+    flex-direction: column;
+  }
+  .member_profile_left_icon img {
+    width: 200px; height: 200px;
+    object-fit: contain;
+  }
+}

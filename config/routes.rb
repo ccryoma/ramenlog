@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  #get 'shops/show'
-  #get 'shops/new'
-  #get 'shops/create'
   get  '/search',  to: 'shops#search'
   get  '/map',  to: 'shops#map'
   get 'password_resets/new'
