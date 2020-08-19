@@ -30,7 +30,7 @@ class ShopsController < ApplicationController
 
   def create
     @shop = current_member.shops.build(shop_params)
-    if @shop.save!
+    if @shop.save
       @shop.save_tags(params[:shop][:tag_ids])
       flash[:success] = "店舗を登録しました！"
       redirect_to shop_path(@shop.id)
