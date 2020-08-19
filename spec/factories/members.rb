@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :member do
+  factory :member, class: Member do
     password { 'password' }
     password_digest { Member.digest('password') }
     admin { false }
@@ -30,6 +30,11 @@ FactoryBot.define do
     trait :mikasa do
       name { '三笠洋一郎' }
       email { 'mikasa@example.com' }
+    end
+
+    trait :other_member do
+      name { Faker::Name.name }
+      email { Faker::Internet.email }
     end
   end
 end

@@ -16,7 +16,6 @@ RSpec.describe "会員登録", type: :system do
     end
   end
 
-  context "有効な登録" do
-  end
+  # "有効な情報による登録"はrequest/member_spec.rbに記載
 
 end
