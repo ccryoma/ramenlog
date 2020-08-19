@@ -20,12 +20,5 @@ RSpec.describe "ログイン", type: :system do
       click_link 'ログアウト'
       expect(page).to_not have_text 'ログアウト'
     end
-
-    it "有効な情報でログインし、ログアウトする" do
-      log_in_as(member)
-      click_link 'ログアウト'
-      expect(page).to_not have_text 'ログアウト'
-    end
   end
-
 end
