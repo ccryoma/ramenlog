@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PasswordResetsTest < ActionDispatch::IntegrationTest
-
   def setup
     ActionMailer::Base.deliveries.clear
     @member = members(:michael)
@@ -42,20 +41,20 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     # 無効なパスワードとパスワード確認
     patch password_reset_path(member.reset_token),
           params: { email: member.email,
-                    member: { password:              "foobaz",
-                            password_confirmation: "barquux" } }
+                    member: { password: "foobaz",
+                              password_confirmation: "barquux" } }
     assert_select 'div#error_explanation'
     # パスワードが空
     patch password_reset_path(member.reset_token),
           params: { email: member.email,
-                    member: { password:              "",
-                            password_confirmation: "" } }
+                    member: { password: "",
+                              password_confirmation: "" } }
     assert_select 'div#error_explanation'
     # 有効なパスワードとパスワード確認
     patch password_reset_path(member.reset_token),
           params: { email: member.email,
-                    member: { password:              "foobaz",
-                            password_confirmation: "foobaz" } }
+                    member: { password: "foobaz",
+                              password_confirmation: "foobaz" } }
     assert is_logged_in?
     assert_not flash.empty?
     assert_redirected_to member

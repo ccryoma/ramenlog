@@ -17,7 +17,6 @@ class ActiveSupport::TestCase
 end
 
 class ActionDispatch::IntegrationTest
-
   # テストユーザーとしてログインする
   def log_in_as(member, password: 'password', remember_me: '1')
     post login_path, params: { session: { email: member.email,

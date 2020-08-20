@@ -1,14 +1,12 @@
 class SessionsController < ApplicationController
-  
-  def new
-  end
-  
+  def new; end
+
   def create
     member = Member.find_by(email: params[:session][:email].downcase)
-    if member && member.authenticate(params[:session][:password])
+    if member&.authenticate(params[:session][:password])
       if member.activated?
         log_in member
-        params[:session][:remember_me] == '1' ? remember(member) : forget(member)
+        params[:session][:remember_me] == "1" ? remember(member) : forget(member)
         redirect_back_or member
       else
         message  = "アカウントが有効化されていません。"
@@ -17,8 +15,8 @@ class SessionsController < ApplicationController
         redirect_to root_url
       end
     else
-      flash.now[:danger] = 'メールアドレスとパスワードの組み合わせが不正です。'
-      render 'new'
+      flash.now[:danger] = "メールアドレスとパスワードの組み合わせが不正です。"
+      render "new"
     end
   end
 

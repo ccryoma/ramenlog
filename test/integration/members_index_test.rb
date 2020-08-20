@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class MembersIndexTest < ActionDispatch::IntegrationTest
-
   def setup
     @admin     = members(:michael)
     @non_admin = members(:archer)
