@@ -1,0 +1,92 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - !ruby/regexp /old_and_unused\.rb$/
+    - 'bin/**/*'
+    - 'lib/**/*'
+    - 'node_modules/**/*'
+    - 'config/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+
+    - 'test/**/*'
+
+  TargetRubyVersion: 2.6.3
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    
+Rails/HelperInstanceVariable:
+  Exclude:
+    - 'app/helpers/*'
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'app/models/*'
+
+# 日本語でのコメントを許可
+AsciiComments:
+  Enabled: false
+
+# メソッド呼び出しの引数を複数行にして良い
+Layout/ArgumentAlignment:
+  Enabled: false
+
+# ABC(代入、呼び出し、条件文)サイズ30まで許可
+Metrics/AbcSize:
+  Max: 35
+
+# メソッドの長さを20行まで許可
+Metrics/MethodLength:
+  Max: 20
+
+# 行の長さを160字まで許可
+Metrics/LineLength:
+  Max: 180
+
+# capybaraのfind_by_id誤検出を防ぐ
+Rails/DynamicFindBy:
+  Exclude:
+    - 'spec/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - "spec/**/*"
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# if 文のブロック長を5行まで許容
+Style/GuardClause:
+  MinBodyLength: 5
+
+# 後置のif/unlessを許可する
+Style/IfUnlessModifier:
+  Enabled: false
+
+# 三項演算子を許可する
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+# 基本はダブルクォートを使用  
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# selfを許可
+Style/RedundantSelf:
+  Enabled: false

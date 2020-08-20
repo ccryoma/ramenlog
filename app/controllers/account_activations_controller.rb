@@ -1,5 +1,4 @@
 class AccountActivationsController < ApplicationController
-
   def edit
     member = Member.find_by(email: params[:email])
     if member && !member.activated? && member.authenticated?(:activation, params[:id])

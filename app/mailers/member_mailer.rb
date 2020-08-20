@@ -1,5 +1,4 @@
 class MemberMailer < ApplicationMailer
-
   def account_activation(member)
     @member = member
     mail to: member.email, subject: "アカウントの有効化"

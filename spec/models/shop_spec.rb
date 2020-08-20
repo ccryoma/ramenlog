@@ -1,8 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Shop, type: :model do
-
-  let(:shop) { create(:shop,:minato) }
+  let(:shop) { create(:shop, :minato) }
 
   it "Shopは有効である" do
     expect(shop).to be_valid

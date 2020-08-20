@@ -1,32 +1,32 @@
 class Member < ApplicationRecord
-  has_many :shops
-  has_many :posts
+  has_many :shops, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_one_attached :image
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
   before_save { self.email = email.downcase }
   validates :name,  presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: true }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
-                                      message: "must be a valid image format" },
-                      size:         { less_than: 5.megabytes,
-                                      message: "ファイルサイズは5MB未満としてください" }
-  
+  validates :image, content_type: { in: %w[image/jpeg image/gif image/png],
+                                    message: "must be a valid image format" },
+                    size: { less_than: 5.megabytes,
+                            message: "ファイルサイズは5MB未満としてください" }
+
   # 渡された文字列のハッシュ値を返す(fixtureパスワード用)
-  def Member.digest(string)
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
-  
+
   # ランダムなトークンを返す
-  def Member.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -40,14 +40,15 @@ class Member < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
-  
+
   # 会員のログイン情報を破棄する
   def forget
     update_attribute(:remember_digest, nil)
   end
-  
+
   # アカウントを有効にする
   def activate
     update_attribute(:activated,    true)
@@ -75,17 +76,17 @@ class Member < ApplicationRecord
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
-  
+
   private
 
-    # メールアドレスをすべて小文字にする
-    def downcase_email
-      self.email = email.downcase
-    end
+  # メールアドレスをすべて小文字にする
+  def downcase_email
+    self.email = email.downcase
+  end
 
-    # 有効化トークンとダイジェストを作成および代入する
-    def create_activation_digest
-      self.activation_token  = Member.new_token
-      self.activation_digest = Member.digest(activation_token)
-    end
+  # 有効化トークンとダイジェストを作成および代入する
+  def create_activation_digest
+    self.activation_token  = Member.new_token
+    self.activation_digest = Member.digest(activation_token)
+  end
 end
