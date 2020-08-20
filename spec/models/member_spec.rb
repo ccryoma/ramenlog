@@ -1,8 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Member, type: :model do
-
-  let(:member) { build(:member,:admin) }
+  let(:member) { build(:member, :admin) }
 
   it "Memberは有効である" do
     expect(member).to be_valid
@@ -49,12 +48,6 @@ RSpec.describe Member, type: :model do
   end
 
   it "authenticated?メソッドはnilダイジェストを持つmemberに対してfalseを返す" do
-   expect(member.authenticated?(:remember,'')).to be_falsey
+    expect(member.authenticated?(:remember, "")).to be_falsey
   end
-
 end
-
-
-
-
-

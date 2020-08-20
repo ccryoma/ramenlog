@@ -9,11 +9,11 @@ class ShopsRegistrationTest < ActionDispatch::IntegrationTest
     log_in_as(@member)
     get registration_path
     assert_no_difference 'Shop.count' do
-      post shops_path, params: { shop: { name:         "",
-                                         address:       "",
-                                         opening_ours:  "",
-                                         sheets:        0,
-                                         parking:       ""} }
+      post shops_path, params: { shop: { name: "",
+                                         address: "",
+                                         opening_ours: "",
+                                         sheets: 0,
+                                         parking: "" } }
     end
     assert_template 'shops/new'
     assert_select 'div#error_explanation'
@@ -23,12 +23,12 @@ class ShopsRegistrationTest < ActionDispatch::IntegrationTest
   test "valid registration information" do
     log_in_as(@member)
     get registration_path
-    assert_difference 'Shop.count',1 do
-      post shops_path, params: { shop: { name:         "ExampleShop",
-                                         address:       "ExampleAddress",
-                                         opening_ours:  "9:00～20:00",
-                                         sheets:        10,
-                                         parking:       "Nothing"} }
+    assert_difference 'Shop.count', 1 do
+      post shops_path, params: { shop: { name: "ExampleShop",
+                                         address: "ExampleAddress",
+                                         opening_ours: "9:00～20:00",
+                                         sheets: 10,
+                                         parking: "Nothing" } }
     end
     follow_redirect!
     assert_template 'shops/show'

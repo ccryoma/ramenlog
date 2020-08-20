@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe MemberMailer, type: :mailer do
-  let(:member) { create(:member,:hanzawa) }
+  let(:member) { create(:member, :hanzawa) }
 
   describe "アカウントの有効化" do
     let(:mail) { MemberMailer.account_activation(member) }

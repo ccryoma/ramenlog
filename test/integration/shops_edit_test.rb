@@ -10,26 +10,26 @@ class ShopsEditTest < ActionDispatch::IntegrationTest
     log_in_as(@member)
     get edit_shop_path(@shop)
     assert_template 'shops/edit'
-      patch shop_path(@shop), params: { shop: { name:         "",
-                                                address:       "",
-                                                opening_ours:  "",
-                                                sheets:        10,
-                                                parking:       ""} }
+    patch shop_path(@shop), params: { shop: { name: "",
+                                              address: "",
+                                              opening_ours: "",
+                                              sheets: 10,
+                                              parking: "" } }
 
     assert_template 'shops/edit'
     assert_select 'div#error_explanation'
     assert_select 'div.field_with_errors'
   end
-  
+
   test "successful edit" do
     log_in_as(@member)
     get edit_shop_path(@shop)
     assert_template 'shops/edit'
-      patch shop_path(@shop), params: { shop: { name:         "EditName",
-                                                address:       "EditAddress",
-                                                opening_ours:  "EditOpeningOurs",
-                                                sheets:        30,
-                                                parking:       "EditParking"} }
+    patch shop_path(@shop), params: { shop: { name: "EditName",
+                                              address: "EditAddress",
+                                              opening_ours: "EditOpeningOurs",
+                                              sheets: 30,
+                                              parking: "EditParking" } }
     assert_template 'shops/edit'
   end
 end

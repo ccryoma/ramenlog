@@ -1,4 +1,4 @@
-require 'capybara/rspec'
+require "capybara/rspec"
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
@@ -7,9 +7,9 @@ RSpec.configure do |config|
       url: ENV.fetch("SELENIUM_DRIVER_URL"),
       desired_capabilities: :chrome
     }
-    Capybara.server_host = 'web'
-    Capybara.app_host='http://web'
+    Capybara.server_host = "web"
+    Capybara.app_host = "http://web"
   end
 end
 
-Capybara.javascript_driver=:selenium_chrome_headless
+Capybara.javascript_driver = :selenium_chrome_headless
