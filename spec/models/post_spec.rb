@@ -1,8 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Post, type: :model do
-
-  let(:post) { create(:post,:test0) }
+  let(:post) { create(:post, :test0) }
 
   it "Postは有効である" do
     expect(post).to be_valid

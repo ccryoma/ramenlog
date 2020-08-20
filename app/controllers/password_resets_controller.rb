@@ -1,10 +1,9 @@
 class PasswordResetsController < ApplicationController
-  before_action :get_member,   only: [:edit, :update]
-  before_action :valid_member, only: [:edit, :update]
-  before_action :check_expiration, only: [:edit, :update]
-  
-  def new
-  end
+  before_action :member_get,   only: %i[edit update]
+  before_action :valid_member, only: %i[edit update]
+  before_action :check_expiration, only: %i[edit update]
+
+  def new; end
 
   def create
     @member = Member.find_by(email: params[:password_reset][:email].downcase)
@@ -15,50 +14,49 @@ class PasswordResetsController < ApplicationController
       redirect_to root_url
     else
       flash.now[:danger] = "メールアドレスが登録されていません。"
-      render 'new'
+      render "new"
     end
   end
-  
-  def edit
-  end
-  
+
+  def edit; end
+
   def update
-    if params[:member][:password].empty?                  
+    if params[:member][:password].empty?
       @member.errors.add(:password, :blank)
-      render 'edit'
-    elsif @member.update(member_params)                     
+      render "edit"
+    elsif @member.update(member_params)
       log_in @member
       flash[:success] = "Password has been reset."
       redirect_to @member
     else
-      render 'edit'                                     
+      render "edit"
     end
   end
 
   private
 
-    def member_params
-      params.require(:member).permit(:password, :password_confirmation)
-    end
+  def member_params
+    params.require(:member).permit(:password, :password_confirmation)
+  end
 
-    # beforeフィルタ
-    def get_member
-      @member = Member.find_by(email: params[:email])
-    end
+  # beforeフィルタ
+  def member_get
+    @member = Member.find_by(email: params[:email])
+  end
 
-    # 正しい会員かどうか確認する
-    def valid_member
-      unless (@member && @member.activated? &&
-              @member.authenticated?(:reset, params[:id]))
-        redirect_to root_url
-      end
+  # 正しい会員かどうか確認する
+  def valid_member
+    unless @member&.activated? &&
+           @member&.authenticated?(:reset, params[:id])
+      redirect_to root_url
     end
+  end
 
-    # トークンが期限切れかどうか確認する
-    def check_expiration
-      if @member.password_reset_expired?
-        flash[:danger] = "パスワード再設定の期限が切れています。"
-        redirect_to new_password_reset_url
-      end
+  # トークンが期限切れかどうか確認する
+  def check_expiration
+    if @member.password_reset_expired?
+      flash[:danger] = "パスワード再設定の期限が切れています。"
+      redirect_to new_password_reset_url
     end
+  end
 end
