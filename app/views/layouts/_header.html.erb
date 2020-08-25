@@ -1,3 +1,13 @@
+
+<script>
+  $(function(){
+    $('.search_form_switch').on('click',function(){
+        $('.search_form_hide').slideToggle(200);
+        return false;
+    });
+  });
+</script>
+
 <header class="navbar  ">
   <div class="container">
   
@@ -11,19 +21,15 @@
             <% if logged_in? %>
               <li><%= link_to "店舗登録", registration_path %></li>
               <li><%= link_to "会員一覧", members_path %></li>
-<!--
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   アカウント <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                  
--->
                   <li><%= link_to "プロフィール", current_member %></li>
                   <li><%= link_to "設定", edit_member_path(current_member) %></li>
-<!--
                   <li class="divider"></li>
--->
                   <li>
                     <%= link_to "ログアウト", logout_path, method: :delete %>
 
@@ -58,16 +64,21 @@
                   <%= f.submit '地図表示', class: "btn", id: "btn_map" %>
                 </div>
               </div>
-              <div class='search_form_tags'>
-                <%= f.collection_check_boxes('post[tag_ids]', Tag.all, :id, :name,include_hidden: false ) do |tag| %>
-                  <div class='search_form_tags_tag'>
-                    <%= tag.check_box %>
-                    <%= tag.label %>
-                  </div>
-                <% end %>
-              </div> 
-              <div class='search_form_AO'>
-                <%= f.select 'post[AO]', {'全てのタグを含む(AND)': 'AND', '一部のタグを含む(OR)': 'OR'}, {selected: 'AND'} %>
+              <div class='search_form_switch'>
+                こだわり条件を指定する
+              </div>
+              <div class='search_form_hide'>
+                <div class='search_form_tags'>
+                  <%= f.collection_check_boxes('post[tag_ids]', Tag.all, :id, :name,include_hidden: false ) do |tag| %>
+                    <div class='search_form_tags_tag'>
+                      <%= tag.check_box %>
+                      <%= tag.label %>
+                    </div>
+                  <% end %>
+                </div> 
+                <div class='search_form_AO'>
+                  <%= f.select 'post[AO]', {'全てのタグを含む(AND)': 'AND', '一部のタグを含む(OR)': 'OR'}, {selected: 'AND'} %>
+                </div> 
               </div> 
             </div>
           <% end %>

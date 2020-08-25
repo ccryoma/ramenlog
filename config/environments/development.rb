@@ -34,8 +34,8 @@ Rails.application.configure do
   #メールプレビューの設定
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  host = '155d13ba2bd24eb4993e1ea39cfefe46.vfs.cloud9.ap-northeast-1.amazonaws.com'
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  host = 'localhost:3000'    
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
 
   config.action_mailer.perform_caching = false
 

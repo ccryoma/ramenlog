@@ -20,8 +20,17 @@ class ShopsController < ApplicationController
   def show
     @shop = Shop.find(params[:id])
     @shop_point = Post.where(shop_id: @shop.id).average("point")
+    @shop_point ? @shop_point = @shop_point.round(1) : @shop_point = "未評価"
     @post = Post.new
     @posts = @shop.posts
+  end
+
+  def postlist
+    @shop = Shop.find(params[:id])
+    @shop_point = Post.where(shop_id: @shop.id).average("point")
+    @shop_point ? @shop_point = @shop_point.round(1) : @shop_point = "未評価"
+    @post = Post.new
+    @posts = @shop.posts.paginate(page: params[:page], per_page: 5)
   end
 
   def new
