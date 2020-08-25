@@ -3,13 +3,13 @@ class PostsController < ApplicationController
 
   def create
     @post = current_member.posts.build(posts_params)
-    @post.images.attach(params[:post][:images])
+    @post[:point] = params[:score]
     if @post.save
       flash[:success] = "レビューが投稿されました!"
     else
       flash[:danger] = "入力に誤りがあります。"
     end
-    redirect_to shop_path(@post.shop_id)
+    redirect_to postlist_path(@post.shop_id)
   end
 
   def destroy
