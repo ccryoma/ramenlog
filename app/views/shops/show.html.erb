@@ -1,4 +1,67 @@
 <% provide(:title, @shop.name) %>
+
+<script>
+  $(window).on('load',function(){
+    $('.postform_point input[name="score"]').val(0);
+  });
+$(function(){
+  $.fn.raty.defaults.path = "/assets/raty";
+  $('.raty').raty({
+    half: true,
+    readOnly: function() {
+      return $(this).attr('read_only');
+    },
+    score: function() {
+      return $(this).attr('data_score');
+    },
+  });
+  // 星をクリック時に数値を更新
+  $('.raty').on('click',function(){
+    $('.postform_point_num').text($('.postform_point input[name="score"]').val());
+  });
+
+  // 投稿フォームのモーダル表示
+  let scrollPos;//topからのスクロール位置
+  $('.js_modal_open').on('click',function(){
+      scrollPos = $(window).scrollTop();//topからのスクロール位置を格納
+      let open = '.js_modal.' + $(this).attr('id');
+      $(open).fadeIn(10);
+      $('body').addClass('fixed').css({ top: -scrollPos });//背景固定
+      return false;
+  });
+  $('.js_modal_close').on('click',function(){
+      $('.js_modal').fadeOut(10);
+      $('body').removeClass('fixed').css({ top: 0 });//背景固定を解除
+      $(window).scrollTop(scrollPos);//元の位置までスクロール
+      return false;
+  });
+
+  //続きを読む機能
+  $('.shop_Com_right_comment').each(function(e){
+    let $comment = $(this);
+    // 元の文章を変数に格納
+    let comment = $comment.html();
+    let commentShow;
+    let commentText;
+    if($comment.height() > 100){
+      // 文章の要素の高さが100を超えていたら隠す用のisHiddenクラスを付与
+      $comment.addClass('isHidden');
+      
+      // ウィンドウ幅が768px以上の時の処理（PC表示）
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 128);
+        commentText = commentShow += '...続きを読む';
+        $comment.html(commentText);
+      } else { // ウィンドウ幅が768px以下の時の処理（スマホ表示）
+        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 68);
+        commentText = commentShow += '...続きを読む';
+        $comment.html(commentText);
+      }
+    }
+  });
+});
+</script>
+
 <div class="row">
       
   <div class="shop_head">
@@ -6,7 +69,10 @@
       <%= @shop.name %>
     </div>
     <div class="shop_head_point">
-      <%= @shop_point ? @shop_point.round(1) : "未評価" %>
+      <div class="raty" read_only="true" data_score="<%= @shop_point %>"></div>
+      <div class="shop_head_point_num">
+        <%= @shop_point %>
+      </div>
     </div>
     <div class="shop_head_tag">
       <% @shop.tags.each do |tag| %>
@@ -49,19 +115,29 @@
         <% @posts.each do |post| %>
           <% if post.images.attached? %>
             <% post.images.each do |image| %>
-              <div class="shop_dtl_left_img">
-                <%= image_tag image %>
+              <div class="shop_dtl_right_img">
+                <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
+                  <%= image_tag image %>
+                </a>
+              </div>
+              <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
+                <div class="modal__bg js_modal_close"></div>
+                <div class="modal__content_img">
+                  <%= image_tag image %>
+                </div>
               </div>
             <% end %>
             <% @no_image = false %>
           <% end %>
         <% end %>
-        <%= image_tag("no_image.png") if @no_image %>
+        <div class="shop_dtl_right_noImg">
+          <%= image_tag("no_image.png") if @no_image %>
+        </div>
     </div>
   </div>
       
   <ul>
-    <% @shop.posts.each do |post| %>
+    <% @posts.first(3).each do |post| %>
       <li class="shop_Com">
         <div class="shop_Com_left">
           <div class="shop_Com_left_memberImg">
@@ -72,50 +148,41 @@
           </div>
         </div>
         <div class="shop_Com_right">
+          <%= link_to "", "/postlist/#{@shop.id}##{post.id}", class: :wrap %>
           <div class="shop_Com_right_title">
               <%= post.title %>
           </div>
-          <div class="shop_Com_right_comment">
-              <%= post.comment %>
+          <div class="shop_Com_right_comment" id=<%= post.id %>>
+            <%= simple_format(post.comment) %>
           </div>
           <div class="shop_Com_right_point">
+            <div class="raty" read_only="true" data_score="<%= post.point %>"></div>
+            <div class="shop_Com_right_point_num">
               <%= post.point %>
-          </div>
-          <% if current_member && current_member.admin? %>
-            <div class="shop_Com_right_delete">
-              <%= link_to "削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
             </div>
-          <% end %>
+          </div>
         </div>
       </li>
     <% end %>
   </ul>
+            <div class="a">
+              <%= link_to "すべて読む", postlist_path(@shop) %>
+            </div>
       
 
     <% if current_member %>
-
-      <%= form_with(model: @post, local: true) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        
-        <%= f.label :title ,"タイトル" %>
-        <%= f.text_field :title, class: 'form-control' %>
-  
-        <%= f.label :point ,"ポイント" %>
-        <%= f.text_field :point , class: 'form-control' %>
-  
-        <%= f.label :comment ,"レビュー" %>
-        <%= f.text_area :comment , class: 'form-control' %>
-        
-        <span class="image">
-          <%= f.file_field :images, multiple: true , accept: "image/jpeg,image/gif,image/png" %>
-        </span>
-  
-        <%= f.hidden_field :shop_id, value: @shop.id %>
-        
-        <%= f.submit "投稿", class: "btn btn-primary" %>
-      <% end %>
-      <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
-      
+        <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
     <% end %>
+
+
+    <div class="content">
+        <a class="js_modal_open" href="" id="modal_post">レビューを投稿する</a>
+    </div>
+
+        <%= render partial: "posts/postform" %>
+
+
+
+
 
 </div>

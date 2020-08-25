@@ -7,7 +7,7 @@
       <div class="member_profile_left_name">
         <%= @member.name %>
         <div class="member_profile_left_delete">
-          <% if current_member.admin? && !current_member?(@member) %>
+          <% if current_member && current_member.admin? && !current_member?(@member) %>
             | <%= link_to "削除", @member, method: :delete,
                                           data: { confirm: "削除しますか？" } %>
           <% end %>
@@ -38,11 +38,6 @@
               <div class="shop_Com_right_point">
                   <%= post.point %>
               </div>
-              <% if current_member && current_member.admin? %>
-                <div class="shop_Com_right_delete">
-                  <%= link_to "削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
-                </div>
-              <% end %>
             </div>
           </li>
         <% end %>

@@ -1,0 +1,73 @@
+<script>
+$(function(){
+	$("#shopform").validate({
+    rules : {
+      "shop[name]": {
+        required: true,
+        maxlength: 50
+      },
+      "shop[address]": {
+        required: true,
+        maxlength: 100
+      },
+      "shop[opening_ours]": {
+        maxlength: 255
+      },
+      "shop[parking]": {
+        maxlength: 50
+      }
+    },
+    messages: {
+      "shop[name]": {
+        required: "※店名は必須項目です。入力をお願いします。",
+        maxlength: "※店名は50文字以内で入力してください。"
+      },
+      "shop[address]": {
+        required: "※住所は必須項目です。入力をお願いします。",
+        maxlength: "※住所は100文字以内で入力してください。"
+      },
+      "shop[opening_ours]": {
+        maxlength: "※営業時間は255文字以内で入力してください。"
+      },
+      "shop[parking]": {
+        maxlength: "※駐車場は50文字以内で入力してください。"
+      }
+    }
+  });
+});
+</script>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @shop, local: true, id: :shopform ) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div class="shopform_name">
+        <%= f.label :name ,"店名" %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="shopform_address">
+        <%= f.label :address ,"住所" %>
+        <%= f.text_field :address %>
+      </div>
+      <div class="shopform_opening_ours">
+        <%= f.label :opening_ours ,"営業時間" %>
+        <%= f.text_area :opening_ours %>
+      </div>
+      <div class="shopform_sheets">
+        <%= f.label :sheets, "席数" %>
+        <%= f.text_field :sheets %>
+      </div>
+      <div class="shopform_parking">
+        <%= f.label :parking ,"駐車場" %>
+        <%= f.text_field :parking %>
+      </div>
+      <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,include_hidden: false ) do |tag| %>
+          <%= tag.label do %>
+            <%= tag.check_box %>
+            <%= tag.text %>
+          <% end %>
+      <% end %>
+      <%= f.submit controller.action_name == "new" ? "登録" : "更新" , class: "btn submit_btn" %>
+    <% end %>
+  </div>
+</div>

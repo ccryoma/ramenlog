@@ -363,8 +363,13 @@ span.image {
 }
 
 .shop_head_point {
-  font-size: 1.5em;
-  font-weight: bold;
+	display: flex;
+  flex-direction: row;
+  .shop_head_point_num {
+    font-size: 1.7em;
+    color: red;
+    font-weight: bold;
+  }
 }
 
 .shop_dtl {
@@ -380,7 +385,7 @@ span.image {
   width: 70%;
 	display: flex;
 	flex-wrap: wrap;
-  img {
+  .shop_dtl_right_img,.shop_dtl_right_noImg img {
     width: 150px; height: 150px;
     object-fit: contain;
     margin: 10px;
@@ -407,6 +412,20 @@ span.image {
   width: 100%;
   background-color: ivory;
   padding: 5px;
+
+  position: relative;
+  a.wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
+  }
+  a:hover{/* マウスオーバー時に色変更*/
+    opacity: 0.1;
+    background-color: #000000;
+  }
+
 }
 
 .shop_Com_right_title {
@@ -418,10 +437,25 @@ span.image {
   color: dimgray;
 }
 
-.shop_Com_right_delete {
-  text-align: right;
+.shop_Com_right_comment.isHidden{
+  overflow-y:hidden;
 }
 
+.shop_Com_right_point {
+  display: flex;
+  flex-direction: row;
+}
+
+.shop_Com_right_images {
+  display: flex;
+  flex-direction: row;
+}
+
+.shop_Com_right_images_img img {
+  margin: 10px;
+  width: 200px; height: 200px;
+  object-fit: contain;
+}
 
 .top-bg {
   background-image: url("top.jpg");
@@ -458,6 +492,10 @@ span.image {
     flex-direction: row;
   }
 
+  .search_form_hide {
+    display: none;
+  }
+
   .search_form_tags {
     display: flex;
     flex-wrap: wrap;
@@ -469,30 +507,29 @@ span.image {
     label {
       display: block;
       position: relative;
-      padding: 5px 10px 5px 30px;
-      border: 3px solid #fff;
-      border-radius: 100px;
-      color: #fff;
-      background-color: #6a8494;
-      box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+      padding: 2px 10px 2px 10px;
+      font-weight: normal;
+      border-radius: 5px;
+      border: 1px solid #611f00;
+      background-color: #fff;
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
       transition: background-color .2s, box-shadow .2s;
     }
   
-    label::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 10px;
-      bottom: 10px;
-      left: 10px;
-      width:15px;
-      border: 3px solid #fff;
-      border-radius: 100px;
-      transition: background-color .2s;
-    }
+    // label::before {
+    //   content: '';
+    //   display: block;
+    //   position: absolute;
+    //   top: 10px;
+    //   bottom: 10px;
+    //   left: 10px;
+    //   width:10px;
+    //   border: 1px solid #fff;
+    //   border-radius: 100px;
+    //   transition: background-color .2s;
+    // }
   
     label:first-of-type {
       transform: translateX(-40px);
@@ -503,7 +540,8 @@ span.image {
     }
   
     input:checked + label {
-      background-color: #ab576c;
+      background-color: #aa3c09;
+      color: #fff;
     }
   
     input:checked + label::before {
@@ -535,5 +573,86 @@ span.image {
   .member_profile_left_icon img {
     width: 200px; height: 200px;
     object-fit: contain;
+  }
+}
+
+/* モーダル */
+
+.modal{
+  display: none;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.modal__bg{
+  background: rgba(0,0,0,0.8);
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+}
+
+.modal__content {
+  background: #fff;
+  left: 50%;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 60%;
+  textarea {
+    height: 300px;
+    resize: none;
+  }
+}
+
+.modal__content_img {
+  background: #fff;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* モーダル表示時に背景固定 */
+body.fixed {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+}
+
+/* postform */
+.postform_point {
+  display: flex;
+  .postform_point_num {
+    color: red;
+    font-size: 1.7em;
+  }
+}
+
+label.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: -10px;
+}
+
+/* バリデートのエラーメッセージ */
+#shopform,#postform,#memberform,#passwordResetsform {
+  input,textarea {
+    margin-bottom: 0px;
+  }
+  label:not(.error){
+    margin-top: 15px;
+  }
+}
+
+.submit_btn {
+  margin-top: 15px;
+  color: #fff;
+  background-color: #aa3c09;
+  &:hover {
+    color: #fff;
+    background-color: #df6a35;
   }
 }
