@@ -1,21 +1,51 @@
+<script>
+  $(function(){
+    $.validator.addMethod("isemail",function(val,elem){
+      reg = new RegExp("[^\s]+@[^\s]+", 'i');
+      return this.optional(elem) || reg.test(val);
+    });
+    $("#passwordResetsform").validate({
+      rules : {
+        "member[password]": {
+          minlength: 6
+        },
+        "member[password_confirmation]": {
+          equalTo : "#member_password"
+        }
+      },
+      messages: {
+        "member[password]": {
+          minlength: "※パスワードは6文字以上で入力してください。"
+        },
+        "member[password_confirmation]": {
+          equalTo : "※パスワード(再入力)はパスワードと同じ内容を入力してください。"
+        }
+      }
+    });
+  });
+</script>
+
 <% provide(:title, 'パスワード再設定') %>
 <h1>パスワード再設定</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @member, url: password_reset_path(params[:id]),
-                  local: true) do |f| %>
+        id: :passwordResetsform, local: true) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= hidden_field_tag :email, @member.email %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+      <div class="passwordResets_password">
+        <%= f.label :password ,"パスワード" %>
+        <%= f.password_field :password %>
+      </div>
+      <div class="passwordResets_password_confirmation">
+        <%= f.label :password_confirmation, "パスワード(再入力)" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      <%= f.submit "Update password", class: "btn btn-primary" %>
+      <%= f.submit "再設定", class: "btn submit_btn" %>
     <% end %>
   </div>
 </div>

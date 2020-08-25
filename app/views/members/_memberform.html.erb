@@ -1,0 +1,84 @@
+<script>
+  $(function(){
+    $.validator.addMethod("isemail",function(val,elem){
+      reg = new RegExp("[^\s]+@[^\s]+", 'i');
+      return this.optional(elem) || reg.test(val);
+    });
+    $("#memberform").validate({
+      rules : {
+        "member[name]": {
+          required: true,
+          maxlength: 50
+        },
+        "member[email]": {
+          required: true,
+          maxlength: 255,
+          isemail: true
+        },
+        "member[password]": {
+          minlength: 6
+        },
+        "member[password_confirmation]": {
+          equalTo : "#member_password"
+        }
+      },
+      messages: {
+        "member[name]": {
+          required: "※名前は必須項目です。入力をお願いします。",
+          maxlength: "※名前は50文字以内で入力してください。"
+        },
+        "member[email]": {
+          required: "※メールアドレスは必須項目です。入力をお願いします。",
+          maxlength: "※メールアドレスは100文字以内で入力してください。",
+          isemail: "※メールアドレスを正しい型式で入力してください。"
+        },
+        "member[password]": {
+          minlength: "※パスワードは6文字以上で入力してください。"
+        },
+        "member[password_confirmation]": {
+          equalTo : "※パスワード(再入力)はパスワードと同じ内容を入力してください。"
+        }
+      }
+    });
+  });
+</script>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @member, local: true, id: :memberform, html: { novalidate: true } ) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <span class="image">
+        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+      </span>
+
+      <div class="memberform_name">
+        <%= f.label :name ,"名前" %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="memberform_email">
+        <%= f.label :email ,"メールアドレス" %>
+        <%= f.text_field :email %>
+      </div>
+      <div class="memberform_password">
+        <%= f.label :password ,"パスワード" %>
+        <%= f.password_field :password %>
+      </div>
+      <div class="memberform_password_confirmation">
+        <%= f.label :password_confirmation, "パスワード(再入力)" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+      <%= f.submit controller.action_name == "new" ? "登録" : "更新", class: "btn submit_btn" %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#member_image").bind("change", function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert("ファイルサイズは5MB未満としてください");
+      $("#micropost_image").val("");
+    }
+  });
+</script>

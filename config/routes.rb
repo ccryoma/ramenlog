@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get  '/search',  to: 'shops#search'
+  get  '/postlist/:id',  to: 'shops#postlist', as: 'postlist'
   get  '/map',  to: 'shops#map'
   get 'password_resets/new'
   get 'password_resets/edit'

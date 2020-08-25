@@ -1,0 +1,59 @@
+<script>
+$(function(){
+	$("#postform").validate({
+    rules : {
+      "post[title]": {
+        required: true
+      },
+      "post[comment]": {
+        required: true,
+        maxlength: 3000
+      }
+    },
+    messages: {
+      "post[title]":{
+        required: "※タイトルは必須項目です。入力をお願いします。"
+      },
+      "post[comment]":{
+        required: "※レビューは必須項目です。入力をお願いします。",
+        maxlength: "※レビューは3000文字以内で入力してください。"
+      }
+    }
+  });
+});
+</script>
+
+
+<div class="modal js_modal modal_post">
+  <div class="modal__bg js_modal_close"></div>
+  <div class="modal__content">
+    <%= form_with(model: @post, local: true, id: :postform) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      
+      <%= f.label :title ,"タイトル" %>
+      <%= f.text_field :title %>
+      <div>
+        <%= f.label :point ,"ポイント" %>
+      </div>
+      <div class="postform_point">
+        <div class="postform_point_star">
+          <div class="raty" read_only="" data_score="0"></div>
+        </div>
+        <div class="postform_point_num">
+          0.0
+        </div>
+      </div>
+
+      <%= f.label :comment ,"レビュー" %>
+      <%= f.text_area :comment %>
+      
+      <span class="image">
+        <%= f.file_field :images, multiple: true , accept: "image/jpeg,image/gif,image/png" %>
+      </span>
+
+      <%= f.hidden_field :shop_id, value: @shop.id %>
+      
+      <%= f.submit "投稿", class: "btn submit_btn" %>
+    <% end %>
+  </div>
+</div>
