@@ -11,7 +11,7 @@ RSpec.describe "会員プロフィール", type: :system do
 
     context "閲覧先が他人のページ" do
       it "プロフィールが表示され、削除リンクが表示される" do
-        visit member_path(member)
+        visit postlistMember_path(member)
 
         expect(page).to have_selector ".member_profile_left_name", text: member.name
         expect(page).to have_selector ".member_profile_left_posts", text: member.posts.count
@@ -26,7 +26,7 @@ RSpec.describe "会員プロフィール", type: :system do
 
     context "閲覧先が自身のページ" do
       it "削除リンクが表示されない" do
-        visit member_path(admin)
+        visit postlistMember_path(admin)
         expect(page).to_not have_selector ".member_profile_left_delete", text: "\u524A\u9664"
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe "会員プロフィール", type: :system do
   context "一般会員でログイン中の場合" do
     it "削除リンクが表示されない" do
       log_in_as(member)
-      visit member_path(member)
+      visit postlistMember_path(member)
       expect(page).to_not have_selector ".member_profile_left_delete", text: "\u524A\u9664"
     end
   end

@@ -20,7 +20,7 @@ $(function(){
     $('.postform_point_num').text($('.postform_point input[name="score"]').val());
   });
 
-  // 投稿フォームのモーダル表示
+  // 投稿フォームと画像のモーダル表示
   let scrollPos;//topからのスクロール位置
   $('.js_modal_open').on('click',function(){
       scrollPos = $(window).scrollTop();//topからのスクロール位置を格納
@@ -64,23 +64,8 @@ $(function(){
 
 <div class="row">
       
-  <div class="shop_head">
-    <div class="shop_head_name">
-      <%= @shop.name %>
-    </div>
-    <div class="shop_head_point">
-      <div class="raty" read_only="true" data_score="<%= @shop_point %>"></div>
-      <div class="shop_head_point_num">
-        <%= @shop_point %>
-      </div>
-    </div>
-    <div class="shop_head_tag">
-      <% @shop.tags.each do |tag| %>
-        <%= tag.name %>
-      <% end %>
-    </div>
-  </div>
-  
+  <%= render partial: "shopHead" %>
+
   <div class="shop_dtl">
     <div class="shop_dtl_left">
       <table class="table">
@@ -111,40 +96,48 @@ $(function(){
       </table>
     </div>
     <div class="shop_dtl_right">
-        <% @no_image = true %>
-        <% @posts.each do |post| %>
-          <% if post.images.attached? %>
-            <% post.images.each do |image| %>
-              <div class="shop_dtl_right_img">
-                <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
-                  <%= image_tag image %>
-                </a>
+      <% @no_image = true %>
+      <% @image_cnt = 0 %>
+      <% @posts.each do |post| %>
+        <% if post.images.attached? %>
+          <% post.images.each do |image| %>
+            <div class="shop_dtl_right_img">
+              <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
+                <%= image_tag image %>
+              </a>
+            </div>
+            <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
+              <div class="modal__bg js_modal_close"></div>
+              <div class="modal__content_img">
+                <%= image_tag image %>
               </div>
-              <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
-                <div class="modal__bg js_modal_close"></div>
-                <div class="modal__content_img">
-                  <%= image_tag image %>
-                </div>
-              </div>
-            <% end %>
-            <% @no_image = false %>
+            </div>
+            <% @image_cnt +=1 %>
+            <% break if @image_cnt > 7 %>
           <% end %>
+          <% @no_image = false %>
         <% end %>
-        <div class="shop_dtl_right_noImg">
-          <%= image_tag("no_image.png") if @no_image %>
-        </div>
+        <% break if @image_cnt > 7 %>
+      <% end %>
+      <div class="shop_dtl_right_noImg">
+        <%= image_tag("no_image.png") if @no_image %>
+      </div>
     </div>
   </div>
-      
+
+  <div class="caption_shop">
+    レビュー
+  </div>   
+
   <ul>
     <% @posts.first(3).each do |post| %>
       <li class="shop_Com">
         <div class="shop_Com_left">
           <div class="shop_Com_left_memberImg">
-            <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("default_member.png"), post.member, target: :_blank)  %>
+            <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("default_member.png"), postlistMember_path(post.member), target: :_blank)  %>
           </div>
           <div class="shop_Com_left_memberName">
-            <%= link_to(post.member.name, post.member, target: :_blank) %>
+            <%= link_to(post.member.name, postlistMember_path(post.member), target: :_blank) %>
           </div>
         </div>
         <div class="shop_Com_right">
@@ -155,34 +148,22 @@ $(function(){
           <div class="shop_Com_right_comment" id=<%= post.id %>>
             <%= simple_format(post.comment) %>
           </div>
-          <div class="shop_Com_right_point">
-            <div class="raty" read_only="true" data_score="<%= post.point %>"></div>
-            <div class="shop_Com_right_point_num">
-              <%= post.point %>
+          <div class="shop_Com_right_dtl">
+            <div class="shop_Com_right_dtl_raty">
+              <div class="raty" read_only="true" data_score="<%= post.point %>"></div>
+            </div>
+            <div class="shop_Com_right_dtl_date">
+              <%= "投稿日:#{post.created_at.strftime('%Y/%m/%d')}" %>
             </div>
           </div>
         </div>
       </li>
     <% end %>
   </ul>
-            <div class="a">
-              <%= link_to "すべて読む", postlist_path(@shop) %>
-            </div>
-      
+  <div class="right">
+    <%= link_to "レビューをすべて読む(#{@posts.count}件)", postlist_path(@shop) %>
+  </div>
 
-    <% if current_member %>
-        <%= link_to "店舗情報編集", edit_shop_path(@shop) %>
-    <% end %>
-
-
-    <div class="content">
-        <a class="js_modal_open" href="" id="modal_post">レビューを投稿する</a>
-    </div>
-
-        <%= render partial: "posts/postform" %>
-
-
-
-
+  <%= render partial: "posts/postform" %>
 
 </div>

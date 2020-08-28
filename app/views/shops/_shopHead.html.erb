@@ -1,0 +1,24 @@
+<div class="shop_head">
+  <div class="shop_head_left">
+    <div class="shop_head_name">
+      <%= controller.action_name == "show" ? @shop.name : link_to(@shop.name, shop_path(@shop)) %>
+    </div>
+    <div class="shop_head_point">
+      <div class="raty" read_only="true" data_score="<%= @shop_point %>"></div>
+      <div class="shop_head_point_num">
+        <%= @shop_point %>
+      </div>
+    </div>
+    <div class="shop_head_tag">
+      <% @shop.tags.each do |tag| %>
+        <%= tag.name %>
+      <% end %>
+    </div>
+  </div>
+  <div class="shop_head_right">
+    <% if current_member %>
+        <%= link_to "店舗情報編集", edit_shop_path(@shop), class: "btn_flat shop_edit_btn"%>
+    <% end %>
+        <a class="js_modal_open btn_flat post_create_btn" href="" id="modal_post">レビューを投稿する</a>
+  </div>
+</div>
