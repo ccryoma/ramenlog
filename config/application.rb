@@ -26,6 +26,8 @@ module Ramenlog
     Faker::Config.locale = :ja
     Faker::Config.locale # => :en
     Faker::Internet.email # => "ransom_blanda@auer.name"
+    # タイムゾーンを日本時間に設定
+    config.time_zone = 'Asia/Tokyo'
 
     config.generators do |g|
       g.test_framework :rspec,

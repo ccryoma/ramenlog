@@ -40,6 +40,6 @@ RSpec.describe "Password_reset pages", type: :request do
                   member: { password: "foobaz",
                             password_confirmation: "foobaz" } }
     expect(session[:member_id]).to eq member.id
-    expect(response).to redirect_to member_path(member)
+    expect(response).to redirect_to postlistMember_path(member)
   end
 end

@@ -7,8 +7,9 @@ class MembersController < ApplicationController
     @members = Member.paginate(page: params[:page])
   end
 
-  def show
+  def postlistMember
     @member = Member.find(params[:id])
+    @posts = @member.posts.paginate(page: params[:page], per_page: 5)
   end
 
   def new

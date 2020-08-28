@@ -1,0 +1,136 @@
+<% provide(:title, @member.name) %>
+
+<script>
+$(function(){
+  $.fn.raty.defaults.path = "/assets/raty";
+  $('.raty').raty({
+    half: true,
+    readOnly: function() {
+      return $(this).attr('read_only');
+    },
+    score: function() {
+      return $(this).attr('data_score');
+    },
+  });
+  // 星をクリック時に数値を更新
+  $('.raty').on('click',function(){
+    $('.postform_point_num').text($('.postform_point input[name="score"]').val());
+  });
+
+  // 投稿フォームと画像のモーダル表示
+  let scrollPos;//topからのスクロール位置
+  $('.js_modal_open').on('click',function(){
+      scrollPos = $(window).scrollTop();//topからのスクロール位置を格納
+      let open = '.js_modal.' + $(this).attr('id');
+      $(open).fadeIn(10);
+      $('body').addClass('fixed').css({ top: -scrollPos });//背景固定
+      return false;
+  });
+  $('.js_modal_close').on('click',function(){
+      $('.js_modal').fadeOut(10);
+      $('body').removeClass('fixed').css({ top: 0 });//背景固定を解除
+      $(window).scrollTop(scrollPos);//元の位置までスクロール
+      return false;
+  });
+
+});
+</script>
+
+<div class="row">
+    <div class="postlistMember_profile">
+      <div class="postlistMember_profile_left">
+        <div class="postlistMember_profile_left_icon">
+          <%= @member.image.attached? ? image_tag(@member.image) : image_tag("default_member.png")  %>
+        </div>
+      </div>
+      <div class="postlistMember_profile_right">
+        <div class="postlistMember_profile_right_name">
+          <%= @member.name %> さんのプロフィール
+        </div>
+        <div class="postlistMember_profile_right_delete">
+          <% if current_member && current_member.admin? && !current_member?(@member) %>
+            | <%= link_to "削除", @member, method: :delete,
+                                          data: { confirm: "削除しますか？" } %>
+          <% end %>
+        </div>
+        <div class="postlistMember_profile_right_posts">
+          <%= "(レビュー投稿数:#{@member.posts.count})" %>
+        </div>
+        <div class="postlistMember_profile_right_shops">
+          <%= "(店舗登録数:#{@member.shops.count})" %>
+        </div>
+      </div>
+    </div>
+
+  <% unless @posts.empty? %>
+    <div class="caption_postList">
+      レビュー一覧
+    </div>   
+
+    <%= will_paginate @posts %>
+    
+    <ul>
+      <% @posts.each do |post| %>
+        <li class="postList" id=<%= post.id %>>
+          <div class="postList_member">
+            <div class="postList_member_left">
+              <div class="postList_member_left_name">
+                <%= link_to( post.shop.name, post.shop, target: :_blank)  %>
+              </div>
+            </div>
+            <div class="postList_member_right">
+              <div class="postList_member_right_address">
+                (<%= post.shop.address %>)
+              </div>
+              <div class="postList_member_right_dtl">
+                <div class="postList_member_right_dtl_raty">
+                  <div class="raty" read_only="true" data_score="<%= post.point %>"></div>
+                  <div class="postList_member_right_dtl_raty_num">
+                    <%= post.point %>
+                  </div>
+                </div>
+                <div class="postList_member_right_dtl_date">
+                  <%= "投稿日:#{post.created_at.strftime('%Y/%m/%d')}" %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="postList_content">
+            <div class="postList_content_title">
+              <%= post.title %>
+            </div>
+            <div class="postList_content_comment">
+              <%= simple_format(post.comment) %>
+            </div>
+            <div class="postList_content_images">
+            <% if post.images.attached? %>
+              <% post.images.each do |image| %>
+                <div class="postList_content_images_img">
+                  <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
+                    <%= image_tag image %>
+                  </a>
+                </div>
+                <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
+                  <div class="modal__bg js_modal_close"></div>
+                  <div class="modal__content_img">
+                    <%= image_tag image %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+            </div>
+            <% if current_member && current_member.admin? %>
+              <div class="postList_content_delete right">
+                <%= link_to "このレビューを削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
+              </div>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= will_paginate @posts %>
+
+  <% end %>
+
+</div>
