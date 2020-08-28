@@ -19,6 +19,8 @@
     <% else %>
       <div id="other" class="container-fluid">
     <% end %>
+    
+      <%= breadcrumbs separator: " &rsaquo; " %>
 
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
