@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       if member.activated?
         log_in member
         params[:session][:remember_me] == "1" ? remember(member) : forget(member)
-        redirect_back_or member
+        redirect_back_or postlistMember_path(member)
       else
         message  = "アカウントが有効化されていません。"
         message += "有効化リンクの記載されたメールをご確認ください。"
