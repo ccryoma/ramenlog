@@ -1,0 +1,17 @@
+<% if @find %>
+  <h2>
+    <%= params['post']['area'] %><br />
+    <%= params['post']['name'] %><br />
+    <% if @tags %>
+      <% @tags.each do |tag| %>
+        <%= tag %>
+      <% end %>
+      <%= params['post']['AO'] == 'AND' ? '(選択した全てのタグを含む(AND))' : '(選択した一部のタグを含む(OR))' %>
+    <% end %>
+  </h2>
+<% else %>
+  <h2>
+    ご指定の条件ではお店が見つかりませんでした。<br />
+    ※全国のお店を表示しています
+  </h2>
+<% end %>
