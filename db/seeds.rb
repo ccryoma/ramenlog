@@ -21,7 +21,7 @@ Member.create!(name: "りょうま",
 end
 
 # 店舗をまとめて生成する
-prename = %W[\u9EBA\u5C4B \u88FD\u9EBA\u6240 \u30E9\u30FC\u30E1\u30F3 \u3089\u30FC\u3081\u3093 \u5DE5\u623F]
+prename = ["麺屋", "製麺所", "ラーメン", "らーめん", "工房"]
 40.times do |n|
   name = prename[rand(5)] + Faker::Name.last_name
   address = Faker::Address.state
@@ -53,26 +53,26 @@ end
 
 # タグを生成する
 Tag.create!([
-              { name: "\u30E9\u30FC\u30E1\u30F3" },
-              { name: "\u3064\u3051\u9EBA" },
-              { name: "\u6CB9\u305D\u3070" },
-              { name: "\u30BF\u30F3\u30E1\u30F3" },
-              { name: "\u592A\u9EBA" },
-              { name: "\u7D30\u9EBA" },
-              { name: "\u5E73\u6253\u3061\u9EBA" },
-              { name: "\u5200\u524A\u9EBA" },
-              { name: "\u3057\u3087\u3046\u3086" },
-              { name: "\u3057\u304A" },
-              { name: "\u307F\u305D" },
-              { name: "\u3068\u3093\u3053\u3064" },
-              { name: "\u80CC\u8102" },
-              { name: "\u9B5A\u4ECB" },
-              { name: "\u716E\u5E72\u3057" },
-              { name: "\u9D8F\u767D\u6E6F" },
-              { name: "\u6FC0\u8F9B" },
-              { name: "\u4E8C\u90CE\u7CFB" },
-              { name: "\u5BB6\u7CFB" },
-              { name: "\u535A\u591A\u7CFB" }
+              { name: 'ラーメン' },
+              { name: 'つけ麺' },
+              { name: '油そば'},
+              { name: 'タンメン'},
+              { name: '太麺'},
+              { name: '細麺'},
+              { name: '平打ち麺' },
+              { name: '刀削麺'},
+              { name: 'しょうゆ'},
+              { name: 'しお'},
+              { name: 'みそ'},
+              { name: 'とんこつ' },
+              { name: '背脂'},
+              { name: '魚介'},
+              { name: '煮干し'},
+              { name: '鶏白湯'},
+              { name: '激辛' },
+              { name: '二郎系'},
+              { name: '家系'},
+              { name: '博多系'}
             ])
 
 # タグをまとめて紐付けする

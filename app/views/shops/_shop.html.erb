@@ -1,16 +1,15 @@
+<% if controller.action_name == "show" %>
 <li>
+<% end %>
+
   <div class="shop">
     <div class="shop_left">
       <div class="shop_image">
-        <% @no_image = true %>
-        <% shop.posts.each do |post| %>
-          <% if post.images.attached? %>
-            <%= link_to image_tag(post.images[0]) , shop %>
-            <% @no_image = false %>
-            <% break %>
-          <% end %>
+        <% if @shop_hash[shop.id][:img] %>
+          <%= link_to image_tag(@shop_hash[shop.id][:img]), shop %>
+        <% else %>
+          <%= link_to(image_tag("no_image.png"), shop) %>
         <% end %>
-        <%= link_to(image_tag("no_image.png"),shop) if @no_image %>
       </div>
     </div>
     <div class="shop_right">
@@ -30,17 +29,17 @@
       </div>
       <div class="shop_right_topCom">
         <div class="shop_right_topCom_title">
-          <% if shop.posts[0] %>
-            <%= shop.posts[0].title %>
+          <% if @shop_hash[shop.id][:dtl] %>
+            <%= @shop_hash[shop.id][:dtl].title %>
             <span class="shop_right_topCom_title_by">
-              by <%= link_to shop.posts[0].member.name, member_path(shop.posts[0].member), target: :_blank %>
+              by <%= link_to @shop_hash[shop.id][:dtl].member.name, postlistMember_path(@shop_hash[shop.id][:dtl].member), target: :_blank %>
             </span>
+            <div class="shop_right_topCom_comment">
+              <%= @shop_hash[shop.id][:dtl].comment %>
+            </div>
           <% else %>
             ※まだコメントがありません
           <% end %>
-        </div>
-        <div class="shop_right_topCom_comment">
-          <%= shop.posts[0] ? shop.posts[0].comment : "" %>
         </div>
       </div>
       <% if current_member && current_member.admin? %>
@@ -50,4 +49,7 @@
       <% end %>
     </div>
   </div>
+
+<% if controller.action_name == "show" %>
 </li>
+<% end %>

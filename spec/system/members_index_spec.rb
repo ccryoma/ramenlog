@@ -13,9 +13,9 @@ RSpec.describe "会員一覧", type: :system do
       expect(page).to have_css ".pagination"
       first_page_of_members = Member.paginate(page: 1)
       first_page_of_members.each do |member|
-        expect(page).to have_link href: member_path(member), text: member.name
+        expect(page).to have_link href: postlistMember_path(member), text: member.name
         unless member == admin
-          expect(page).to have_link href: member_path(member), text: "\u524A\u9664"
+          expect(page).to have_link href: postlistMember_path(member), text: "\u524A\u9664"
         end
       end
       expect {
