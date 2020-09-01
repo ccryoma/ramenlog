@@ -1,19 +1,4 @@
-<% provide(:title, "地図検索") %>
-<% breadcrumb :map %>
-
-<%= render partial: "result" %>
-
-<div id='map'></div>
-
-<style>
-#map {
-  height: 600px;
-  width: 100%;
-}
-</style>
-
 <script>
-
 // マーカー用のデータを取得
 const data = [
   <% @shops.each do |shop| %>
@@ -74,6 +59,12 @@ map.fitBounds(new google.maps.LatLngBounds(
 ));
 }
 
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzZIPZF0Uch20mSuje8gzNVh2MYViAHlM&callback=initMap" async defer></script>
+
+<% provide(:title, "地図検索") %>
+<% breadcrumb :map %>
+
+<%= render partial: "result" %>
+
+<div id='map'></div>

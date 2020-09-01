@@ -11,23 +11,22 @@ RSpec.describe "会員プロフィール", type: :system do
 
     context "閲覧先が他人のページ" do
       it "プロフィールが表示され、削除リンクが表示される" do
-        visit postlistMember_path(member)
+        visit postlist_member_path(member)
 
-        expect(page).to have_selector ".member_profile_left_name", text: member.name
-        expect(page).to have_selector ".member_profile_left_posts", text: member.posts.count
-        expect(page).to have_selector ".member_profile_left_shops", text: member.shops.count
-        expect(page).to have_selector ".member_profile_left_shops", text: member.shops.count
-        expect(page).to have_selector ".member_profile_left_delete", text: "\u524A\u9664"
+        expect(page).to have_selector ".postlistMember_profile_right_name", text: member.name
+        expect(page).to have_selector ".postlistMember_profile_right_posts", text: member.posts.count
+        expect(page).to have_selector ".postlistMember_profile_right_shops", text: member.shops.count
+        expect(page).to have_selector ".postlistMember_profile_right_delete", text: "削除"
         expect {
-          click_link "\u524A\u9664", match: :first
+          click_link "削除", match: :first
         }.to change(Member, :count).by(-1)
       end
     end
 
     context "閲覧先が自身のページ" do
       it "削除リンクが表示されない" do
-        visit postlistMember_path(admin)
-        expect(page).to_not have_selector ".member_profile_left_delete", text: "\u524A\u9664"
+        visit postlist_member_path(admin)
+        expect(page).to_not have_selector ".member_profile_left_delete", text: "削除"
       end
     end
   end
@@ -35,8 +34,8 @@ RSpec.describe "会員プロフィール", type: :system do
   context "一般会員でログイン中の場合" do
     it "削除リンクが表示されない" do
       log_in_as(member)
-      visit postlistMember_path(member)
-      expect(page).to_not have_selector ".member_profile_left_delete", text: "\u524A\u9664"
+      visit postlist_member_path(member)
+      expect(page).to_not have_selector ".member_profile_left_delete", text: "削除"
     end
   end
 end
