@@ -26,8 +26,8 @@ class PasswordResetsController < ApplicationController
       render "edit"
     elsif @member.update(member_params)
       log_in @member
-      flash[:success] = "Password has been reset."
-      redirect_to @member
+      flash[:success] = "パスワードを変更しました。"
+      redirect_to postlist_member_path(@member)
     else
       render "edit"
     end

@@ -1,55 +1,66 @@
-<% if controller.action_name == "show" %>
-<li>
+<% if controller.action_name == "search" %>
+  <div class="shop_search">
+<% else %>
+  <div class="shop_map">
 <% end %>
 
-  <div class="shop">
-    <div class="shop_left">
-      <div class="shop_image">
-        <% if @shop_hash[shop.id][:img] %>
-          <%= link_to image_tag(@shop_hash[shop.id][:img]), shop %>
-        <% else %>
-          <%= link_to(image_tag("no_image.png"), shop) %>
+  <%= link_to "", shop, class: :wrap %>
+  <div class="shop_left">
+    <div class="shop_image">
+      <% if @shop_hash[shop.id][:img] %>
+        <%= image_tag(@shop_hash[shop.id][:img]) %>
+      <% else %>
+        <%= image_tag("no_image.png") %>
+      <% end %>
+    </div>
+  </div>
+  <div class="shop_right">
+    <div class="shop_right_name">
+      <%= shop.name %>
+    </div>
+    <div class="shop_right_address">
+      <%= shop.address %>
+    </div>
+    <div class="shop_right_point">
+      <div class="shop_right_point_raty">
+        <div class="raty" read_only="true" data_score="<%= shop.point_avg %>"></div>
+      </div>
+      <div class="shop_right_point_num">
+        <%= shop.point_avg || "未評価" %>
+      </div>
+    </div>
+    <div class="shop_right_tags">
+      <div class="tags">
+        <% shop.tags.each do |tag| %>
+          <span class="tag">
+            <%= tag.name %>
+          </span>
         <% end %>
       </div>
     </div>
-    <div class="shop_right">
-      <div class="shop_right_name">
-        <%= link_to shop.name, shop %>
-      </div>
-      <div class="shop_right_address">
-        <%= shop.address %>
-      </div>
-      <div class="shop_right_point">
-        <%= shop.point_avg || "未評価" %>
-      </div>
-      <div class="shop_right_tags">
-        <% shop.tags.each do |tag| %>
-          <%= tag.name %>
-        <% end %>
-      </div>
+    <% if controller.action_name == "search" %>
       <div class="shop_right_topCom">
         <div class="shop_right_topCom_title">
           <% if @shop_hash[shop.id][:dtl] %>
             <%= @shop_hash[shop.id][:dtl].title %>
             <span class="shop_right_topCom_title_by">
-              by <%= link_to @shop_hash[shop.id][:dtl].member.name, postlistMember_path(@shop_hash[shop.id][:dtl].member), target: :_blank %>
+              by <%= link_to @shop_hash[shop.id][:dtl].member.name, postlist_member_path(@shop_hash[shop.id][:dtl].member) %> さん
             </span>
             <div class="shop_right_topCom_comment">
               <%= @shop_hash[shop.id][:dtl].comment %>
             </div>
           <% else %>
-            ※まだコメントがありません
+            ※まだレビューがありません
           <% end %>
         </div>
       </div>
-      <% if current_member && current_member.admin? %>
-        <div class="shop_right_delete">
-          <%= link_to "この店舗を削除", shop, method: :delete,data: { confirm: "削除しますか？" } %>
-        </div>
-      <% end %>
-    </div>
+    <% else %>
+      <%= shop.posts.count %>件のレビュー
+    <% end %>
+    <% if current_member && current_member.admin? %>
+      <div class="shop_right_delete">
+        <%= link_to "この店舗を削除", shop, method: :delete,data: { confirm: "削除しますか？" } %>
+      </div>
+    <% end %>
   </div>
-
-<% if controller.action_name == "show" %>
-</li>
-<% end %>
+</div>

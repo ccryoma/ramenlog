@@ -21,7 +21,7 @@ Member.create!(name: "りょうま",
 end
 
 # 店舗をまとめて生成する
-prename = ["麺屋", "製麺所", "ラーメン", "らーめん", "工房"]
+prename = %w[麺屋 製麺所 ラーメン らーめん 工房]
 40.times do |n|
   name = prename[rand(5)] + Faker::Name.last_name
   address = Faker::Address.state
@@ -53,26 +53,26 @@ end
 
 # タグを生成する
 Tag.create!([
-              { name: 'ラーメン' },
-              { name: 'つけ麺' },
-              { name: '油そば'},
-              { name: 'タンメン'},
-              { name: '太麺'},
-              { name: '細麺'},
-              { name: '平打ち麺' },
-              { name: '刀削麺'},
-              { name: 'しょうゆ'},
-              { name: 'しお'},
-              { name: 'みそ'},
-              { name: 'とんこつ' },
-              { name: '背脂'},
-              { name: '魚介'},
-              { name: '煮干し'},
-              { name: '鶏白湯'},
-              { name: '激辛' },
-              { name: '二郎系'},
-              { name: '家系'},
-              { name: '博多系'}
+              { name: "ラーメン" },
+              { name: "つけ麺" },
+              { name: "油そば" },
+              { name: "タンメン" },
+              { name: "太麺" },
+              { name: "細麺" },
+              { name: "平打ち麺" },
+              { name: "刀削麺" },
+              { name: "しょうゆ" },
+              { name: "しお" },
+              { name: "みそ" },
+              { name: "とんこつ" },
+              { name: "背脂" },
+              { name: "魚介" },
+              { name: "煮干し" },
+              { name: "鶏白湯" },
+              { name: "激辛" },
+              { name: "二郎系" },
+              { name: "家系" },
+              { name: "博多系" }
             ])
 
 # タグをまとめて紐付けする

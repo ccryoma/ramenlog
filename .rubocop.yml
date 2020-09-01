@@ -43,9 +43,9 @@ AsciiComments:
 Layout/ArgumentAlignment:
   Enabled: false
 
-# ABC(代入、呼び出し、条件文)サイズ30まで許可
+# ABC(代入、呼び出し、条件文)
 Metrics/AbcSize:
-  Max: 35
+  Max: 45
 
 # メソッドの長さを20行まで許可
 Metrics/MethodLength:

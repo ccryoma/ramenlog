@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_many_attached :images
   default_scope -> { order(created_at: :desc) }
   validates :images, content_type: { in: %w[image/jpeg image/gif image/png],
-                                    message: "ファイルタイプはjpeg,gif,pngのいずれかとして下さい。" },
-                    size: { less_than: 5.megabytes,
-                            message: "ファイルサイズは5MB未満としてください。" }
+                                     message: "ファイルタイプはjpeg,gif,pngのいずれかとして下さい。" },
+                     size: { less_than: 5.megabytes,
+                             message: "ファイルサイズは5MB未満としてください。" }
 end
