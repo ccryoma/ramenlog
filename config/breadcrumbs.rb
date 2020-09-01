@@ -22,8 +22,8 @@ crumb :edit_member do |member|
   parent :root
 end
 
-crumb :postlistMember do |member|
-  link member.name + "さんのプロフィール", postlistMember_path(member)
+crumb :postlist_member do |member|
+  link member.name + "さんのプロフィール", postlist_member_path(member)
   parent :root
 end
 

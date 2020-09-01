@@ -1,0 +1,34 @@
+<div class='search_form_tags'>
+  <% tag_count = 0 %>
+  <% current_type = 0 %>
+  <%= object.collection_check_boxes(:tag_ids, Tag.all.order(type: :asc).order(id: :asc), :id, :name,include_hidden: false ) do |tag| %>
+    <% if current_type != tag.object.type %>
+      <% if current_type != 0 %>
+        </div>
+      <% end %>
+      <div class='search_form_tags_col'>
+        <div class='search_form_tags_col_type'>
+          <% case tag.object.type when 1 %>
+            ジャンル
+          <% when 2 %>
+            麺
+          <% when 3 %>
+            スープ
+          <% when 4 %>
+            系統
+          <% else %>
+            その他
+          <% end %>
+        </div>
+      <% current_type = tag.object.type %>
+    <% end %>
+    <div class='search_form_tags_col_tag'>
+      <%= tag.check_box %>
+      <%= tag.label %>
+    </div>
+    <% tag_count += 1 %>
+    <% if tag_count == Tag.all.order(type: :asc).order(id: :asc).count %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

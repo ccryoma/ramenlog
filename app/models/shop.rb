@@ -42,7 +42,7 @@ class Shop < ApplicationRecord
     # ホーム画面用
     when "home"
       Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("posts.created_at DESC").limit(3)
-    
+
     else
       if search["tag_ids"]
         # タグ指定あり
@@ -58,29 +58,33 @@ class Shop < ApplicationRecord
         end
       else
         # タグ指定なし
-        Shop.eager_load(:posts).where("address LIKE ? AND name LIKE ? ", "%#{search['area']}%", "%#{search['name']}%").
-                select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC")
+        Shop.eager_load(:posts).where("address LIKE ? AND name LIKE ? ", "%#{search['area']}%", "%#{search['name']}%")
+            .select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC")
       end
     end
   end
 
-  
-
   # 最新のレビューと画像を取得
-  def self.shop_dtl_set(shops)
-    shop_hash = Hash.new { |h,k| h[k] = {} }
+  def self.latest_set(shops)
+    shop_hash = Hash.new { |h, k| h[k] = {} }
     shops.each do |shop|
       shop_posts = Shop.find(shop.id).posts
-      if shop_posts
-        shop_hash[shop.id][:dtl] = shop_posts.first
-        shop_posts.each do |post|
-          if post.images.attached?
-            shop_hash[shop.id][:img] = post.images[0]
-            break
-          end
+      next unless shop_posts
+
+      shop_hash[shop.id][:dtl] = shop_posts.first
+      shop_posts.each do |post|
+        if post.images.attached?
+          shop_hash[shop.id][:img] = post.images[0]
+          break
         end
       end
     end
-    return shop_hash
+    shop_hash
+  end
+
+  # 店舗の平均ポイントを取得
+  def self.point_set(shop)
+    shop_point = shop.posts.average("point")
+    shop_point ? shop_point.round(1) : "未評価"
   end
 end

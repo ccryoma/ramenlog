@@ -1,0 +1,29 @@
+<div class="sessions">
+  <div class="sessions_greeting">
+    <span class="greeting">
+      <% if controller.action_name == "home" %>
+        ようこそ！
+      <% else %>
+        投稿・編集するにはログインしてください
+      <% end %>
+    </span>
+  </div>
+  <div class="sessions_signup">
+    <%= link_to "新規会員登録", signup_path, class: "btn_flat sign_up_btn"%>
+  </div>
+  <div class="sessions_explanationSignup">
+    <span class="explanation">会員になると、レビューを投稿したり、<br />お店の登録・編集ができます。</span>
+  </div>
+  <div class="sessions_testLogin">
+    <%= link_to "テストログイン", guest_login_path, method: :post, class: "btn_flat test_login_btn"%>
+  </div>
+  <div class="sessions_explanationTestLogin">
+    <span class="explanation">会員登録せずに機能をテストできます。<br />(※プロフィール編集は利用できません)</span>
+  </div>
+  <div class="sessions_login">
+    <%= link_to "ログイン", login_path, class: "btn_flat login_btn"%>
+  </div>
+  <div class="sessions_explanationLogin">
+    <span class="explanation">すでにご登録済みの方はこちら。</span>
+  </div>
+</div>

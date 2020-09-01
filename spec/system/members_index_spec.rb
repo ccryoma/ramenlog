@@ -13,13 +13,13 @@ RSpec.describe "会員一覧", type: :system do
       expect(page).to have_css ".pagination"
       first_page_of_members = Member.paginate(page: 1)
       first_page_of_members.each do |member|
-        expect(page).to have_link href: postlistMember_path(member), text: member.name
+        expect(page).to have_link href: postlist_member_path(member), text: member.name
         unless member == admin
-          expect(page).to have_link href: postlistMember_path(member), text: "\u524A\u9664"
+          expect(page).to have_link href: member_path(member), text: "削除"
         end
       end
       expect {
-        click_link "\u524A\u9664", match: :first
+        click_link "削除", match: :first
       }.to change(Member, :count).by(-1)
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe "会員一覧", type: :system do
     it "削除リンクが表示されない" do
       log_in_as(non_admin)
       visit members_path
-      expect(page).to_not have_link text: "\u524A\u9664"
+      expect(page).to_not have_link text: "削除"
     end
   end
 end

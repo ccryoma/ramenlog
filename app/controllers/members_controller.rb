@@ -7,7 +7,7 @@ class MembersController < ApplicationController
     @members = Member.paginate(page: params[:page])
   end
 
-  def postlistMember
+  def postlist_member
     @member = Member.find(params[:id])
     @posts = @member.posts.paginate(page: params[:page], per_page: 5)
   end
@@ -28,6 +28,7 @@ class MembersController < ApplicationController
   end
 
   def edit
+    redirect_to root_url if current_member.email == "guest@example.com"
     @member = Member.find(params[:id])
   end
 
@@ -35,7 +36,7 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if @member.update(member_params)
       flash[:success] = "プロフィールが更新されました"
-      redirect_to @member
+      redirect_to postlist_member_path(@member)
     else
       render "edit"
     end
@@ -55,23 +56,9 @@ class MembersController < ApplicationController
   end
   # beforeアクション
 
-  # ログイン済み会員かどうか確認
-  def logged_in_member
-    unless logged_in?
-      store_location
-      flash[:danger] = "ログインしてください"
-      redirect_to login_url
-    end
-  end
-
   # 正しい会員かどうか確認
   def correct_member
     @member = Member.find(params[:id])
     redirect_to(root_url) unless current_member?(@member)
-  end
-
-  # 管理者かどうか確認
-  def admin_member
-    redirect_to(root_url) unless current_member.admin?
   end
 end

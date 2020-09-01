@@ -1,10 +1,38 @@
+<script>
+$(document).on('turbolinks:load', function(){
+  //続きを読む機能
+  $('.shop_right_topCom_comment').each(function(e){
+    let $comment = $(this);
+    // 元の文章を変数に格納
+    let comment = $comment.html();
+    let commentShow;
+    let commentText;
+    if($comment.height() > 10){
+      // 文章の要素の高さが100を超えていたら隠す用のisHiddenクラスを付与
+      $comment.addClass('isHidden');
+      
+      // ウィンドウ幅が768px以上の時の処理（PC表示）
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 48);
+        commentText = commentShow += '...続きを読む';
+        $comment.html(commentText);
+      } else { // ウィンドウ幅が768px以下の時の処理（スマホ表示）
+        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 48);
+        commentText = commentShow += '...続きを読む';
+        $comment.html(commentText);
+      }
+    }
+  });
+});
+</script>
+
 <% provide(:title, '店舗検索') %>
 <% breadcrumb :search %>
 <%= render partial: "result" %>
 
 <%= will_paginate %>
 
-<ul class="members">
+<ul class="shops">
   <%= render @shops %>
 </ul>
 

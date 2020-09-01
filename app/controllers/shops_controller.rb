@@ -1,15 +1,17 @@
 class ShopsController < ApplicationController
+  before_action :logged_in_member, only: %i[new create edit update destroy]
+  before_action :admin_member,     only: :destroy
 
   def home
     @shops = Shop.search("home")
-    @shop_hash = Shop.shop_dtl_set(@shops)
+    @shop_hash = Shop.latest_set(@shops)
   end
 
   def search
     @shops = Shop.search(post_params).paginate(page: params[:page], per_page: 20)
     find_set
     @shops = Shop.search("all").paginate(page: params[:page], per_page: 20) if @shops.empty?
-    @shop_hash = Shop.shop_dtl_set(@shops)
+    @shop_hash = Shop.latest_set(@shops)
     @tags = Tag.name_set(params[:post][:tag_ids]) if params[:post][:tag_ids]
   end
 
@@ -17,24 +19,23 @@ class ShopsController < ApplicationController
     @shops = Shop.search(post_params)
     find_set
     @shops = Shop.search("all") if @shops.empty?
-    @shop_hash = Shop.shop_dtl_set(@shops)
+    @shop_hash = Shop.latest_set(@shops)
     @tags = Tag.name_set(params[:post][:tag_ids]) if params[:post][:tag_ids]
   end
 
   def show
     @shop = Shop.find(params[:id])
-    @shop_point = Post.where(shop_id: @shop.id).average("point")
-    @shop_point ? @shop_point = @shop_point.round(1) : @shop_point = "未評価"
-    @post = Post.new
     @posts = @shop.posts
+    @shop_point = Shop.point_set(@shop)
+    @post = Post.new
   end
 
   def postlist
     @shop = Shop.find(params[:id])
-    @shop_point = Post.where(shop_id: @shop.id).average("point")
-    @shop_point ? @shop_point = @shop_point.round(1) : @shop_point = "未評価"
+    @posts = @shop.posts.paginate(page: params[:page], per_page: 3)
+    redirect_to @shop if @posts.empty?
+    @shop_point = Shop.point_set(@shop)
     @post = Post.new
-    @posts = @shop.posts.paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -70,24 +71,24 @@ class ShopsController < ApplicationController
   def destroy
     Shop.find(params[:id]).destroy
     flash[:success] = "店舗を削除しました"
-    redirect_to shops_url
+    redirect_to request.referer
   end
 
   private
 
-    def shop_params
-      params.require(:shop).permit(:name, :address, :opening_ours, :sheets, :parking, :latitude, :longitude, tag_ids: [])
-    end
+  def shop_params
+    params.require(:shop).permit(:name, :address, :opening_ours, :sheets, :parking, :latitude, :longitude, tag_ids: [])
+  end
 
-    def post_params
-      params.require(:post).permit(:area, :name, :AO, tag_ids: [])
-    end
+  def post_params
+    params.require(:post).permit(:area, :name, :AO, tag_ids: [])
+  end
 
-    # 検索結果が存在したか否かを@findにセット
-    def find_set
-      @find = true
-      if @shops.empty? || (params[:post][:area].empty? && params[:post][:name].empty? && params[:post][:tag_ids].nil?)
-        @find = false
-      end
+  # 検索結果が存在したか否かを@findにセット
+  def find_set
+    @find = true
+    if @shops.empty? || (params[:post][:area].empty? && params[:post][:name].empty? && params[:post][:tag_ids].nil?)
+      @find = false
     end
+  end
 end
