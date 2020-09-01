@@ -10,15 +10,25 @@
       </div>
     </div>
     <div class="shop_head_tag">
-      <% @shop.tags.each do |tag| %>
-        <%= tag.name %>
-      <% end %>
+      <div class="tags">
+        <% @shop.tags.each do |tag| %>
+          <span class="tag">
+            <%= tag.name %>
+          </span>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="shop_head_right">
     <% if current_member %>
-        <%= link_to "店舗情報編集", edit_shop_path(@shop), class: "btn_flat shop_edit_btn"%>
+      <%= link_to "店舗情報編集", edit_shop_path(@shop), class: "btn_flat shop_edit_btn"%>
+      <%= link_to "レビューを投稿する", "", class: "js_modal_open btn_flat post_create_btn", id: :modal_post %>
+    <% else %>
+      <%= link_to "店舗情報編集", edit_shop_path(@shop), class: "js_modal_open btn_flat shop_edit_btn", id: :modal_session_edit %>
+      <%= link_to "レビューを投稿する", "", class: "js_modal_open btn_flat post_create_btn", id: :modal_session_post %>
     <% end %>
-        <a class="js_modal_open btn_flat post_create_btn" href="" id="modal_post">レビューを投稿する</a>
   </div>
 </div>
+
+<%= render partial: "posts/postform" %>
+<%= render partial: "shops/modalSession" %>

@@ -1,41 +1,5 @@
 <% provide(:title, @member.name) %>
-<% breadcrumb :postlistMember, @member %>
-
-<script>
-$(function(){
-  $.fn.raty.defaults.path = "/assets/raty";
-  $('.raty').raty({
-    half: true,
-    readOnly: function() {
-      return $(this).attr('read_only');
-    },
-    score: function() {
-      return $(this).attr('data_score');
-    },
-  });
-  // 星をクリック時に数値を更新
-  $('.raty').on('click',function(){
-    $('.postform_point_num').text($('.postform_point input[name="score"]').val());
-  });
-
-  // 投稿フォームと画像のモーダル表示
-  let scrollPos;//topからのスクロール位置
-  $('.js_modal_open').on('click',function(){
-      scrollPos = $(window).scrollTop();//topからのスクロール位置を格納
-      let open = '.js_modal.' + $(this).attr('id');
-      $(open).fadeIn(10);
-      $('body').addClass('fixed').css({ top: -scrollPos });//背景固定
-      return false;
-  });
-  $('.js_modal_close').on('click',function(){
-      $('.js_modal').fadeOut(10);
-      $('body').removeClass('fixed').css({ top: 0 });//背景固定を解除
-      $(window).scrollTop(scrollPos);//元の位置までスクロール
-      return false;
-  });
-
-});
-</script>
+<% breadcrumb :postlist_member, @member %>
 
 <div class="row">
     <div class="postlistMember_profile">
@@ -76,7 +40,7 @@ $(function(){
           <div class="postList_member">
             <div class="postList_member_left">
               <div class="postList_member_left_name">
-                <%= link_to( post.shop.name, post.shop, target: :_blank)  %>
+                <%= link_to( post.shop.name, post.shop)  %>
               </div>
             </div>
             <div class="postList_member_right">
@@ -120,7 +84,7 @@ $(function(){
               <% end %>
             <% end %>
             </div>
-            <% if current_member && current_member.admin? %>
+            <% if current_member && ( current_member?(post.member) || current_member.admin? ) %>
               <div class="postList_content_delete right">
                 <%= link_to "このレビューを削除", post, method: :delete,data: { confirm: "削除しますか？" } %>
               </div>

@@ -37,37 +37,39 @@ $(function(){
 });
 </script>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with(model: @shop, local: true, id: :shopform ) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <div class="shopform_name">
+<%= form_with(model: @shop, local: true, id: :shopform ) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="shopform">
+    <div class="shopform_left">
+      <div class="shopform_left_name">
         <%= f.label :name ,"店名" %>
         <%= f.text_field :name %>
       </div>
-      <div class="shopform_address">
+      <div class="shopform_left_address">
         <%= f.label :address ,"住所" %>
         <%= f.text_field :address %>
       </div>
-      <div class="shopform_opening_ours">
+      <div class="shopform_left_opening_ours">
         <%= f.label :opening_ours ,"営業時間" %>
         <%= f.text_area :opening_ours %>
       </div>
-      <div class="shopform_sheets">
+      <div class="shopform_left_sheets">
         <%= f.label :sheets, "席数" %>
         <%= f.text_field :sheets %>
       </div>
-      <div class="shopform_parking">
+      <div class="shopform_left_parking">
         <%= f.label :parking ,"駐車場" %>
         <%= f.text_field :parking %>
       </div>
-      <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name,include_hidden: false ) do |tag| %>
-          <%= tag.label do %>
-            <%= tag.check_box %>
-            <%= tag.text %>
-          <% end %>
-      <% end %>
-      <%= f.submit controller.action_name == "new" ? "登録" : "更新" , class: "btn submit_btn" %>
-    <% end %>
+    </div>
+    <div class="shopform_right">
+      <div class="shopform_right_tag_ids">
+        <%= f.label :tag_ids ,"こだわり条件" %>
+      </div>
+      <%= render 'shared/tagsform', object: f %>
+    </div>
   </div>
-</div>
+  <div class="shop_submit">
+    <%= f.submit controller.action_name == "new" ? "登録" : "更新" , class: "btn submit_btn shop_submit_btn" %>
+  </div>
+<% end %>

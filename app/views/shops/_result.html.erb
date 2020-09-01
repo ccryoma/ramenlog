@@ -6,6 +6,8 @@
       <% @tags.each do |tag| %>
         <%= tag %>
       <% end %>
+    <% end %>
+    <% if params['post']['AO'] %>
       <%= params['post']['AO'] == 'AND' ? '(選択した全てのタグを含む(AND))' : '(選択した一部のタグを含む(OR))' %>
     <% end %>
   </h2>

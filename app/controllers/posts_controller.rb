@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :logged_in_user, only: %i[create destroy]
+  before_action :logged_in_member, only: %i[create destroy]
 
   def create
     @post = current_member.posts.build(posts_params)
