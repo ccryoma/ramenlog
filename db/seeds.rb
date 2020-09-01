@@ -53,26 +53,26 @@ end
 
 # タグを生成する
 Tag.create!([
-              { name: "ラーメン" },
-              { name: "つけ麺" },
-              { name: "油そば" },
-              { name: "タンメン" },
-              { name: "太麺" },
-              { name: "細麺" },
-              { name: "平打ち麺" },
-              { name: "刀削麺" },
-              { name: "しょうゆ" },
-              { name: "しお" },
-              { name: "みそ" },
-              { name: "とんこつ" },
-              { name: "背脂" },
-              { name: "魚介" },
-              { name: "煮干し" },
-              { name: "鶏白湯" },
-              { name: "激辛" },
-              { name: "二郎系" },
-              { name: "家系" },
-              { name: "博多系" }
+              { name: "ラーメン", type: 1 },
+              { name: "つけ麺", type: 1 },
+              { name: "油そば", type: 1 },
+              { name: "太麺", type: 2 },
+              { name: "細麺", type: 2 },
+              { name: "平打ち麺", type: 2 },
+              { name: "刀削麺", type: 2 },
+              { name: "しょうゆ", type: 3 },
+              { name: "しお", type: 3 },
+              { name: "みそ", type: 3 },
+              { name: "とんこつ", type: 3 },
+              { name: "二郎系", type: 4 },
+              { name: "家系", type: 4 },
+              { name: "博多系", type: 4 },
+              { name: "背脂", type: 5 },
+              { name: "魚介", type: 5 },
+              { name: "煮干し", type: 5 },
+              { name: "鶏白湯", type: 5 },
+              { name: "激辛", type: 5 },
+              { name: "タンメン", type: 5 }
             ])
 
 # タグをまとめて紐付けする
