@@ -1,4 +1,4 @@
-#ワーカーの数。後述
+#ワーカーの数
 $worker  = 2
 #何秒経過すればワーカーを削除するのかを決める
   $timeout = 30
@@ -23,7 +23,7 @@ $worker  = 2
 #ホットデプロイをするかしないかを設定
   preload_app true
 
-#fork前に行うことを定義。後述
+#fork前に行うことを定義
   before_fork do |server, worker|
     defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
     old_pid = "#{server.config[:pid]}.oldbin"
@@ -35,7 +35,7 @@ $worker  = 2
     end
   end
 
-#fork後に行うことを定義。後述
+#fork後に行うことを定義
   after_fork do |server, worker|
     defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
   end
