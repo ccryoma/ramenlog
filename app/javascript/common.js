@@ -1,5 +1,5 @@
 $(document).on('turbolinks:load', function(){
-  $.fn.raty.defaults.path = "/assets/raty";
+  $.fn.raty.defaults.path = "/images/raty";
   $('.raty').raty({
     number: 5,
     half: true,

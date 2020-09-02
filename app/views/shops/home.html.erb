@@ -11,9 +11,9 @@
           <div class="home_left_review_shop_left">
             <div class="home_left_review_shop_left_img">
               <% if @shop_hash[shop.id][:img] %>
-                <%= link_to image_tag(@shop_hash[shop.id][:img]), shop %>
+                <%= image_tag(@shop_hash[shop.id][:img]) %>
               <% else %>
-                <%= link_to(image_tag("no_image.png"), shop) %>
+                <%= image_tag("/images/no_image.png") %>
               <% end %>
             </div>
           </div>
@@ -114,27 +114,27 @@
       <div class="home_left_type_mamy">
         <div class="home_left_type_mamy_item">
           <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['1'] }}), class: :wrap) %>
-          <%= image_tag asset_path("ramen.jpg") %>
+          <img src="/images/ramen.jpg" alt="ラーメン" />
           <span>ラーメン</span>
         </div>
         <div class="home_left_type_mamy_item">
           <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['2'] }}), class: :wrap) %>
-          <%= image_tag asset_path("tsukemen.jpeg") %>
+          <img src="/images/tsukemen.jpeg" alt="つけ麺" />
           <span>つけ麺</span>
         </div>
         <div class="home_left_type_mamy_item">
           <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['3'] }}), class: :wrap) %>
-          <%= image_tag asset_path("aburasoba.jpeg") %>
+          <img src="/images/aburasoba.jpeg" alt="油そば" />
           <span>油そば</span>
         </div>
         <div class="home_left_type_mamy_item">
           <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['15'] }}), class: :wrap) %>
-          <%= image_tag asset_path("nibosi.jpeg") %>
+          <img src="/images/nibosi.jpeg" alt="煮干し" />
           <span>煮干し</span>
         </div>
         <div class="home_left_type_mamy_item">
           <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['18'] }}), class: :wrap) %>
-          <%= image_tag asset_path("ziro.jpeg") %>
+          <img src="/images/ziro.jpeg" alt="二郎系" />
           <span>二郎系</span>
         </div>
       </div>
@@ -208,7 +208,7 @@
         <div class="home_right_profile_head">
           <%= link_to "", postlist_member_path(current_member), class: :wrap %>
           <div class="home_right_profile_head_icon">
-            <%= current_member.image.attached? ? image_tag(current_member.image) : image_tag("default_member.png")  %>
+            <%= current_member.image.attached? ? image_tag(current_member.image) : image_tag("/images/default_member.png")  %>
           </div>
           <span class="home_right_profile_head_name">
             <%= current_member.name %> さん

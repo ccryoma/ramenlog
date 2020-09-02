@@ -17,7 +17,7 @@
         <div class="postList_member">
           <div class="postList_member_left">
             <div class="postList_member_left_memberImg">
-              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("default_member.png"), postlist_member_path(post.member))  %>
+              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png"), postlist_member_path(post.member))  %>
             </div>
           </div>
           <div class="postList_member_right">

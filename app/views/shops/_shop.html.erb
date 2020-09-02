@@ -10,7 +10,7 @@
       <% if @shop_hash[shop.id][:img] %>
         <%= image_tag(@shop_hash[shop.id][:img]) %>
       <% else %>
-        <%= image_tag("no_image.png") %>
+        <img src="/images/no_image.png" alt="NoImage" />
       <% end %>
     </div>
   </div>
