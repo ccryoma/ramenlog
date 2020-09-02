@@ -88,7 +88,7 @@
         <% break if @image_cnt > 7 %>
       <% end %>
       <div class="shop_dtl_right_noImg">
-        <%= image_tag("no_image.png") if @no_image %>
+        <%= image_tag("/images/no_image.png") if @no_image %>
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@
         <li class="shop_Com">
           <div class="shop_Com_left">
             <div class="shop_Com_left_memberImg">
-              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("default_member.png"), postlist_member_path(post.member))  %>
+              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png"), postlist_member_path(post.member))  %>
             </div>
             <div class="shop_Com_left_memberName">
               <%= link_to(post.member.name, postlist_member_path(post.member)) %>
