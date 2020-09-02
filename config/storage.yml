@@ -1,17 +1,17 @@
-# test:
-#   service: Disk
-#   root: <%= Rails.root.join("tmp/storage") %>
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
 
-# local:
-#   service: Disk
-#   root: <%= Rails.root.join("storage") %>
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
 
 amazon:
   service: S3
-  access_key_id: AKIAILCFQHOYVOE2HF5Q
-  secret_access_key: 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
-  region: ap-northeast-1
-  bucket: hid7ubokura.asagao.foo.bar
+  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+  region: <%= Rails.application.credentials.dig(:aws, :s3, :region) %>
+  bucket: <%= Rails.application.credentials.dig(:aws, :s3, :bucket) %>
   # access_key_id:     <%= ENV['AWS_ACCESS_KEY_ID'] %>
   # secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   # region:            <%= ENV['AWS_REGION'] %>
