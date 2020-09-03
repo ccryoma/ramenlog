@@ -1,9 +1,9 @@
 # 概要
 ラーメン店の検索、およびレビューを共有できるサービスです。
 
-# URL
+## URL
 
-# 機能一覧
+## 機能一覧
 ・会員登録機能
 ・パスワード再設定機能
 ・リメンバーミー
@@ -20,31 +20,31 @@
 ・ページネーション
 ・パンくずリスト
 
-# 使用技術一覧
--インフラ
-  -AWS(EC2/RDS/Route53/VPC/S3/EIP)
--DB
-  -MySQL2
--バックエンド
-  -Ruby
-  -Rails
--フロントエンド
-  -Javascript
-  -jQuery
-  -HTML/SCSS
-  -Bootstrap
--開発環境
-  -VSCode
-  -Docker/Docker-compose
-  -Rubocop
--本番環境
-  -Nginx
-  -Unicorn
--テスト
-  -RSpec/Capybara/Faker/FactoryBot
--デプロイ
-  -Capistrano3
+## 使用技術一覧
+* インフラ
+  * AWS(EC2/RDS/Route53/VPC/S3/EIP)
+* DB
+  * MySQL2
+* バックエンド
+  * Ruby
+  * Rails
+* フロントエンド
+  * Javascript
+  * jQuery
+  * HTML/SCSS
+  * Bootstrap
+* 開発環境
+  * VSCode
+  * Docker/Docker-compose
+  * Rubocop
+* 本番環境
+  * Nginx
+  * Unicorn
+* テスト
+  * RSpec/Capybara/Faker/FactoryBot
+* デプロイ
+  * Capistrano3
 
-# クラウドアーキテクチャ
+## クラウドアーキテクチャ
 
-# E-R図
+## E-R図
