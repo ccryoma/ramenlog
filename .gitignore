@@ -46,3 +46,4 @@ yarn-debug.log*
 /Dockerfile_web
 /docker-compose.yml
 /db/mysql
+/config/credentials/development.key
