@@ -10,7 +10,10 @@
       </div>
       <div class="postlistMember_profile_right">
         <div class="postlistMember_profile_right_name">
-          <%= @member.name %> さんのプロフィール
+          <span class="name">
+            <%= @member.name %> さんのプロフィール
+          </span>
+          (<%= link_to "編集する", edit_member_path(@member) %>)
         </div>
         <div class="postlistMember_profile_right_delete">
           <% if current_member && current_member.admin? && !current_member?(@member) %>
