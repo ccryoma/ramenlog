@@ -48,10 +48,6 @@
     <%= form_with(model: @member, local: true, id: :memberform, html: { novalidate: true } ) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <span class="image">
-        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
-      </span>
-
       <div class="memberform_name">
         <%= f.label :name ,"名前" %>
         <%= f.text_field :name %>
@@ -68,6 +64,13 @@
         <%= f.label :password_confirmation, "パスワード(再入力)" %>
         <%= f.password_field :password_confirmation %>
       </div>
+      <% if controller.action_name == "edit" %>
+        <span class="image">
+          <%= f.label :image ,"アイコン画像" %>
+          <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+        </span>
+      <% end %>
+
       <%= f.submit controller.action_name == "new" ? "登録" : "更新", class: "btn submit_btn" %>
     <% end %>
   </div>

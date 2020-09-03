@@ -57,7 +57,7 @@ class Member < ApplicationRecord
 
   # 有効化用のメールを送信する
   def send_activation_email
-    MemberMailer.account_activation(self).deliver_now
+    MemberMailer.account_activation(self).deliver
   end
 
   # パスワード再設定の属性を設定する
