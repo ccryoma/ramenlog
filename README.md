@@ -9,6 +9,7 @@
 * リメンバーミー
 * ログイン情報のセッション保持
 * プロフィール編集機能(テストユーザーは利用不可)
+* フォーム入力時点のバリデーションチェック
 * 会員一覧表示機能
 * メール配信機能
 * 店舗登録機能
@@ -22,7 +23,7 @@
 
 ## 使用技術一覧
 ### インフラ
-* AWS(EC2/RDS/Route53/VPC/S3/EIP)
+* AWS( EC2, RDS, Route53, VPC, S3, EIP )
 ### DB
 * MySQL2
 ### バックエンド
@@ -31,19 +32,23 @@
 ### フロントエンド
 * JavaScript
 * jQuery
-* HTML/SCSS
+* HTML, SCSS
 * Bootstrap
 ### 開発環境
 * VSCode
-* Docker/Docker-compose
+* Docker, Docker-compose
 * Rubocop
 ### 本番環境
 * Nginx
 * Unicorn
 ### テスト
-* RSpec/Capybara/Faker/FactoryBot
+* RSpec, Capybara, Faker, FactoryBot
 ### デプロイ
 * Capistrano3
+### その他
+* Google Maps API
+* jQuery.raty
+* jQuery validation
 
 ## クラウドアーキテクチャ
 
