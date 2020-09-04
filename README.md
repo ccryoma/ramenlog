@@ -33,7 +33,7 @@
 * jQuery validation
 
 ## クラウドアーキテクチャ
-https://user-images.githubusercontent.com/67304331/92231189-50e0fe80-eee7-11ea-8de9-2933be8875cf.png
+![architecture](https://user-images.githubusercontent.com/67304331/92231189-50e0fe80-eee7-11ea-8de9-2933be8875cf.png)
 
 ## E-R図
 
