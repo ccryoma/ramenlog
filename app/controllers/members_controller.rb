@@ -56,7 +56,7 @@ class MembersController < ApplicationController
   end
   # beforeアクション
 
-  # 正しい会員かどうか確認
+  # ログイン中の会員かどうか確認
   def correct_member
     @member = Member.find(params[:id])
     redirect_to(root_url) unless current_member?(@member)
