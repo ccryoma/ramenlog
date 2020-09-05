@@ -7,8 +7,8 @@
   <%= link_to "", shop, class: :wrap %>
   <div class="shop_left">
     <div class="shop_image">
-      <% if @shop_hash[shop.id][:img] %>
-        <%= image_tag(@shop_hash[shop.id][:img]) %>
+      <% if shop.latest_img %>
+        <%= image_tag(shop.latest_img.images.first) %>
       <% else %>
         <img src="/images/no_image.png" alt="NoImage" />
       <% end %>
@@ -41,13 +41,13 @@
     <% if controller.action_name == "search" %>
       <div class="shop_right_topCom">
         <div class="shop_right_topCom_title">
-          <% if @shop_hash[shop.id][:dtl] %>
-            <%= @shop_hash[shop.id][:dtl].title %>
+          <% if shop.latest_post %>
+            <%= shop.latest_post.title %>
             <span class="shop_right_topCom_title_by">
-              by <%= link_to @shop_hash[shop.id][:dtl].member.name, postlist_member_path(@shop_hash[shop.id][:dtl].member) %> さん
+              by <%= link_to shop.latest_post.member.name, postlist_member_path(shop.latest_post.member) %> さん
             </span>
             <div class="shop_right_topCom_comment">
-              <%= @shop_hash[shop.id][:dtl].comment %>
+              <%= shop.latest_post.comment %>
             </div>
           <% else %>
             ※まだレビューがありません

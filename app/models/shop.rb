@@ -1,6 +1,8 @@
 class Shop < ApplicationRecord
   extend Geocoder::Model::ActiveRecord
   belongs_to :member
+  belongs_to :latest_post, foreign_key: "latest_post_id", class_name: "Post" 
+  belongs_to :latest_img, foreign_key: "latest_img_id", class_name: "Post" 
   has_many  :posts, dependent: :destroy
   has_many  :shop_tag_relations, dependent: :destroy
   has_many  :tags, through: :shop_tag_relations
@@ -37,54 +39,33 @@ class Shop < ApplicationRecord
 
     # 全件検索
     when "all"
-      Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC")
+      Shop.order("point_avg DESC")
 
     # ホーム画面用
     when "home"
-      Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("posts.created_at DESC").limit(3)
+      Shop.order("updated_at DESC").limit(3)
 
     else
       if search["tag_ids"]
         # タグ指定あり
         if search["AO"] == "AND"
           # AND検索
-          Shop.eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg")
-              .where(id: Shop.joins(:shop_tag_relations).where("address LIKE ? AND name LIKE ? AND tag_id IN (?) ", "%#{search['area']}%", "%#{search['name']}%", search["tag_ids"])
-              .group("shops.id").having("count(shops.id) = ?", search["tag_ids"].size)).group("shops.id").order("point_avg DESC")
+          Shop.joins(:shop_tag_relations).where("address LIKE ? AND name LIKE ? AND tag_id IN (?) ", "%#{search['area']}%", "%#{search['name']}%", search["tag_ids"])
+              .group("shops.id").having("count(shops.id) = ?", search["tag_ids"].size).order("point_avg DESC")
         else
           # OR検索
           Shop.joins(:shop_tag_relations).where("address LIKE ? AND name LIKE ? AND tag_id IN (?) ", "%#{search['area']}%", "%#{search['name']}%", search["tag_ids"])
-              .eager_load(:posts).select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC")
+              .order("point_avg DESC")
         end
       else
         # タグ指定なし
-        Shop.eager_load(:posts).where("address LIKE ? AND name LIKE ? ", "%#{search['area']}%", "%#{search['name']}%")
-            .select("shops.*, posts.*,round(avg(point),1) as point_avg").group("shops.id").order("point_avg DESC")
+        Shop.where("address LIKE ? AND name LIKE ? ", "%#{search['area']}%", "%#{search['name']}%").order("point_avg DESC")
       end
     end
-  end
-
-  # 最新のレビューと画像を取得
-  def self.latest_set(shops)
-    shop_hash = Hash.new { |h, k| h[k] = {} }
-    shops.each do |shop|
-      shop_posts = Shop.find(shop.id).posts
-      next unless shop_posts
-
-      shop_hash[shop.id][:dtl] = shop_posts.first
-      shop_posts.each do |post|
-        if post.images.attached?
-          shop_hash[shop.id][:img] = post.images[0]
-          break
-        end
-      end
-    end
-    shop_hash
   end
 
   # 店舗の平均ポイントを取得
-  def self.point_set(shop)
-    shop_point = shop.posts.average("point")
-    shop_point ? shop_point.round(1) : "未評価"
+  def self.cal_point_avg(shop)
+    shop.posts.average(:point)
   end
 end
