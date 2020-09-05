@@ -4,9 +4,9 @@
       <%= controller.action_name == "show" ? @shop.name : link_to(@shop.name, shop_path(@shop)) %>
     </div>
     <div class="shop_head_point">
-      <div class="raty" read_only="true" data_score="<%= @shop_point %>"></div>
+      <div class="raty" read_only="true" data_score="<%= @shop.point_avg %>"></div>
       <div class="shop_head_point_num">
-        <%= @shop_point %>
+        <%= @shop.point_avg %>
       </div>
     </div>
     <div class="shop_head_tag">

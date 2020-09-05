@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_120834) do
+ActiveRecord::Schema.define(version: 2020_09_05_063146) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -81,6 +81,11 @@ ActiveRecord::Schema.define(version: 2020_08_26_120834) do
     t.datetime "updated_at", precision: 6, null: false
     t.float "latitude", limit: 53
     t.float "longitude", limit: 53
+    t.decimal "point_avg", precision: 2, scale: 1
+    t.bigint "latest_post_id"
+    t.bigint "latest_img_id"
+    t.index ["latest_img_id"], name: "index_shops_on_latest_img_id"
+    t.index ["latest_post_id"], name: "index_shops_on_latest_post_id"
     t.index ["member_id"], name: "index_shops_on_member_id"
   end
 
@@ -96,4 +101,6 @@ ActiveRecord::Schema.define(version: 2020_08_26_120834) do
   add_foreign_key "posts", "shops"
   add_foreign_key "shop_tag_relations", "shops"
   add_foreign_key "shop_tag_relations", "tags"
+  add_foreign_key "shops", "posts", column: "latest_img_id"
+  add_foreign_key "shops", "posts", column: "latest_post_id"
 end

@@ -29,6 +29,7 @@ $(document).on('turbolinks:load', function(){
 <% provide(:title, '店舗検索') %>
 <% breadcrumb :search %>
 <%= render partial: "result" %>
+<%= @result %>
 
 <%= will_paginate %>
 
