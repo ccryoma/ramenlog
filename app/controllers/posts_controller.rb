@@ -4,12 +4,26 @@ class PostsController < ApplicationController
   def create
     @post = current_member.posts.build(posts_params)
     @post[:point] = params[:score]
-    if @post.save
-      flash[:success] = "レビューが投稿されました!"
-    else
-      flash[:danger] = "入力に誤りがあります。"
+    latest_img = @post if @post.images.attached?
+    shop = @post.shop
+
+    @post.transaction do
+      @post.save!
+      point_avg = Shop.cal_point_avg(shop)
+      # 新規の登録画像があれば更新
+      latest_img ||= shop.latest_img
+      shop.update!(
+        point_avg: point_avg,
+        latest_post: @post,
+        latest_img: latest_img
+      )
     end
-    redirect_to postlist_path(@post.shop_id)
+      flash[:success] = "レビューが投稿されました!"
+      redirect_to postlist_path(shop)
+    rescue => e
+      logger.error e.message
+      flash[:danger] = "入力に誤りがあります。"
+      redirect_to request.referer
   end
 
   def destroy

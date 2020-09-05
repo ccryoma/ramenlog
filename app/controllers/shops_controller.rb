@@ -4,29 +4,23 @@ class ShopsController < ApplicationController
 
   def home
     @shops = Shop.search("home")
-    @shop_hash = Shop.latest_set(@shops)
   end
 
   def search
     @shops = Shop.search(post_params).paginate(page: params[:page], per_page: 20)
     find_set
     @shops = Shop.search("all").paginate(page: params[:page], per_page: 20) if @shops.empty?
-    @shop_hash = Shop.latest_set(@shops)
-    @tags = Tag.name_set(params[:post][:tag_ids]) if params[:post][:tag_ids]
   end
 
   def map
     @shops = Shop.search(post_params)
     find_set
     @shops = Shop.search("all") if @shops.empty?
-    @shop_hash = Shop.latest_set(@shops)
-    @tags = Tag.name_set(params[:post][:tag_ids]) if params[:post][:tag_ids]
   end
 
   def show
     @shop = Shop.find(params[:id])
     @posts = @shop.posts
-    @shop_point = Shop.point_set(@shop)
     @post = Post.new
   end
 
@@ -34,7 +28,6 @@ class ShopsController < ApplicationController
     @shop = Shop.find(params[:id])
     @posts = @shop.posts.paginate(page: params[:page], per_page: 3)
     redirect_to @shop if @posts.empty?
-    @shop_point = Shop.point_set(@shop)
     @post = Post.new
   end
 
