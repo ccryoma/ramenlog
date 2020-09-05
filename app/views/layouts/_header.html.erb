@@ -59,7 +59,7 @@
                   <div class='search_form_AO'>
                     <%= f.select 'post[AO]', {'選択した全てのタグを含む(AND)': 'AND', '選択した一部のタグを含む(OR)': 'OR'}, {selected: 'AND'} %>
                   </div> 
-                  <%= render 'shared/tagsform', object: f %>
+                    <%= render partial: 'shared/tagsform', locals: { obj: f, name: "post[tag_ids]" } %>
                 </div> 
               </div>
             <% end %>

@@ -1,8 +1,8 @@
 class Shop < ApplicationRecord
   extend Geocoder::Model::ActiveRecord
   belongs_to :member
-  belongs_to :latest_post, foreign_key: "latest_post_id", class_name: "Post" 
-  belongs_to :latest_img, foreign_key: "latest_img_id", class_name: "Post" 
+  belongs_to :latest_post, foreign_key: "latest_post_id", class_name: "Post" , optional: true
+  belongs_to :latest_img, foreign_key: "latest_img_id", class_name: "Post" , optional: true
   has_many  :posts, dependent: :destroy
   has_many  :shop_tag_relations, dependent: :destroy
   has_many  :tags, through: :shop_tag_relations

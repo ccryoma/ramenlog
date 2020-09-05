@@ -37,6 +37,7 @@ class ShopsController < ApplicationController
 
   def create
     @shop = current_member.shops.build(shop_params)
+    #@shop.latest_post_id = @shop.latest_img_id = nil
     if @shop.save
       @shop.save_tags(params[:shop][:tag_ids])
       flash[:success] = "店舗を登録しました！"
