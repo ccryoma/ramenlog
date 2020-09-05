@@ -10,8 +10,8 @@
           <%= link_to "", shop, class: :wrap %>
           <div class="home_left_review_shop_left">
             <div class="home_left_review_shop_left_img">
-              <% if @shop_hash[shop.id][:img] %>
-                <%= image_tag(@shop_hash[shop.id][:img]) %>
+              <% if shop.latest_img %>
+                <%= image_tag(shop.latest_img.images.first) %>
               <% else %>
                 <%= image_tag("/images/no_image.png") %>
               <% end %>

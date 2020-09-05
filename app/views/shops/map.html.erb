@@ -12,14 +12,8 @@ const data = [
 let map
 
 function initMap(){
-  //デフォルトの緯度経度の変数
-  const latLng = {
-    lat: 35.729642,
-    lng: 139.710887
-  };
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: latLng,
     zoom: 15,
     gestureHandling: 'greedy',
   });
