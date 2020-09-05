@@ -24,7 +24,7 @@ function initMap(){
   data.map(d => {
     // マーカーをつける
     const marker = new google.maps.Marker({
-      position: {lat: d.lat, lng: d.lng},
+      position: {lat: parseFloat(d.lat), lng: parseFloat(d.lng)},
       map: map
     });
 

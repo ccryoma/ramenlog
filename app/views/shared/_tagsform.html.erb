@@ -1,7 +1,7 @@
 <div class='search_form_tags'>
   <% tag_count = 0 %>
   <% current_type = 0 %>
-  <%= object.collection_check_boxes("post[tag_ids]", Tag.all.order(type: :asc).order(id: :asc), :id, :name,include_hidden: false ) do |tag| %>
+  <%= obj.collection_check_boxes(name, Tag.all.order(type: :asc).order(id: :asc), :id, :name,include_hidden: false ) do |tag| %>
     <% if current_type != tag.object.type %>
       <% if current_type != 0 %>
         </div>
