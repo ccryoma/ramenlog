@@ -18,12 +18,12 @@ class PostsController < ApplicationController
         latest_img: latest_img
       )
     end
-      flash[:success] = "レビューが投稿されました!"
-      redirect_to postlist_path(shop)
-    rescue => e
-      logger.error e.message
-      flash[:danger] = "入力に誤りがあります。"
-      redirect_to request.referer
+    flash[:success] = "レビューが投稿されました!"
+    redirect_to postlist_path(shop)
+  rescue => e
+    logger.error e.message
+    flash[:danger] = "入力に誤りがあります。"
+    redirect_to request.referer
   end
 
   def destroy
