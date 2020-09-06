@@ -40,6 +40,37 @@
         }
       }
     });
+
+    // アイコン画像のプレビュー
+    //FileReaderのreadAsDataURLで指定したFileオブジェクトを読み込む
+    let fileReader = new FileReader();
+    //fileが選択された時に発火するイベント
+    $('#image_label').change(function(){
+      //選択したfileのオブジェクトをpropで取得
+      $(".memberform_icon_img").empty();
+      let file = $('input[type="file"]').prop('files')[0];
+      if(file === undefined){
+        return false;
+      }
+
+      //Fileオブジェクトを読み込む
+      fileReader.readAsDataURL(file);
+
+      //読み込みが完了すると、srcにfileのURLを格納
+      fileReader.onloadend = function() {
+        let src = fileReader.result
+        let html =  `<a class="js_modal_open" id="modal_image_icon" href="">
+                        <img src="${src}">
+                      </a>
+                      <div class="modal js_modal modal_image_icon">
+                        <div class="modal__bg js_modal_close" id="modal_image_input_icon"></div>
+                        <div class="modal__content_img">
+                          <img src="${src}">
+                        </div>
+                      </div>`
+        $(html).appendTo(".memberform_icon_img").trigger("build");
+      };
+    });
   });
 </script>
 
@@ -65,10 +96,16 @@
         <%= f.password_field :password_confirmation %>
       </div>
       <% if controller.action_name == "edit" %>
-        <span class="image">
-          <%= f.label :image ,"アイコン画像" %>
-          <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
-        </span>
+      <div class="memberform_icon">
+        <div class="memberform_icon_btn">
+          <label for="image_label">
+            <span>アイコン画像を選択</span>
+            <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", id: :image_label %>
+          </label>
+        </div>
+        <div class="memberform_icon_img">
+        </div>
+      </div>
       <% end %>
 
       <%= f.submit controller.action_name == "new" ? "登録" : "更新", class: "btn submit_btn" %>

@@ -17,15 +17,20 @@ $(document).on('turbolinks:load', function(){
 
   // 投稿フォームと画像のモーダル表示
   let scrollPos;//topからのスクロール位置
-  $('.js_modal_open').on('click',function(){
+  let stack = [];
+  $(document).on('click','.js_modal_open',function(){
       scrollPos = $(window).scrollTop();//topからのスクロール位置を格納
+      console.log(scrollPos);
       let open = '.js_modal.' + $(this).attr('id');
+      stack.push($(this).attr('id'));
       $(open).fadeIn(10);
       $('body').addClass('fixed').css({ top: -scrollPos });//背景固定
       return false;
   });
-  $('.js_modal_close').on('click',function(){
-      $('.js_modal').fadeOut(10);
+  $(document).on('click','.js_modal_close',function(){
+      let close = '.js_modal.' + stack[stack.length - 1];
+      stack.pop();
+      $(close).fadeOut(10);
       $('body').removeClass('fixed').css({ top: 0 });//背景固定を解除
       $(window).scrollTop(scrollPos);//元の位置までスクロール
       return false;
