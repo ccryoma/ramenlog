@@ -90,3 +90,7 @@ Style/StringLiterals:
 # selfを許可
 Style/RedundantSelf:
   Enabled: false
+
+# StandardErrorの表記省略を許容
+Style/RescueStandardError:
+  EnforcedStyle: implicit

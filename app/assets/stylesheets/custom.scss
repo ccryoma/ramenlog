@@ -535,7 +535,7 @@ input {
 .modal__content {
   background: #fff;
   left: 50%;
-  padding: 40px;
+  padding: 20px;
   position: absolute;
   top: 50%;
   transform: translate(-50%,-50%);
@@ -560,15 +560,6 @@ body.fixed {
 	width: 100%;
 	height: 100%;
 	left: 0;
-}
-
-/* postform */
-.postform_point {
-  display: flex;
-  .postform_point_num {
-    color: red;
-    font-size: 1.7em;
-  }
 }
 
 label.error {
@@ -1195,4 +1186,122 @@ a.wrap {
   margin-left:5px;
   border-radius:2px;
   font-size: 0.9em;
+}
+
+
+/* postform */
+.postform_head {
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.postform_title {
+  font-weight: bold;
+}
+
+.postform_point {
+  display: flex;
+  width: 100%;
+  .postform_point_num {
+    color: red;
+    font-size: 1.7em;
+  }
+}
+
+.postform_point_star {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 25%;
+}
+
+.postform_point_star_raty {
+  display: flex;
+}
+
+.postform_point_image {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  width: 75%;
+}
+
+.postform_point_image_images {
+  ul {
+    display: flex;
+    justify-content: center;
+    border: #df9931 3px dashed;
+    background-color: #fcedd8;
+    padding: 5px;
+  }
+  li {
+    list-style-type:none;
+    margin: 5px 10px;
+    img {
+      width: 80px; height: 80px;
+      object-fit: cover;
+    }
+  }
+  
+  .modal{
+    display: none;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.postform_point_image_label,.memberform_icon {
+  display: flex;
+  flex-direction: column;
+  span {
+    display: block;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1em;
+    background: #00abee;
+    padding: 4px 0;
+    border-radius: 16px;
+    width: 160px;
+    text-align: center;
+    transition: .2s;
+    cursor:pointer;
+    z-index: 2;
+  }
+  span:hover {
+    background: #000;
+  }
+  input {
+    display: none;
+  }
+}
+.postform_point_image_label_btn {
+  display: flex;
+}
+
+.memberform_icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top:10px;
+}
+
+.memberform_icon_btn {
+  width:30%
+}
+
+.memberform_icon_img {
+  width:70%;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.memberform_icon_img .js_modal_open img {
+  width: 100px; height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
 }
