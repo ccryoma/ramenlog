@@ -75,17 +75,17 @@
               </a>
             </div>
             <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
-              <div class="modal__bg js_modal_close"></div>
+              <div class="modal__bg js_modal_close" id="<%= "modal_image_#{image.id}" %>"></div>
               <div class="modal__content_img">
                 <%= image_tag image %>
               </div>
             </div>
             <% @image_cnt +=1 %>
-            <% break if @image_cnt > 7 %>
+            <% break if @image_cnt > 9 %>
           <% end %>
           <% @no_image = false %>
         <% end %>
-        <% break if @image_cnt > 7 %>
+        <% break if @image_cnt > 9 %>
       <% end %>
       <div class="shop_dtl_right_noImg">
         <%= image_tag("/images/no_image.png") if @no_image %>
