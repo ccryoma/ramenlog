@@ -36,7 +36,8 @@
 ![architecture](https://user-images.githubusercontent.com/67304331/92231189-50e0fe80-eee7-11ea-8de9-2933be8875cf.png)
 
 ## E-R図
-![E-R](https://user-images.githubusercontent.com/67304331/92330542-841fbb00-f0aa-11ea-8885-e85d72c38b01.png)
+![E-R Diagram](https://user-images.githubusercontent.com/67304331/92330687-b7167e80-f0ab-11ea-9266-c482bff8f029.png)
+
 
 ## 機能一覧
 * 会員登録機能
