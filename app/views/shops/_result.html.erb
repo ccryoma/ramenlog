@@ -1,19 +1,31 @@
-<% if @find %>
-  <h2>
-    <%= params['post']['area'] %><br />
-    <%= params['post']['name'] %><br />
-    <% if @tags %>
-      <% @tags.each do |tag| %>
-        <%= tag %>
+
+<div class="result">
+  <% if @find %>
+    <div class="result_area">
+      <%= params['post']['area'] %>
+    </div>
+    <div class="result_name">
+      <%= params['post']['name'] %>
+    </div>
+    <div class="result_shop">
+      <%= params['post']['shop_name'] %>
+    </div>
+    <div class="result_tag">
+      <% if @tags %>
+        <% @tags.each do |tag| %>
+          <%= tag %>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if params['post']['tag_ids'] %>
-      <%= params['post']['AO'] == 'AND' ? '(選択した全てのタグを含む(AND))' : '(選択した一部のタグを含む(OR))' %>
-    <% end %>
-  </h2>
-<% else %>
-  <h2>
-    ご指定の条件ではお店が見つかりませんでした。<br />
-    ※全国のお店を表示しています
-  </h2>
-<% end %>
+      <% if params['post']['tag_ids'] %>
+        <%= params['post']['AO'] == 'AND' ? '(選択した全てのタグを含む(AND))' : '(選択した一部のタグを含む(OR))' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="result_all">
+      全国のお店
+    </div>
+    <div class="result_notes">
+      ※ご指定の条件ではお店が見つかりませんでした。
+    </div>
+  <% end %>
+</div>

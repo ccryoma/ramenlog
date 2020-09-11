@@ -50,7 +50,9 @@
             <% post.images.each do |image| %>
               <div class="postList_content_images_img">
                 <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
-                  <%= image_tag image %>
+                  <div class="liquid">
+                    <%= image_tag image %>
+                  </div>
                 </a>
               </div>
               <div class="modal js_modal <%= "modal_image_#{image.id}" %>">

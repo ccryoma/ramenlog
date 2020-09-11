@@ -6,63 +6,66 @@
     $('.postform_point input[name="score"]').val(0);
   });
   //続きを読む機能
-  $('.shop_Com_right_comment').each(function(e){
+  $('.js_modal_open').each(function(e){
     let $comment = $(this);
     // 元の文章を変数に格納
     let comment = $comment.html();
     let commentShow;
     let commentText;
     if($comment.height() > 70){
-      // 文章の要素の高さが100を超えていたら隠す用のisHiddenクラスを付与
+      // 文章の要素の高さが70を超えていたら隠す用のisHiddenクラスを付与
       $comment.addClass('isHidden');
-      
-      // ウィンドウ幅が768px以上の時の処理（PC表示）
-      if (window.matchMedia('(min-width: 768px)').matches) {
-        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 128);
-        commentText = commentShow += '...続きを読む';
-        $comment.html(commentText);
-      } else { // ウィンドウ幅が768px以下の時の処理（スマホ表示）
-        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 32);
-        commentText = commentShow += '...続きを読む';
-        $comment.html(commentText);
-      }
+      commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 128);
+      commentText = commentShow += '...続きを読む';
+      $comment.html(commentText);
     }
   });
+
+  // マーカー用のデータを取得
+  const shopdata = [
+    <% if @shop.latitude && @shop.longitude %>
+      <%= "{ lat: #{@shop.latitude}, lng: #{@shop.longitude} }".html_safe %>
+    <% end %>
+  ];
+  function initMap(){
+    let map;
+    map = new google.maps.Map(document.getElementById('map'), {
+      maxZoom: 19,
+      zoom: 15,
+      scrollwheel: false,
+      disableDefaultUI: true,
+    });
+    shopdata.map(d => {
+      // マーカーをつける
+      const marker = new google.maps.Marker({
+        position: {lat: parseFloat(d.lat), lng: parseFloat(d.lng)},
+        map: map
+      });
+    });
+
+    //マーカーがいい感じに表示できるよう調整
+    map.fitBounds(new google.maps.LatLngBounds(
+      //sw
+      {
+        lat: Math.min(...shopdata.map(d => d.lat)),
+        lng: Math.min(...shopdata.map(d => d.lng))
+      },
+      //ne
+      {
+        lat: Math.max(...shopdata.map(d => d.lat)),
+        lng: Math.max(...shopdata.map(d => d.lng))
+      }
+    ));
+  }
 </script>
 
-<div class="row">
+<%= render partial: "googlemap" %>
+
+<div class="other">
       
   <%= render partial: "shopHead" %>
 
-  <div class="shop_dtl">
-    <div class="shop_dtl_left">
-      <table class="table">
-        <tr>
-          <th>店名</th>
-          <td><%= @shop.name %></td>
-        </tr>
-        <tr>
-          <th>住所</th>
-          <td><%= @shop.address %></td>
-        </tr>
-        <tr>
-          <th>営業時間</th>
-          <td><%= @shop.opening_ours %></td>
-        </tr>
-        <tr>
-          <th>席数</th>
-          <td><%= @shop.sheets %></td>
-        </tr>
-        <tr>
-          <th>駐車場</th>
-          <td><%= @shop.parking %></td>
-        </tr>
-        <tr>
-          <th>店舗登録者</th>
-          <td><%= link_to @shop.member.name, @shop.member %></td>
-        </tr>
-      </table>
-    </div>
+
     <div class="shop_dtl_right">
       <% @no_image = true %>
       <% @image_cnt = 0 %>
@@ -71,13 +74,15 @@
           <% post.images.each do |image| %>
             <div class="shop_dtl_right_img">
               <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
-                <%= image_tag image %>
+                <div class="liquid">
+                  <%= image_tag image %>
+                </div>
               </a>
             </div>
             <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
               <div class="modal__bg js_modal_close" id="<%= "modal_image_#{image.id}" %>"></div>
               <div class="modal__content_img">
-                <%= image_tag image %>
+                  <%= image_tag image %>
               </div>
             </div>
             <% @image_cnt +=1 %>
@@ -87,32 +92,26 @@
         <% end %>
         <% break if @image_cnt > 9 %>
       <% end %>
-      <div class="shop_dtl_right_noImg">
-        <%= image_tag("/images/no_image.png") if @no_image %>
-      </div>
     </div>
-  </div>
-
-  <% if @posts.empty? %>
-
-    <div class="caption_shop">
-      ※まだレビューがありません。
-    </div>   
-
-  <% else %>
 
     <div class="caption_shop">
       レビュー
     </div>   
+  <% if @posts.empty? %>
+      ※まだレビューがありません。
+  <% else %>
     <ul>
       <% @posts.first(3).each do |post| %>
         <li class="shop_Com">
           <div class="shop_Com_left">
+            <%= link_to "", postlist_member_path(post.member), class: :wrap %>
             <div class="shop_Com_left_memberImg">
-              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png"), postlist_member_path(post.member))  %>
+              <div class="liquid">
+                <%= post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png") %>
+              </div>
             </div>
             <div class="shop_Com_left_memberName">
-              <%= link_to(post.member.name, postlist_member_path(post.member)) %>
+              <%= post.member.name %>
             </div>
           </div>
           <div class="shop_Com_right">
@@ -140,4 +139,44 @@
     </div>
   <% end %>
 
+    <div class="caption_shop">
+      店舗詳細
+    </div>   
+    <div class="shop_dtl_left">
+      <table class="table">
+        <tr>
+          <th>店名</th>
+          <td><%= @shop.name %></td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td>
+            <div class="address_map">
+              <a href="<%= map_path(@shop, params: { post: { shop: @shop, shop_name: @shop.name }}) %>" class="wrap">
+                <%= @shop.address %>
+                <!-- 地図を操作させない -->
+                <div class="map_wrapper"></div>
+                <div id='map' class="shop_dtl_left_map"></div>
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>営業時間</th>
+          <td><%= simple_format(@shop.opening_ours) %></td>
+        </tr>
+        <tr>
+          <th>席数</th>
+          <td><%= @shop.sheets %></td>
+        </tr>
+        <tr>
+          <th>駐車場</th>
+          <td><%= @shop.parking %></td>
+        </tr>
+        <tr>
+          <th>店舗登録者</th>
+          <td><%= link_to @shop.member.name, postlist_member_path(@shop.member) %></td>
+        </tr>
+      </table>
+    </div>
 </div>

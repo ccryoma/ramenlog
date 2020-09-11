@@ -45,11 +45,11 @@ Layout/ArgumentAlignment:
 
 # ABC(代入、呼び出し、条件文)
 Metrics/AbcSize:
-  Max: 45
+  Max: 35
 
 # メソッドの長さを20行まで許可
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
 
 # 行の長さを160字まで許可
 Metrics/LineLength:

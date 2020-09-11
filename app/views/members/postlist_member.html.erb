@@ -1,34 +1,45 @@
 <% provide(:title, @member.name) %>
 <% breadcrumb :postlist_member, @member %>
-
 <div class="row">
-    <div class="postlistMember_profile">
-      <div class="postlistMember_profile_left">
-        <div class="postlistMember_profile_left_icon">
-          <%= @member.image.attached? ? image_tag(@member.image) : image_tag("/images/default_member.png")  %>
-        </div>
+  <div class="postlistMember_profile">
+    <div class="postlistMember_profile_left">
+      <div class="postlistMember_profile_left_icon">
+        <a class="js_modal_open" id="<%= "modal_image_profile" %>" href="">
+          <div class="liquid">
+            <%= @member.image.attached? ? image_tag(@member.image) : image_tag("/images/default_member.png")  %>
+          </div>
+        </a>
       </div>
-      <div class="postlistMember_profile_right">
-        <div class="postlistMember_profile_right_name">
-          <span class="name">
-            <%= @member.name %> さんのプロフィール
-          </span>
-          <%= link_to("(編集する)", edit_member_path(@member)) if @member.id == current_member.id %>
-        </div>
-        <div class="postlistMember_profile_right_delete">
-          <% if current_member && current_member.admin? && !current_member?(@member) %>
-            | <%= link_to "削除", @member, method: :delete,
-                                          data: { confirm: "削除しますか？" } %>
-          <% end %>
-        </div>
-        <div class="postlistMember_profile_right_posts">
-          <%= "(レビュー投稿数:#{@member.posts.count})" %>
-        </div>
-        <div class="postlistMember_profile_right_shops">
-          <%= "(店舗登録数:#{@member.shops.count})" %>
+      <div class="modal js_modal <%= "modal_image_profile" %>">
+        <div class="modal__bg js_modal_close"></div>
+        <div class="modal__content_img">
+            <%= @member.image.attached? ? image_tag(@member.image) : image_tag("/images/default_member.png")  %>
         </div>
       </div>
     </div>
+    <div class="postlistMember_profile_right">
+      <div class="postlistMember_profile_right_name">
+        <span class="name">
+          <%= @member.name %> さんのプロフィール
+        </span>
+        <% if current_member.email != "guest@example.com" %>
+          <%= link_to("(編集する)", edit_member_path(@member)) if @member.id == current_member.id %>
+        <% end %>
+      </div>
+      <div class="postlistMember_profile_right_delete">
+        <% if current_member && current_member.admin? && !current_member?(@member) %>
+          | <%= link_to "削除", @member, method: :delete,
+                                        data: { confirm: "削除しますか？" } %>
+        <% end %>
+      </div>
+      <div class="postlistMember_profile_right_posts">
+        <%= "(レビュー投稿数:#{@member.posts.count})" %>
+      </div>
+      <div class="postlistMember_profile_right_shops">
+        <%= "(店舗登録数:#{@member.shops.count})" %>
+      </div>
+    </div>
+  </div>
 
   <% unless @posts.empty? %>
     <div class="caption_postList">
@@ -75,7 +86,9 @@
               <% post.images.each do |image| %>
                 <div class="postList_content_images_img">
                   <a class="js_modal_open" id="<%= "modal_image_#{image.id}" %>" href="">
-                    <%= image_tag image %>
+                    <div class="liquid">
+                      <%= image_tag image %>
+                    </div>
                   </a>
                 </div>
                 <div class="modal js_modal <%= "modal_image_#{image.id}" %>">
