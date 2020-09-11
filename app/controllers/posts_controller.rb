@@ -3,10 +3,10 @@ class PostsController < ApplicationController
 
   def create
     @post = current_member.posts.build(posts_params)
+    params[:score] = 0.0 if params[:score].empty?
     @post[:point] = params[:score]
     latest_img = @post if @post.images.attached?
     shop = @post.shop
-
     @post.transaction do
       @post.save!
       point_avg = Shop.cal_point_avg(shop)

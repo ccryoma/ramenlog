@@ -1,65 +1,69 @@
 <script>
-// マーカー用のデータを取得
-const data = [
-  <% @shops.each do |shop| %>
-    <% if shop.latitude && shop.longitude %>
-      <% @shopwin = (render partial: "shop", locals:{shop: shop}).gsub(/(\r\n|\r|\n)/, "\\n") %>
-      <%= "{ shopInfo: \'#{@shopwin}\', lat: #{shop.latitude}, lng: #{shop.longitude} },".html_safe %>
+  console.log("map");
+  // マーカー用のデータを取得
+  const data = [
+    <% @shops.each do |shop| %>
+      <% if shop.latitude && shop.longitude %>
+        <% @shopwin = (render partial: "shop", locals:{shop: shop}).gsub(/(\r\n|\r|\n)/, "\\n") %>
+        <%= "{ shopInfo: \'#{@shopwin}\', lat: #{shop.latitude}, lng: #{shop.longitude} },".html_safe %>
+      <% end %>
     <% end %>
-  <% end %>
-];
+  ];
 
-let map
-
-function initMap(){
-
-  map = new google.maps.Map(document.getElementById('map'), {
-    maxZoom: 15,
-    zoom: 15,
-    gestureHandling: 'greedy',
-  });
-
+  function initMap(){
+    let map;
+    var infoWindow = new google.maps.InfoWindow();
+    map = new google.maps.Map(document.getElementById('map'), {
+      maxZoom: 19,
+      zoom: 15,
+      gestureHandling: 'greedy',
+    });
     // 現在表示されているinfoWindowオブジェクト
-  let currentWindow;
-
-  data.map(d => {
-    // マーカーをつける
-    const marker = new google.maps.Marker({
-      position: {lat: parseFloat(d.lat), lng: parseFloat(d.lng)},
-      map: map
+    let currentWindow;
+    data.map(d => {
+      // マーカーをつける
+      const marker = new google.maps.Marker({
+        position: {lat: parseFloat(d.lat), lng: parseFloat(d.lng)},
+        map: map
+      });
+      // マーカークリックしたら地名をポップアップさせる
+      marker.addListener('click', () => {
+        currentWindow && currentWindow.close();
+        infoWindow.setContent(d.shopInfo);
+        infoWindow.open(map, marker);
+        currentWindow = infoWindow;
+      });
     });
 
-    // マーカークリックしたら地名をポップアップさせる
-    marker.addListener('click', () => {
-      currentWindow && currentWindow.close();
-      const infoWindow = new google.maps.InfoWindow({content: d.shopInfo});
-      infoWindow.open(map, marker);
-      currentWindow = infoWindow;
+    // マーカーがいい感じに表示できるよう調整
+    map.fitBounds(new google.maps.LatLngBounds(
+      {
+        lat: Math.min(...data.map(d => d.lat)),
+        lng: Math.min(...data.map(d => d.lng))
+      },
+      {
+        lat: Math.max(...data.map(d => d.lat)),
+        lng: Math.max(...data.map(d => d.lng))
+      }
+    ));
+    google.maps.event.addListener(infoWindow, 'domready', function() {
+      $('.liquid').imgLiquid();
+      $('.raty').raty({
+        number: 5,
+        half: true,
+        readOnly: true,
+        score: function() {
+          return $(this).attr('data_score');
+        },
+      });
     });
-  });
-
-
-// マーカーがいい感じに表示できるよう調整
-map.fitBounds(new google.maps.LatLngBounds(
-  // sw
-  {
-    lat: Math.min(...data.map(d => d.lat)),
-    lng: Math.min(...data.map(d => d.lng))
-  },
-  // ne
-  {
-    lat: Math.max(...data.map(d => d.lat)),
-    lng: Math.max(...data.map(d => d.lng))
   }
-));
-}
-
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzZIPZF0Uch20mSuje8gzNVh2MYViAHlM&callback=initMap" async defer></script>
+
+<%= render partial: "googlemap" %>
 
 <% provide(:title, "地図検索") %>
 <% breadcrumb :map %>
 
 <%= render partial: "result" %>
-
-<div id='map'></div>
+<div id='map' class="search_map"></div>

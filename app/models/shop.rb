@@ -46,7 +46,10 @@ class Shop < ApplicationRecord
       Shop.order("updated_at DESC").limit(3)
 
     else
-      if search["tag_ids"]
+      # 店舗詳細ページからのリンク
+      if search["shop"]
+        Shop.where("id = #{search['shop']}")
+      elsif search["tag_ids"]
         # タグ指定あり
         if search["AO"] == "AND"
           # AND検索

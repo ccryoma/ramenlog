@@ -1,5 +1,5 @@
 <script>
-  $(function(){
+  $(document).on('turbolinks:load', function(){
     $.validator.addMethod("isemail",function(val,elem){
       reg = new RegExp("[^\s]+@[^\s]+", 'i');
       return this.optional(elem) || reg.test(val);
@@ -60,7 +60,9 @@
       fileReader.onloadend = function() {
         let src = fileReader.result
         let html =  `<a class="js_modal_open" id="modal_image_icon" href="">
-                        <img src="${src}">
+                        <div class="liquid">
+                          <img src="${src}">
+                        </div>
                       </a>
                       <div class="modal js_modal modal_image_icon">
                         <div class="modal__bg js_modal_close" id="modal_image_input_icon"></div>
@@ -70,6 +72,9 @@
                       </div>`
         $(html).appendTo(".memberform_icon_img").trigger("build");
       };
+    });
+    $('.memberform_icon_img').on('DOMSubtreeModified propertychange', function() {
+      $('.liquid').imgLiquid();
     });
   });
 </script>
@@ -104,6 +109,17 @@
           </label>
         </div>
         <div class="memberform_icon_img">
+          <a class="js_modal_open" id="modal_image_icon" href="">
+            <div class="liquid">
+              <%= @member.image.attached? ? image_tag(@member.image) : image_tag("/images/default_member.png") %>
+            </div>
+          </a>
+          <div class="modal js_modal modal_image_icon">
+            <div class="modal__bg js_modal_close" id="modal_image_input_icon"></div>
+            <div class="modal__content_img">
+              <%= @member.image.attached? ? image_tag(@member.image) : image_tag("/images/default_member.png") %>
+            </div>
+          </div>
         </div>
       </div>
       <% end %>

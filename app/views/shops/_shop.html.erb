@@ -7,11 +7,13 @@
   <%= link_to "", shop, class: :wrap %>
   <div class="shop_left">
     <div class="shop_image">
-      <% if shop.latest_img %>
-        <%= image_tag(shop.latest_img.images.first) %>
-      <% else %>
-        <img src="/images/no_image.png" alt="NoImage" />
-      <% end %>
+        <div class="liquid">
+          <% if shop.latest_img %>
+              <%= image_tag(shop.latest_img.images.first) %>
+          <% else %>
+            <img src="/images/no_image.png" alt="NoImage" />
+          <% end %>
+        </div>
     </div>
   </div>
   <div class="shop_right">
@@ -57,10 +59,10 @@
     <% else %>
       <%= shop.posts.count %>件のレビュー
     <% end %>
+  </div>
+</div>
     <% if current_member && current_member.admin? %>
       <div class="shop_right_delete">
         <%= link_to "この店舗を削除", shop, method: :delete,data: { confirm: "削除しますか？" } %>
       </div>
     <% end %>
-  </div>
-</div>
