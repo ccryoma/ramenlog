@@ -10,11 +10,13 @@
           <%= link_to "", shop, class: :wrap %>
           <div class="home_left_review_shop_left">
             <div class="home_left_review_shop_left_img">
-              <% if shop.latest_img %>
-                <%= image_tag(shop.latest_img.images.first) %>
-              <% else %>
-                <%= image_tag("/images/no_image.png") %>
-              <% end %>
+              <div class="liquid">
+                <% if shop.latest_img %>
+                  <%= image_tag(shop.latest_img.images.first) %>
+                <% else %>
+                  <%= image_tag("/images/no_image.png") %>
+                <% end %>
+              </div>
             </div>
           </div>
           <div class="home_left_review_shop_right">
@@ -208,7 +210,9 @@
         <div class="home_right_profile_head">
           <%= link_to "", postlist_member_path(current_member), class: :wrap %>
           <div class="home_right_profile_head_icon">
-            <%= current_member.image.attached? ? image_tag(current_member.image) : image_tag("/images/default_member.png")  %>
+            <div class="liquid">
+              <%= current_member.image.attached? ? image_tag(current_member.image) : image_tag("/images/default_member.png")  %>
+            </div>
           </div>
           <span class="home_right_profile_head_name">
             <%= current_member.name %> さん

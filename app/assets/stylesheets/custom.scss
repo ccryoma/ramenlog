@@ -15,18 +15,27 @@ $border_color: #ffe9c7;
 }
 
 /* universal */
-#home.container-fluid {
+.header_contents {
   margin-top: 15px;
   margin-right: auto;
   margin-left: auto;
-  max-width: 1200px;
+  width: 1200px;
+  display :flex;
+  justify-content: space-between;
 }
 
-#other.container-fluid {
+.home_contents {
   margin-top: 15px;
   margin-right: auto;
   margin-left: auto;
-  max-width: 1000px;
+  width: 1200px;
+}
+
+.other_contents {
+  margin-top: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 900px;
 }
 
 section {
@@ -42,10 +51,6 @@ textarea {
   h1 {
     margin-bottom: 10px;
   }
-}
-
-.header_contents {
-  display: flex;
 }
 
 nav {
@@ -173,14 +178,16 @@ input {
   li {
     overflow: auto;
     padding: 10px 0;
-    border-bottom: 1px solid $border_color;
+    border-top: 1px solid $border_color;
   }
 }
 
-.member_icon img {
-  width: 150px; height: 150px;
-  object-fit: contain;
+.member_icon {
+  width: 120px; height: 120px;
   margin: 10px;
+  .liquid {
+    border-radius: 5px;
+  }
 }
 
 /* search */
@@ -205,10 +212,10 @@ input {
   margin-top: 20px;
   border-top: 1px solid $border_color;
 
-  .shop_image img {
+  .shop_image {
     width: 180px; height: 180px;
-    object-fit: cover;
   }
+
   .shop_right_name {
     font-size: 1.5em;
     font-weight: bold;
@@ -218,17 +225,14 @@ input {
     font-weight: bold;
     color: red;
   }
-  
 }
 
 .shop_map {
   display: flex;
   position: relative;
   width: 100%;
-  height: 130px;
-  .shop_image img {
+  .shop_image {
     width: 110px; height: 110px;
-    object-fit: cover;
   }
   .shop_right_name {
     font-weight: bold;
@@ -325,66 +329,61 @@ input {
 }
 
 .shop_dtl_left {
-  width: 30%;
+  // width: 30%;
   tr {
     border-top: 2px #a07751 solid;
     border-bottom: 2px #a07751 solid;
-    width: 70%;
+    width: 80%;
   }
   th {
-    width: 30%;
+    width: 20%;
     background-color: #e6aa88;
   }
 }
 
 .shop_dtl_right {
-  width: 60%;
-	display: flex;
+  display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+}
   
-  .shop_dtl_right_img {
-    position: relative;
-    width: 20%;
-    height: 50%;
-    &:before {
-      content: "";
-      display: block;
-      padding-top: 100%;
-    }
-    img {
-      position: absolute;
-      width: 90%;
-      height: 90%;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      object-fit: cover;
-    }
-  }
+.shop_dtl_right_img {
+  width: 160px;
+  height: 160px;
+  padding: 5px;
+}
 
-  .shop_dtl_right_noImg img {
-    width: 150px; height: 150px;
-    object-fit: contain;
-    margin: 10px;
-  }
+.shop_dtl_right_noImg img {
+  width: 150px; height: 150px;
+  object-fit: contain;
+  margin: 10px;
 }
 
 .caption_shop {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
-  padding-top: 30px;
   margin: 30px 0px;
+  padding-left: 5px;
+  border-left: #b36b00 3px solid;
 }
 
 .shop_Com {
-	display: flex;
+  display: flex;
+  margin-bottom: 15px;
 }
 
-.shop_Com_left_memberImg img {
+.shop_Com_left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 60px;
+}
+
+.shop_Com_left_memberImg .liquid {
   width: 50px; height: 50px;
-  object-fit: contain;
+  border-radius: 5px;
 }
 
 .shop_Com_left_memberName {
@@ -394,7 +393,7 @@ input {
 
 .shop_Com_right {
   flex-direction: column;
-  margin: 10px;
+  margin-left: 10px;
   width: 100%;
   background-color: $comment_color;
   padding: 5px;
@@ -467,10 +466,16 @@ input {
 
   .list_btn {
     background-color: #f0a400;
+    &:hover {
+      opacity: 0.4;
+    }
   }
 
   .map_btn {
     background-color: #c77700;
+    &:hover {
+      opacity: 0.4;
+    }
   }
 
   *, *::before, *::after {
@@ -643,30 +648,17 @@ label.error {
 }
 
 .postList_content_images_img {
-  position: relative;
-  width: 20%;
-  &:before {
-    content: "";
-    display: block;
-    padding-top: 100%;
-  }
-  img {
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    object-fit: cover;
-  }
+  width: 160px;
+  height: 160px;
+  padding: 5px;
 }
 
 .caption_postList {
   font-size: 1.5em;
   font-weight: bold;
   margin-top: 15px;
+  padding-left: 5px;
+  border-left: #b36b00 3px solid;
 }
 
 /* pagenation */
@@ -690,11 +682,12 @@ label.error {
 
 .postlistMember_profile {
   display: flex;
+  margin-bottom: 30px;
 }
 
-.postlistMember_profile_left_icon img {
-  width: 150px; height: 150px;
-  object-fit: contain;
+.postlistMember_profile_left_icon .liquid {
+  width: 140px; height: 140px;
+  border-radius: 15px;
 }
 
 .postlistMember_profile_right {
@@ -760,10 +753,11 @@ label.error {
   padding: 5px;
 }
 
-.home_left_review_shop_left_img img {
+.home_left_review_shop_left_img {
   width: 100px; height: 100px;
-  object-fit: cover;
-  border-radius: 5px 0px 0px 5px;
+  .liquid {
+    border-radius: 5px 0px 0px 5px;
+  }
 }
 
 .home_left_area {
@@ -913,11 +907,12 @@ label.error {
   vertical-align: middle;
 }
 
-.home_right_profile_head_icon img {
-  width: 80px; height: 80px;
-  object-fit: cover;
+.home_right_profile_head_icon {
   margin: 10px;
-  border-radius: 10px;
+  .liquid {
+    width: 80px; height: 80px;
+    border-radius: 10px;
+  }
 }
 
 .home_right_profile_posts,.home_right_profile_shops {
@@ -1004,9 +999,11 @@ label.error {
 .search_dtl_btn {
   color: #945900;
   background: #fac99c;
-  width: 160px;
-  padding: 5px 15px;
-  margin-bottom: 10px;
+  width: 150px;
+  padding: 6px 10px;
+  margin: 0 0px;
+  border-radius: 0px;
+  border: #fac99c 1px solid;
   cursor: pointer;
   &:hover {
     background: #ff9e0d;
@@ -1161,9 +1158,15 @@ label.error {
   user-select: none;
 }
 
-#map {
+.search_map {
   height: 600px;
   width: 100%;
+}
+
+.shop_dtl_left_map {
+  height: 200px;
+  width: 100%;
+  z-index: 0;
 }
 
 a.wrap {
@@ -1240,9 +1243,8 @@ a.wrap {
   li {
     list-style-type:none;
     margin: 5px 10px;
-    img {
+    .liquid {
       width: 80px; height: 80px;
-      object-fit: cover;
     }
   }
   
@@ -1287,7 +1289,9 @@ a.wrap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding-top:10px;
+  height: 110px;
 }
 
 .memberform_icon_btn {
@@ -1297,11 +1301,10 @@ a.wrap {
 .memberform_icon_img {
   width:70%;
   margin-left: 10px;
-  text-align: center;
-}
-
-.memberform_icon_img .js_modal_open img {
-  width: 100px; height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  .liquid {
+    width: 100px; height: 100px;
+    border-radius: 5px;
+  }
 }

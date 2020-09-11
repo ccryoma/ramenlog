@@ -38,6 +38,7 @@ $(document).on('turbolinks:load', function(){
     let files = $('input[type="file"]').prop('files')[0];
     $(".postform_point_image_images").empty();
     $.each(this.files, function(i, file){
+      console.log("i");
       if(i == 0){
         $("<ul></ul>").appendTo(".postform_point_image_images");
       }
@@ -60,7 +61,9 @@ $(document).on('turbolinks:load', function(){
         let src = fileReader.result
         let html =  `<li>
                       <a class="js_modal_open" id="modal_image_input_${i}" href="">
-                        <img src="${src}">
+                        <div class="liquid">
+                          <img src="${src}">
+                        </div>
                       </a>
                     </li>
                     <div class="modal js_modal modal_image_input_${i}">
@@ -72,6 +75,9 @@ $(document).on('turbolinks:load', function(){
         $(html).appendTo(".postform_point_image_images ul").trigger("build");
       };
     });
+  });
+  $('.postform_point_image_images').on('DOMSubtreeModified propertychange', function() {
+    $('.liquid').imgLiquid();
   });
 });
 
