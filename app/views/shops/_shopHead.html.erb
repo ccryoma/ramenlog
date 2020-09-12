@@ -6,7 +6,7 @@
     <div class="shop_head_point">
       <div class="raty" read_only="true" data_score="<%= @shop.point_avg %>"></div>
       <div class="shop_head_point_num">
-        <%= @shop.point_avg %>
+        <%= @shop.point_avg || "未評価" %>
       </div>
     </div>
     <div class="shop_head_tag">

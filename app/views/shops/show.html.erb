@@ -5,20 +5,23 @@
   $(window).on('load',function(){
     $('.postform_point input[name="score"]').val(0);
   });
-  //続きを読む機能
-  $('.js_modal_open').each(function(e){
-    let $comment = $(this);
-    // 元の文章を変数に格納
-    let comment = $comment.html();
-    let commentShow;
-    let commentText;
-    if($comment.height() > 70){
-      // 文章の要素の高さが70を超えていたら隠す用のisHiddenクラスを付与
-      $comment.addClass('isHidden');
-      commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 128);
-      commentText = commentShow += '...続きを読む';
-      $comment.html(commentText);
-    }
+  $(document).on('turbolinks:load', function(){
+    //続きを読む機能
+    $('.shop_Com_right_comment').each(function(e){
+      let $comment = $(this);
+      console.log($comment);
+      // 元の文章を変数に格納
+      let comment = $comment.html();
+      let commentShow;
+      let commentText;
+      if($comment.height() > 70){
+        // 文章の要素の高さが70を超えていたら隠す用のisHiddenクラスを付与
+        $comment.addClass('isHidden');
+        commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 128);
+        commentText = commentShow += '...続きを読む';
+        $comment.html(commentText);
+      }
+    });
   });
 
   // マーカー用のデータを取得
@@ -39,7 +42,11 @@
       // マーカーをつける
       const marker = new google.maps.Marker({
         position: {lat: parseFloat(d.lat), lng: parseFloat(d.lng)},
-        map: map
+        map: map,
+        icon: {
+            url: '/images/marker.png',
+            scaledSize : new google.maps.Size(40, 38)
+        }
       });
     });
 
@@ -115,7 +122,7 @@
             </div>
           </div>
           <div class="shop_Com_right">
-            <%= link_to "", "/postlist/#{@shop.id}##{post.id}", class: :wrap %>
+            <%= link_to "", "/postlist/#{@shop.id}#post#{post.id}", class: :wrap %>
             <div class="shop_Com_right_title">
                 <%= post.title %>
             </div>

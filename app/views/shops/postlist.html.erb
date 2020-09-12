@@ -13,11 +13,13 @@
    
   <ul>
     <% @posts.each do |post| %>
-      <li class="postList" id=<%= post.id %>>
+      <li class="postList" id=<%= "post#{post.id}" %>>
         <div class="postList_member">
           <div class="postList_member_left">
             <div class="postList_member_left_memberImg">
-              <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png"), postlist_member_path(post.member))  %>
+              <div class="liquid">
+                <%= link_to( post.member.image.attached? ? image_tag(post.member.image) : image_tag("/images/default_member.png"), postlist_member_path(post.member))  %>
+              </div>
             </div>
           </div>
           <div class="postList_member_right">

@@ -43,7 +43,7 @@ class Shop < ApplicationRecord
 
     # ホーム画面用
     when "home"
-      Shop.order("updated_at DESC").limit(3)
+      Shop.where("latest_post_id IS NOT NULL").order("updated_at DESC").limit(3)
 
     else
       # 店舗詳細ページからのリンク

@@ -71,3 +71,25 @@ ul.navigation {
     width: 100%;
   }
 }
+
+.raty img {
+  width:18px; height:18px
+}
+
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  text-align: center;
+  padding: 5px;
+  border: #a04800 2px solid;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}

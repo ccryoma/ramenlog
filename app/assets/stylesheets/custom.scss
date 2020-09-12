@@ -93,21 +93,6 @@ header {
   padding-bottom: 10px;
 }
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
-}
-
 /* footer */
 
 footer {
@@ -292,7 +277,7 @@ input {
 }
 
 .shop_head_left {
-  width: 30%;
+  width: 50%;
 	display: flex;
   flex-direction: column;
 }
@@ -318,7 +303,7 @@ input {
 }
 
 .shop_head_right {
-  width: 70%;
+  width: 50%;
   text-align: right;
 }
 
@@ -602,9 +587,8 @@ label.error {
 	display: flex;
 }
 
-.postList_member_left_memberImg img {
+.postList_member_left_memberImg .liquid {
   width: 50px; height: 50px;
-  object-fit: cover;
 }
 
 .postList_member_right {

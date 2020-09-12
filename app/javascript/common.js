@@ -8,6 +8,7 @@ $(document).on('turbolinks:load', function(){
   $('.raty').raty({
     number: 5,
     half: true,
+    hints: ['1', '2', '3', '4', '5'],
     readOnly: function() {
       return $(this).attr('read_only');
     },
