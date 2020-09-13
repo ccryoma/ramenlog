@@ -96,14 +96,15 @@
 /* header */
 .global_search {
   display: flex;
-  align-items: center;
   width: 70%;
 }
 
+.global_search_title {
+  margin-top: 10px;
+}
 
 #logo {
-  //float: left;
-  //border: #a04800 2px solid;
+  margin-top: 10px;
   img {
     width: 150px;
     height: auto;
