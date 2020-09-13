@@ -1,12 +1,27 @@
-<li>
-  <div class="member_icon">
-    <div class="liquid">
-      <%= link_to member.image.attached? ? image_tag(member.image) : image_tag("/images/default_member.png")  ,postlist_member_path(member) %>
+<li class="members_list">
+  <%= link_to "", postlist_member_path(member), class: :wrap %>
+  <div class="members_contents">
+    <div class="members_contents_left">
+      <div class="member_icon">
+        <div class="liquid">
+          <%= member.image.attached? ? image_tag(member.image) : image_tag("/images/default_member.png") %>
+        </div>
+      </div>
+      <%= member.name%>
+    </div>
+    <div class="members_contents_right">
+      <div class="members_contents_right_posts">
+        <%= "(レビュー投稿数:#{member.posts.count})" %>
+      </div>
+      <div class="members_contents_right_shops">
+        <%= "(店舗登録数:#{member.shops.count})" %>
+      </div>
     </div>
   </div>
-  <%= link_to member.name, postlist_member_path(member) %>
-  <% if current_member.admin? && !current_member?(member) %>
-    | <%= link_to "削除", member, method: :delete,
-                                  data: { confirm: "削除しますか？" } %>
-  <% end %>
+  <div class="members_delete">
+    <% if current_member.admin? && !current_member?(member) %>
+      <%= link_to "削除", member, method: :delete,
+                                    data: { confirm: "削除しますか？" } %>
+    <% end %>
+  </div>
 </li>

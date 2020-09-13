@@ -43,8 +43,7 @@ class Shop < ApplicationRecord
 
     # ホーム画面用
     when "home"
-      Shop.where("latest_post_id IS NOT NULL").order("updated_at DESC").limit(3)
-
+      Shop.joins(:posts).order("posts.created_at DESC").limit(3)
     else
       # 店舗詳細ページからのリンク
       if search["shop"]

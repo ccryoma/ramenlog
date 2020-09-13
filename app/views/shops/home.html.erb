@@ -1,3 +1,22 @@
+<script>
+$(document).on('turbolinks:load', function(){
+  //続きを読む機能
+  $('.home_left_review_shop_right_name').each(function(e){
+    let $comment = $(this);
+    // 元の文章を変数に格納
+    let comment = $comment.html();
+    let commentShow;
+    let commentText;
+    if($comment.height() > 40){
+      // 文章の要素の高さが20を超えていたら隠す用のisHiddenクラスを付与
+      $comment.addClass('isHidden');
+      commentShow = comment.replace(/<br>/g, "\u00a0").substring(0, 35);
+      commentText = commentShow += '...';
+      $comment.html(commentText);
+    }
+  });
+});
+</script>
 <div class="home">
   <div class="home_left">
 
@@ -21,7 +40,7 @@
           </div>
           <div class="home_left_review_shop_right">
             <div class="home_left_review_shop_right_name">
-              <%= link_to shop.name, shop %>
+              <%= shop.name %>
             </div>
             <div class="home_left_review_shop_right_point">
               <div class="home_left_review_shop_right_point_raty">
@@ -33,7 +52,7 @@
             </div>
             <div class="home_left_review_shop_right_tags">
               <div class="tags">
-                <% shop.tags.first(4).each do |tag| %>
+                <% shop.tags.first(2).each do |tag| %>
                   <span class="tag">
                     <%= tag.name %>
                   </span>
