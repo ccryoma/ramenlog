@@ -34,8 +34,8 @@
   background: #356bff;
   color: white;
   &:hover {
-    color: #356bff;
-    background: #8aa9ff;
+    color: #1856ff;
+    background: #c6e1ff;
   }
 }
 
@@ -43,7 +43,7 @@
   background: #90d411;
   color: white;
   &:hover {
-    color: #6de200;
+    color: #4c9c00;
     background: #baffb1;
   }
 }
@@ -52,12 +52,28 @@
   background: #11c920;
   color: white;
   &:hover {
-    color: #00e257;
-    background: #b1ffc2;
+    color: #01ac42;
+    background: #ceffb1;
   }
 }
 
+.shop_edit_btn {
+  background: #26bb26;
+  color: white;
+  &:hover {
+    color: #109b2e;
+    background: #c8ffe5;
+  }
+}
 
+.post_create_btn {
+  background: #0d9eff;
+  color: white;
+  &:hover {
+    color: #173b72;
+    background: #9cd4fa;
+  }
+}
 
 .search_dtl_btn {
   width: 150px;
@@ -72,5 +88,24 @@
     color: #945900;
     background: #fac99c;
     border: #fac99c 1px solid;
+  }
+}
+
+
+
+/* header */
+.global_search {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+
+
+#logo {
+  //float: left;
+  //border: #a04800 2px solid;
+  img {
+    width: 150px;
+    height: auto;
   }
 }

@@ -436,6 +436,7 @@ input {
 .search_form {
   display: flex;
   flex-direction: column;
+  margin: 10px 0 0 20px;
 
   .form-control {
     border-radius: 0px;
@@ -476,11 +477,6 @@ input {
 
 .search_form_AO {
   width: 230px;
-}
-
-/* header */
-.global_search {
-  width: 70%;
 }
 
 /* member_profile */
@@ -713,7 +709,7 @@ label.error {
   width: 32%;
   height: 100px;
   position: relative;
-  background-color: #fffcdf;
+  background-color: #fffdee;
   border-radius: 5px;
 }
 
@@ -955,24 +951,6 @@ label.error {
   text-align: center;
   &:hover {
     text-decoration: none;
-  }
-}
-
-.shop_edit_btn {
-  color: #109b2e;
-  background: #c8ffe5;
-  &:hover {
-    background: #26bb26;
-    color: white;
-  }
-}
-
-.post_create_btn {
-  color: #173b72;
-  background: #9cd4fa;
-  &:hover {
-    background: #0d9eff;
-    color: white;
   }
 }
 
@@ -1324,22 +1302,4 @@ ul.navigation {
 
 .raty img {
   width:18px; height:18px
-}
-
-
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  text-align: center;
-  padding: 5px;
-  border: #a04800 2px solid;
-  font-weight: bold;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
 }

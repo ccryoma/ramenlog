@@ -32,7 +32,7 @@
   <div class="header_contents">
     <div class="global_search">
       <div class="global_search_title">
-        <%= link_to "麺びより", root_path, id: "logo",style:"color:black" %>
+        <%= link_to( image_tag("/images/logo.png") , root_path, id: "logo") %>
       </div>
       <div class="global_search_form">
         <%= form_with(url: "", local: true, id: "search_form_id", method: "get") do |f| %>
