@@ -110,7 +110,10 @@ $(document).on('turbolinks:load', function(){
           <div class="home_left_type_mamy_item">
             <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: [t[0]] }}), class: :wrap) %>
             <img src="<%= t[1] %>",alt="<%= Tag.find(t[0]).name %>") />
-            <span><%= Tag.find(t[0]).name %></span>
+            <span>
+              <%= Tag.find(t[0]).name %><br />
+              <p class="tag_count"><%= Shop.joins(:shop_tag_relations).where("tag_id = ?", t[0]).count %>件</p>
+            </span>
           </div>
         <% end %>
       </div>
@@ -131,6 +134,7 @@ $(document).on('turbolinks:load', function(){
       </div>
     </div>
   </div>
+
   <div class="home_right">
     <div class="home_right_count">
       <div class="home_right_count_shops">
