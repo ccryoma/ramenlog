@@ -18,12 +18,12 @@ class PostsController < ApplicationController
         latest_img: latest_img
       )
     end
-      flash[:success] = "レビューが投稿されました!"
-      redirect_to postlist_path(shop)
-    rescue => e
-      logger.error e.message
-      flash[:danger] = "入力に誤りがあります。"
-      redirect_to request.referer
+    flash[:success] = "レビューが投稿されました!"
+    redirect_to postlist_path(shop)
+  rescue => e
+    logger.error e.message
+    flash[:danger] = "入力に誤りがあります。"
+    redirect_to request.referer
   end
 
   def destroy
@@ -36,12 +36,12 @@ class PostsController < ApplicationController
       point_avg = Shop.cal_point_avg(shop)
       shop.update!(point_avg: point_avg)
     end
-      flash[:success] = "レビューを削除しました"
-      redirect_to request.referer
-    rescue => e
-      logger.error e.message
-      flash[:danger] = "削除に失敗しました"
-      redirect_to request.referer
+    flash[:success] = "レビューを削除しました"
+    redirect_to request.referer
+  rescue => e
+    logger.error e.message
+    flash[:danger] = "削除に失敗しました"
+    redirect_to request.referer
   end
 
   private

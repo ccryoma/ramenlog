@@ -20,9 +20,9 @@
       <div id="home" class="home_contents">
     <% else %>
       <div id="other" class="other_contents">
-    <% end %>
-    
+      <span class="bread_home">ホーム</span>
       <%= breadcrumbs separator: " &rsaquo; " %>
+    <% end %>
 
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>

@@ -4,6 +4,8 @@ class ShopsController < ApplicationController
 
   def home
     @shops = Shop.search("home")
+    @area = Shop.area_conf
+    @type = Shop.type_conf
   end
 
   def search

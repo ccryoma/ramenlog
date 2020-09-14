@@ -49,6 +49,12 @@ $(document).on('turbolinks:load', function(){
               <div class="home_left_review_shop_right_point_num">
                 <%= shop.point_avg || "未評価" %>
               </div>
+              <% if shop.posts.count > 0 %>
+                <div class="home_left_review_shop_right_point_review">
+                  <span class="review_icon">レビュー</span>
+                  <%= "#{shop.posts.count}件" %>
+                </div>
+              <% end %>
             </div>
             <div class="home_left_review_shop_right_tags">
               <div class="tags">
@@ -68,64 +74,31 @@ $(document).on('turbolinks:load', function(){
       エリアから探す
     </div>
     <div class="home_left_area">
-      <div class="home_left_area_many">
-        <div class="home_left_area_many_item">
-          <%= link_to( '武蔵野',search_path(@shop, params: { post: { area: "武蔵野", name: ""} })) %>
+      <% @area.each do |prefecture| %>
+        <div class="home_left_area_prefecture">
+          <div class="prefecture">
+            <%= prefecture[0] %>
+            <span class="prefecture_count">(<%= Shop.where("address LIKE ?","%#{prefecture[0]}%").count %>件)</span>
+          </div>
+          <div class="home_left_area_many">
+            <% prefecture[1][0].each do |area| %>
+              <div class="home_left_area_many_item">
+                <a href="<%= search_path(@shop, params: { post: { area: "#{area}", name: ""} }) %>">
+                  <%= area %>
+                  <span class='count'>(<%= Shop.where("address LIKE ?","%#{area}%").count %>件)</span>
+                </a>
+              </div>
+            <% end %>
+          </div>
+          <ul class="home_left_area_few">
+            <% prefecture[1][1].each do |area| %>
+              <li class="home_left_area_few_item">
+                <%= link_to( "#{area}",search_path(@shop, params: { post: { area: "#{area}", name: ""} })) %>
+              </li>
+            <% end %>
+          </ul>
         </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '新宿',search_path(@shop, params: { post: { area: "新宿", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '吉祥寺',search_path(@shop, params: { post: { area: "吉祥寺", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '三鷹',search_path(@shop, params: { post: { area: "三鷹", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '荻窪',search_path(@shop, params: { post: { area: "荻窪", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '高円寺',search_path(@shop, params: { post: { area: "高円寺", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '国分寺',search_path(@shop, params: { post: { area: "国分寺", name: ""} })) %>
-        </div>
-        <div class="home_left_area_many_item">
-          <%= link_to( '池袋',search_path(@shop, params: { post: { area: "池袋", name: ""} })) %>
-        </div>
-      </div>
-      <ul class="home_left_area_few">
-        <li class="home_left_area_few_item">
-          <%= link_to( '中野',search_path(@shop, params: { post: { area: "中野", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '渋谷',search_path(@shop, params: { post: { area: "渋谷", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '立川',search_path(@shop, params: { post: { area: "立川", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '新橋',search_path(@shop, params: { post: { area: "新橋", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '秋葉原',search_path(@shop, params: { post: { area: "秋葉原", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '丸の内',search_path(@shop, params: { post: { area: "丸の内", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '御茶ノ水',search_path(@shop, params: { post: { area: "御茶ノ水", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '後楽園',search_path(@shop, params: { post: { area: "後楽園", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '銀座',search_path(@shop, params: { post: { area: "銀座", name: ""} })) %>
-        </li>
-        <li class="home_left_area_few_item">
-          <%= link_to( '中野',search_path(@shop, params: { post: { area: "中野", name: ""} })) %>
-        </li>
-      </ul>
+      <% end %>
     </div>
     
     <div class="caption_home">
@@ -133,75 +106,28 @@ $(document).on('turbolinks:load', function(){
     </div>
     <div class="home_left_type">
       <div class="home_left_type_mamy">
-        <div class="home_left_type_mamy_item">
-          <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['1'] }}), class: :wrap) %>
-          <img src="/images/ramen.jpg" alt="ラーメン" />
-          <span>ラーメン</span>
-        </div>
-        <div class="home_left_type_mamy_item">
-          <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['2'] }}), class: :wrap) %>
-          <img src="/images/tsukemen.jpeg" alt="つけ麺" />
-          <span>つけ麺</span>
-        </div>
-        <div class="home_left_type_mamy_item">
-          <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['3'] }}), class: :wrap) %>
-          <img src="/images/aburasoba.jpeg" alt="油そば" />
-          <span>油そば</span>
-        </div>
-        <div class="home_left_type_mamy_item">
-          <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['17'] }}), class: :wrap) %>
-          <img src="/images/nibosi.jpeg" alt="煮干し" />
-          <span>煮干し</span>
-        </div>
-        <div class="home_left_type_mamy_item">
-          <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['12'] }}), class: :wrap) %>
-          <img src="/images/ziro.jpeg" alt="二郎系" />
-          <span>二郎系</span>
-        </div>
+        <% @type.each do |t| %>
+          <div class="home_left_type_mamy_item">
+            <%= link_to('' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: [t[0]] }}), class: :wrap) %>
+            <img src="<%= t[1] %>",alt="<%= Tag.find(t[0]).name %>") />
+            <span><%= Tag.find(t[0]).name %></span>
+          </div>
+        <% end %>
       </div>
       <div class="home_left_type_few">
-        <div class="home_left_type_few_tag">
-          <%= link_to('太麺' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['4'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('細麺' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['5'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('平打ち麺' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['6'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('刀削麺' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['7'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('しょうゆ' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['8'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('しお' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['9'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('みそ' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['10'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('とんこつ' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['11'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('背脂' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['15'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('魚介' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['16'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('鶏白湯' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['18'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('激辛' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['19'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('家系' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['13'] }})) %>
-        </div>
-        <div class="home_left_type_few_tag">
-          <%= link_to('博多系' ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: ['14'] }})) %>
-        </div>
+        <% Tag.all.each do |t| %>
+          <% match = false %>
+          <% @type.each do |tp| %>
+            <% if t.id == tp[0] %>
+              <% match = true %>
+              <% break %>
+            <% end %>
+          <% end %>
+          <% next if match %>
+          <div class="home_left_type_few_tag">
+            <%= link_to(t.name ,search_path(@shop, params: { post: { area: "", name: "", tag_ids: [t] }})) %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

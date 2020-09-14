@@ -1,5 +1,5 @@
 crumb :root do
-  link "Top", root_path
+  link "麺びより", root_path
 end
 
 crumb :login do

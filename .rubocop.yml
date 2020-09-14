@@ -35,6 +35,7 @@ Rails/SkipsModelValidations:
   Exclude:
     - 'app/models/*'
 
+
 # 日本語でのコメントを許可
 AsciiComments:
   Enabled: false

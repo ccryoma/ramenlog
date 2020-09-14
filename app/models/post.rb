@@ -25,11 +25,10 @@ class Post < ApplicationRecord
       posts.each do |post|
         if post.images.attached? && shop.latest_img_id != post.id
           latest_img = post
-          break;
+          break
         end
       end
       shop.update!(latest_img: latest_img)
     end
   end
-
 end

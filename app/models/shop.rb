@@ -70,4 +70,21 @@ class Shop < ApplicationRecord
   def self.cal_point_avg(shop)
     shop.posts.average(:point)
   end
+
+  def self.area_conf
+    area = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    area["東京"][0] = %w[三鷹 武蔵野 新宿]
+    area["東京"][1] = %w[吉祥寺 池袋 千代田区]
+    area["愛知"][0] = %w[名古屋 豊橋]
+    area["愛知"][1] = %w[一宮 岡崎]
+    area
+  end
+
+  def self.type_conf
+    [[1, "/images/ramen.jpg"],
+     [2, "/images/tsukemen.jpeg"],
+     [3, "/images/aburasoba.jpeg"],
+     [17, "/images/nibosi.jpeg"],
+     [12, "/images/ziro.jpeg"]]
+  end
 end

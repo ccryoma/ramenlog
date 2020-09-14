@@ -11,7 +11,7 @@ RSpec.describe "新規店舗登録", type: :system do
       expect {
         fill_in "shop_name", with: ""
         fill_in "shop_address", with: ""
-        click_button "\u767B\u9332"
+        click_button "登録"
       }.to change(Shop, :count).by(0)
 
       expect(page).to have_css "div#error_explanation"
@@ -27,7 +27,7 @@ RSpec.describe "新規店舗登録", type: :system do
       expect {
         fill_in "shop_name", with: "Foobar"
         fill_in "shop_address", with: "FoobarAddress"
-        click_button "\u767B\u9332"
+        click_button "登録"
       }.to change(Shop, :count).by(1)
     end
   end

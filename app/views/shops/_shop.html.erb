@@ -30,6 +30,12 @@
       <div class="shop_right_point_num">
         <%= shop.point_avg || "未評価" %>
       </div>
+      <% if shop.posts.count > 0 %>
+        <div class="shop_head_point_review">
+          <span class="review_icon">レビュー</span>
+          <%= "#{shop.posts.count}件" %>
+        </div>
+      <% end %>
     </div>
     <div class="shop_right_tags">
       <div class="tags">

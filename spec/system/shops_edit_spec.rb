@@ -11,7 +11,7 @@ RSpec.describe "店舗情報編集", type: :system do
 
       fill_in "shop_name", with: ""
       fill_in "shop_address", with: ""
-      click_button "\u66F4\u65B0"
+      click_button "更新"
 
       expect(page).to have_css "div#error_explanation"
       expect(page).to have_css "div.field_with_errors"
@@ -27,7 +27,7 @@ RSpec.describe "店舗情報編集", type: :system do
       address = "FoobarAddress"
       fill_in "shop_name", with: "Foobar"
       fill_in "shop_address", with: "FoobarAddress"
-      click_button "\u66F4\u65B0"
+      click_button "更新"
 
       visit edit_shop_path(shop)
 
