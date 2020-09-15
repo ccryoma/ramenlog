@@ -7,6 +7,11 @@ crumb :login do
   parent :root
 end
 
+crumb :password_resets do
+  link "パスワード再設定", login_path
+  parent :root
+end
+
 crumb :members do
   link "会員一覧", members_path
   parent :root
