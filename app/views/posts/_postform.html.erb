@@ -38,7 +38,6 @@ $(document).on('turbolinks:load', function(){
     let files = $('input[type="file"]').prop('files')[0];
     $(".postform_point_image_images").empty();
     $.each(this.files, function(i, file){
-      console.log("i");
       if(i == 0){
         $("<ul></ul>").appendTo(".postform_point_image_images");
       }

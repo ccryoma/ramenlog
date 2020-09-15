@@ -73,10 +73,10 @@ class Shop < ApplicationRecord
 
   def self.area_conf
     area = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
-    area["東京"][0] = %w[三鷹 武蔵野 新宿]
-    area["東京"][1] = %w[吉祥寺 池袋 千代田区]
+    area["東京"][0] = %w[武蔵野 三鷹 新宿]
+    area["東京"][1] = %w[吉祥寺 池袋 千代田区 国分寺]
     area["愛知"][0] = %w[名古屋 豊橋]
-    area["愛知"][1] = %w[一宮 岡崎]
+    area["愛知"][1] = %w[一宮 岡崎 常滑]
     area
   end
 

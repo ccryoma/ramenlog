@@ -1,7 +1,9 @@
 $(document).on('turbolinks:load', function(){
-  Turbolinks.clearCache();
+
   var $input = $('#refresh');
   $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+
+  // アップロード画像を正方形に切り抜き
   $('.liquid').imgLiquid();
 
   $.fn.raty.defaults.path = "/images/raty";

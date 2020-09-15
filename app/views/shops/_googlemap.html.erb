@@ -1,1 +1,10 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzZIPZF0Uch20mSuje8gzNVh2MYViAHlM&callback=initMap" async defer></script>
+<script>
+  if(window.google){
+    initMap();
+  } else{
+    $.ajax('https://maps.googleapis.com/maps/api/js?key=AIzaSyDzZIPZF0Uch20mSuje8gzNVh2MYViAHlM&callback=initMap', {
+      crossDomain: true,
+      dataType: 'script'
+    });
+  }
+</script>
