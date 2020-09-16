@@ -43,7 +43,8 @@ class Shop < ApplicationRecord
 
     # ホーム画面用
     when "home"
-      Shop.joins(:posts).order("posts.created_at DESC").limit(3)
+      Shop.joins("INNER JOIN posts ON shops.latest_post_id = posts.id").order("posts.created_at DESC").limit(3)
+
     else
       # 店舗詳細ページからのリンク
       if search["shop"]
