@@ -1,4 +1,4 @@
-![スクリーンショット 2020-09-15 23 45 32](https://user-images.githubusercontent.com/67304331/93226027-d731f600-f7ad-11ea-9d79-ecfa4aa5d41e.png)
+![スクリーンショット ](https://user-images.githubusercontent.com/67304331/93226027-d731f600-f7ad-11ea-9d79-ecfa4aa5d41e.png)
 # 概要
 ラーメン店の検索、およびレビューを共有できるサービスです。  
 https://men-biyori.com

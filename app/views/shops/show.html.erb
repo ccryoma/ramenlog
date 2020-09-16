@@ -22,14 +22,15 @@
       }
     });
   });
-
-  // マーカー用のデータを取得
-  const shopdata = [
-    <% if @shop.latitude && @shop.longitude %>
-      <%= "{ lat: #{@shop.latitude}, lng: #{@shop.longitude} }".html_safe %>
-    <% end %>
-  ];
   function initMap(){
+
+    // マーカー用のデータを取得
+    const shopdata = [
+      <% if @shop.latitude && @shop.longitude %>
+        <%= "{ lat: #{@shop.latitude}, lng: #{@shop.longitude} }".html_safe %>
+      <% end %>
+    ];
+    
     let map;
     map = new google.maps.Map(document.getElementById('map'), {
       maxZoom: 19,

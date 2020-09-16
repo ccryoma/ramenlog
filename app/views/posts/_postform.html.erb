@@ -31,7 +31,9 @@ $(document).on('turbolinks:load', function(){
   //querySelectorでfile_fieldを取得
   const file_field = document.querySelector('input[type=file]')
   //fileが選択された時に発火するイベント
-  $('#image_label').change(function(){
+
+  $(document).off('change').on('change', '#image_label', function() {
+  //$('#image_label').change(function(){
     //DataTransferオブジェクトで、データを格納する箱を作る
     let dataBox = new DataTransfer();
     //選択したfileのオブジェクトをpropで取得

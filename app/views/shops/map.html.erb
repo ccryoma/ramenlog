@@ -1,15 +1,15 @@
 <script>
-  // マーカー用のデータを取得
-  const data = [
-    <% @shops.each do |shop| %>
-      <% if shop.latitude && shop.longitude %>
-        <% @shopwin = (render partial: "shop", locals:{shop: shop}).gsub(/(\r\n|\r|\n)/, "\\n") %>
-        <%= "{ shopInfo: \'#{@shopwin}\', lat: #{shop.latitude}, lng: #{shop.longitude} },".html_safe %>
-      <% end %>
-    <% end %>
-  ];
-
   function initMap(){
+    // マーカー用のデータを取得
+    const data = [
+      <% @shops.each do |shop| %>
+        <% if shop.latitude && shop.longitude %>
+          <% @shopwin = (render partial: "shop", locals:{shop: shop}).gsub(/(\r\n|\r|\n)/, "\\n") %>
+          <%= "{ shopInfo: \'#{@shopwin}\', lat: #{shop.latitude}, lng: #{shop.longitude} },".html_safe %>
+        <% end %>
+      <% end %>
+    ];
+    
     let map;
     var infoWindow = new google.maps.InfoWindow();
     map = new google.maps.Map(document.getElementById('map'), {

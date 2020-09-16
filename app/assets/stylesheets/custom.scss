@@ -582,6 +582,7 @@ label.error {
 
 .postList_member_left_memberImg .liquid {
   width: 50px; height: 50px;
+  border-radius: 5px;
 }
 
 .postList_member_right {
@@ -633,7 +634,7 @@ label.error {
 .caption_postList {
   font-size: 1.5em;
   font-weight: bold;
-  margin-top: 15px;
+  margin: 15px;
   padding-left: 5px;
   border-left: #b36b00 3px solid;
 }
