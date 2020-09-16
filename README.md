@@ -1,7 +1,7 @@
+![スクリーンショット 2020-09-15 23 45 32](https://user-images.githubusercontent.com/67304331/93226027-d731f600-f7ad-11ea-9d79-ecfa4aa5d41e.png)
 # 概要
-ラーメン店の検索、およびレビューを共有できるサービスです。
-
-## URL
+ラーメン店の検索、およびレビューを共有できるサービスです。  
+https://men-biyori.com
 
 ## 使用技術一覧
 ### インフラ
@@ -31,6 +31,7 @@
 * Google Maps API
 * jQuery.raty
 * jQuery validation
+* Let's Encrypt
 
 ## クラウドアーキテクチャ
 ![architecture](https://user-images.githubusercontent.com/67304331/92231189-50e0fe80-eee7-11ea-8de9-2933be8875cf.png)
@@ -38,12 +39,11 @@
 ## E-R図
 ![E-R Diagram](https://user-images.githubusercontent.com/67304331/92330687-b7167e80-f0ab-11ea-9266-c482bff8f029.png)
 
-
 ## 機能一覧
+### 機能要件
 * 会員登録機能
 * パスワード再設定機能
 * リメンバーミー
-* ログイン情報のセッション保持
 * プロフィール編集機能(テストユーザーは利用不可)
 * フォーム入力時点のバリデーションチェック
 * 会員一覧表示機能
@@ -57,5 +57,8 @@
 * テストログイン機能(お試し利用)
 * パンくずリスト
 * ページネーション
+### 非機能要件
 * トランザクション制御機能
+* ログイン情報のセッション保持
+* SSL
 
