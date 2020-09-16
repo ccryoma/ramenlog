@@ -522,7 +522,7 @@ input {
   position: absolute;
   top: 50%;
   transform: translate(-50%,-50%);
-  width: 60%;
+  width: 800px;
   textarea {
     height: 300px;
     resize: none;
@@ -1084,6 +1084,7 @@ a.wrap {
 .postform_point_image_label,.memberform_icon {
   display: flex;
   flex-direction: column;
+  font-size: 0.9em;
   span {
     display: block;
     color: #fff;
@@ -1119,11 +1120,11 @@ a.wrap {
 }
 
 .memberform_icon_btn {
-  width:30%
+  width:50%
 }
 
 .memberform_icon_img {
-  width:70%;
+  width:50%;
   margin-left: 10px;
   display: flex;
   justify-content: center;
