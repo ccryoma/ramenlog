@@ -22,7 +22,7 @@
         <span class="name">
           <%= @member.name %> さんのプロフィール
         </span>
-        <% if current_member.email != "guest@example.com" %>
+        <% if current_member && current_member.email != "guest@example.com" %>
           <%= link_to("(編集する)", edit_member_path(@member)) if @member.id == current_member.id %>
         <% end %>
       </div>
