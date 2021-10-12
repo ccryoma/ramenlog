@@ -20,7 +20,7 @@ gem "jquery-rails"
 gem "listen", "3.1.5"
 gem "mini_magick", "4.9.5"
 gem "mysql2"
-gem "puma", "4.3.4"
+gem "puma", "4.3.9"
 gem "rails", "6.0.3"
 gem "rails_12factor", group: :production
 gem "rails-i18n"
